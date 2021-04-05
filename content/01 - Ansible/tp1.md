@@ -27,7 +27,7 @@ ansible --version
 - Traditionnellement lorsqu'on veut vérifier le bon fonctionnement d'une configuration on utilise `ansible all -m ping`. Que signifie-t-elle ?
 
 {{% expand "Réponse  :" %}}
-Cette commande lance le module ansible `ping` (test de connection ansible) sur le groupe all c'est à dire toutes les machines de notre inventaire. Il s'agit d'une commande ad-hoc ansible.
+Cette commande lance le module ansible `ping` (test de connexion ansible) sur le groupe all c'est à dire toutes les machines de notre inventaire. Il s'agit d'une commande ad-hoc ansible.
 {{% /expand %}}
 
 
@@ -42,7 +42,7 @@ Cette commande renvoie une erreur car `all` ne matche aucun hôte.
 {{% /expand %}}
 
 
-- Utilisez en plus l'option `-vvv` pour mettre en mode très verbeux. Ce mode est très efficace pour **débugger** lorsqu'une erreur inconnue se présente. Que se passe-t-il avec l'inventaire ?
+- Utilisez en plus l'option `-vvv` pour mettre en mode très verbeux. Ce mode est très efficace pour **debugger** lorsqu'une erreur inconnue se présente. Que se passe-t-il avec l'inventaire ?
 
 {{% expand "Réponse  :" %}}
 
@@ -74,7 +74,7 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 {{% /expand %}}
 
 
-<!-- ## Explorer LXD 
+## Explorer LXD 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
@@ -94,7 +94,7 @@ Il faut cependant l'initialiser avec : `lxd init`
 
 - Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1`
 
-## Facultatif : Configurer un conteneur pour Ansible manuellement
+<!-- ## Facultatif : Configurer un conteneur pour Ansible manuellement
 {{% expand "Facultatif :" %}}
 
 
@@ -182,7 +182,7 @@ lxc launch centos_ansible_ready centos2 centos3
 lxc delete centos1 centos2 centos3 --force
 ```
 
-{{% /expand %}}
+{{% /expand %}} -->
 
 ### Récupérer les images de correction depuis un remote LXD
 
@@ -218,7 +218,7 @@ lxc launch centos_ansible centos1
 
 - Déverrouillez cette clé ssh avec `ssh-add ~/.ssh/id_stagiaire` et le mot de passe `devops101` (le ssh-agent doit être démarré dans le shell pour que cette commande fonctionne si ce n'est pas le cas `eval $(ssh-agent)`).
 
-- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`. -->
+- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
 
 
 ## Créer un projet de code Ansible

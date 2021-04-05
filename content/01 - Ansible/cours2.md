@@ -280,7 +280,7 @@ Les facts sont des valeurs de variables récupérées au début de l'exécution 
 La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
 
 
-## Structures de controle Ansible (et non JinJa2)
+## Structures de controle Ansible (et non Jinja2)
 
 #### La directive `when`
 
