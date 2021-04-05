@@ -58,18 +58,18 @@ ansible essaye de trouver un inventaire c'est à dire une liste de machine à co
 ```
 ansible localhost -m ping
 ```
-La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est contactée (sortie en rouge). Nous allons dans la suite créer des machines de lab avec ssh installé.
+La commande échoue car ssh n'est pas configuré sur l'hôte mais la machine est contactée (sortie en rouge). Nous allons dans la suite créer des machines de lab avec ssh installé.
 {{% /expand %}}
 
 
-- Ajoutez la ligne `hotelocal ansible_host=127.0.0.1` dans l'inventaire par défaut (le chemin est indiqué dans). Et pinguer hotelocal.
+- Ajoutez la ligne `hotelocal ansible_host=127.0.0.1` dans l'inventaire par défaut (le chemin est `/etc/ansible/hosts`). Et pinguer hotelocal.
 
 {{% expand "Réponse  :" %}}
 
 - Éditez le fichier `/etc/ansible/hosts` avec par exemple `sudo gedit /etc/ansible/hosts`
 
 - Testez cette configuration avec `ansible hotelocal -m ping`
-- => idem echec de login
+- => idem échec de login
 
 {{% /expand %}}
 
@@ -184,9 +184,15 @@ lxc delete centos1 centos2 centos3 --force
 
 {{% /expand %}} -->
 
-### Récupérer les images de correction depuis un remote LXD
+### Récupérer les images pré-configurées
 
-Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
+Pour avoir tous les mêmes images de base générons-les depuis un script pré-installé, dans un terminal lancez :
+```bash
+bash /opt/lxd.sh
+``` 
+
+<!-- ### Récupérer les images de correction depuis un remote LXD -->
+<!-- Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
 
 - Ajoutez le remote `tp-images` avec la commande:
 
@@ -202,7 +208,7 @@ lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
 ```bash
 lxc image copy tp-images:centos_ansible local: --copy-aliases --auto-update
 lxc image copy tp-images:ubuntu_ansible local: --copy-aliases --auto-update
-```
+``` -->
 
 
 ### Lancer et tester les conteneurs
@@ -307,7 +313,7 @@ centos1 ansible_host=<ip>
 En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des modes de connexion différents pour chaque machine.
 
 <!-- TODO: faire plus court pour adhoc pour pouvoir explorer --check et become: et autres avec les playbooks plutôt -->
-<!-- ## Installons nginx avec quelques modules et commandes ad-hoc
+## Installons nginx avec quelques modules et commandes ad-hoc
 
 - Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
 
@@ -403,4 +409,4 @@ Il existe trois façon de lancer des commandes unix avec ansible:
 
 ```
 ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
-``` -->
+``` 
