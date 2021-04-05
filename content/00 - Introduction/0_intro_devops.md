@@ -342,11 +342,11 @@ Docker (et un peu LXC)
 
 Il s'agit de mettre en quelques sortes les logiciels dans des boîtes :
 
-- ## Avec tout ce qu'il faut pour qu'il fonctionnent (leurs dépendances).
+- Avec tout ce qu'il faut pour qu'ils fonctionnent (leurs dépendances).
 
-- ## Ces boîtes sont fermées (on peut ne peux plus les modifier). On parle d'**immutabilité**.
+- Ces boîtes sont fermées (on peut ne peux plus les modifier). On parle d'**immutabilité**.
 
-- ## Si on a besoin d'un nouvelle version on fait **un nouveau modèle** de boîte. (on dit une nouvelle image docker)
+- Si on a besoin d'un nouvelle version on fait **un nouveau modèle** de boîte. (on dit une nouvelle image docker)
 
 - Cette nouvelle image permet de **créer autant d'instances que nécessaire**.
 
@@ -354,7 +354,7 @@ Il s'agit de mettre en quelques sortes les logiciels dans des boîtes :
 
 ## Containerisation - Pourquoi ?
 
-- ## L'isolation des containers permet d'éviter que les logiciels s'emmêlent entre eux. (Les dépendances ne rentrent pas en conflit)
+- **L'isolation des containers permet d'éviter que les logiciels s'emmêlent entre eux. (Les dépendances ne rentrent pas en conflit)**
 
 - Les conteneurs non modifiables permettent de savoir exactement l'état de ce qu'on exécute sur l'ordinateur
 

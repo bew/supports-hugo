@@ -41,7 +41,7 @@ draft: false
 - Installez VSCode avec le gestionnaire de paquet `snap install code --classic`
 - En ligne de commande (`apt`) installez `git`, `htop`, `ncdu`
 
-## Explorer Ubuntu Bionic (18.04) : Démo
+## Explorer Ubuntu Focal Fossa (20.04) : Démo
 
 ## Explorer l'éditeur VSCode : Démo
 
