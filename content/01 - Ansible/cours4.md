@@ -70,18 +70,18 @@ Il existe également un mode pour gérer plusieurs mots de passe associés à de
 
 ## Ansible dans le cloud
 
-L'automatisation Ansible fait d'autant plus sens dans un environnement d'infrastructures dynamique:
+L'automatisation Ansible fait d'autant plus sens dans un environnement dynamique d'infrastructures :
 
 - L'agrandissement horizontal implique de résinstaller régulièrement des machines identiques
 - L'automatisation et la gestion des configurations permet de mieux contrôler des environnements de plus en plus complexes.
 
-Il existe de nombreuses solutions pour intégrer Ansible avec les principaux providers de cloud (modules ansible, plugins d'API, intégration avec d'autre outils d'IaC Cloud comme Terraform ou Cloudformation).
+Il existe de nombreuses solutions pour intégrer Ansible avec les principaux providers de cloud (modules Ansible, plugins d'API, intégration avec d'autre outils d'Infrastructure-as-Code cloud comme Terraform ou Cloudformation).
 
 ## Inventaires dynamiques
 
-Les inventaires que nous avons utilisés jusqu'ici implique d'affecter à la main les adresses IP des différents noeuds de notre infrastructure. Cela devient vite ingérable.
+Les inventaires que nous avons utilisés jusqu'ici implique d'affecter à la main les adresses IP des différents noeuds de notre infrastructure. Cela devient vite ingérable si celle-ci change souvent.
 
-La solution ansible pour le pas gérer les IP et les groupes à la main est appelée `inventaire dynamique` ou `inventory plugin`. Un inventaire dynamique est simplement un programme qui renvoie un JSON respectant le format d'inventaire JSON ansible, généralement en contactant l'api du cloud provider ou une autre source.
+La solution Ansible pour ne pas gérer les IP et les groupes à la main est appelée *inventaire dynamique* ou `inventory plugin`. Un inventaire dynamique est simplement un programme qui renvoie un JSON respectant le format d'inventaire JSON Ansible, généralement en contactant l'API du cloud provider ou une autre source.
 
 ```
 $ ./inventory_terraform.py
@@ -173,7 +173,7 @@ Exemple:
 
 On peut explorer plus facilement la hiérarchie d'un inventaire statique ou dynamique avec la commande:
 
-```
+```bash
 ansible-inventory --inventory <inventory> --graph
 ```
 

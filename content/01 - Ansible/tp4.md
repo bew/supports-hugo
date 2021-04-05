@@ -4,6 +4,7 @@ draft: false
 weight: 24
 ---
 
+<!-- TODO: faire un TP ansible vault -->
 
 ## Cloner le projet modèle
 
@@ -158,9 +159,34 @@ awx_admin_password: !vault |
 - Visitez cette dans un navigateur: AWX devrait démarrer.
 
 - Complétez l'inventaire statique `inventory.cfg` avec les ip de l'inventaire dynamique (pour que la config soit plus simple une fois dans AWX)
+
+
+# Explorer AWX
+
+- Identifiez vous sur awx avec le login `admin` et le mot de passe précédemment configuré.
+
+- Dans la section modèle de projet, importez votre projet. Un job d'import se lance. Si vous avez mis le fichier `requirements.yml` dans  `roles` les rôles devraient être automatiquement installés.
+
+- Dans la section crédentials, créez un crédential de type machine. Dans la section clé privée copiez le contenu du fichier `~/.ssh/id_ssh_tp` que nous avons configuré comme clé ssh de nos machines. Ajoutez également la passphrase que vous avez configuré au moment de la création de cette clé.
+
+- Créez une ressource inventaire. Créez simplement l'inventaire avec un nom au départ. Une fois créé vous pouvez aller dans la section `source` et choisir de l'importer depuis le `projet`, sélectionnez `inventory.cfg` que nous avons configuré précédemment. Bien que nous utilisions AWX les ip n'ont pas changé car AWX est en local et peut donc se connecter au reste de notre infrastructure LXD.
+
+- Pour tester tout cela vous pouvez lancez une tâche ad-hoc `ping` depuis la section inventaire en sélectionnant une machine et en cliquant sur le bouton `executer`.
+
+- Allez dans la section modèle de job et créez un job en sélectionnant le playbook `site.yml`.
+
+- Exécutez ensuite le job en cliquant sur la fusée. Vous vous retrouvez sur la page de job de AWX. La sortie ressemble à celle de la commande mais vous pouvez en plus explorer les tâches exécutées en cliquant dessus.
+
+- Modifiez votre job, dans la section `Plannifier` configurer l'exécution du playbook site.yml toutes les 15 minutes.
+
+- Allez dans la section plannification. Puis visitez l'historique des Jobs.
+
+
 {{% /expand %}}
 
-<!-- ## Versionner le projet et utiliser la CI gitlab avec Ansible pour automatiser le déploiement
+## Facultatif : Versionner le projet et utiliser la CI gitlab avec Ansible pour automatiser le déploiement
+
+{{% expand "Facultatif  :" %}}
 
 - Créez un compte sur la forge logicielle `gitlab.com` et créez un projet (dépôt) public `tp4_infra`.
 - Affichez et copiez `cat ~/.ssh/id_ed25519.pub`.
@@ -193,9 +219,9 @@ En poussant du nouveau code dans master ou en mergant dans master le playbook es
 
 - Vous pouvez retrouver tout l'historique de l'exécution des pipelines dans la Section `CI / CD > Jobs` rendez vous dans cette section pour observer le résultat de la dernière exécution.
 
-!!! Notre pipeline nous permet uniquement de vérifier la bonne disponibilité d'ansible.
+!!! Notre pipeline nous permet uniquement de vérifier la bonne disponibilité d'Ansible.
 
-!!! Il est basé une image docker contenant Ansible pour ensuite executer notre projet d'IaC.
+!!! Il est basé une image Docker contenant Ansible pour ensuite exécuter notre projet d'IaC.
 
 Nous allons maintenant configurer le pipeline pour qu'il puisse se connecter à nos serveurs de cloud. Pour cela nous avons principalement besoin de charger l'identité/clé SSH dans le contexte du pipeline et la déverrouiller.
 
@@ -232,27 +258,7 @@ before_script: # some steps to execute before the main pipeline stage
 - Modifiez `only: refs:` pour ajouter la branche `rolling_upgrade`.
 - Modifier la commande ansible pour lancer le playbook d'upgrade.
 - Dans `CI / CD > Schedules` ajoutez un job plannifié toute les 5 min (en production toute les nuits serait plus adapté).
-- Observez le résultat. -->
+- Observez le résultat.
 
-
-# Explorer AWX
-
-- Identifiez vous sur awx avec le login `admin` et le mot de passe précédemment configuré.
-
-- Dans la section modèle de projet, importez votre projet. Un job d'import se lance. Si vous avez mis le fichier `requirements.yml` dans  `roles` les rôles devraient être automatiquement installés.
-
-- Dans la section crédentials, créez un crédential de type machine. Dans la section clé privée copiez le contenu du fichier `~/.ssh/id_ssh_tp` que nous avons configuré comme clé ssh de nos machines. Ajoutez également la passphrase que vous avez configuré au moment de la création de cette clé.
-
-- Créez une ressource inventaire. Créez simplement l'inventaire avec un nom au départ. Une fois créé vous pouvez aller dans la section `source` et choisir de l'importer depuis le `projet`, sélectionnez `inventory.cfg` que nous avons configuré précédemment. Bien que nous utilisions AWX les ip n'ont pas changé car AWX est en local et peut donc se connecter au reste de notre infrastructure LXD.
-
-- Pour tester tout cela vous pouvez lancez une tâche ad-hoc `ping` depuis la section inventaire en sélectionnant une machine et en cliquant sur le bouton `executer`.
-
-- Allez dans la section modèle de job et créez un job en sélectionnant le playbook `site.yml`.
-
-- Exécutez ensuite le job en cliquant sur la fusée. Vous vous retrouvez sur la page de job de AWX. La sortie ressemble à celle de la commande mais vous pouvez en plus explorer les tâches exécutées en cliquant dessus.
-
-- Modifiez votre job, dans la section `Plannifier` configurer l'exécution du playbook site.yml toutes les 15 minutes.
-
-- Allez dans la section plannification. Puis visitez l'historique des Jobs.
-
-
+-->
+{{% /expand %}}
