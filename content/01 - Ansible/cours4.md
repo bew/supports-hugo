@@ -6,43 +6,43 @@ weight: 13
 
 # Sécurité
 
-Les problématiques de sécurité linux ne sont pas résolue magiquement par Ansible. Tous le travail de réflexion et de sécurisation reste identique mais peut comme le reste être mieux controllé grace à l'approche déclarative de l'infrastructure as code.
+Les problématiques de sécurité Linux ne sont pas du tout résolues magiquement par Ansible. Tous le travail de réflexion et de sécurisation reste identique mais peut, comme le reste, être mieux controllé grâce à l'approche déclarative de l'infrastructure as code.
 
-Si cette problématique des liens entre Ansible et sécurité vous intéresse : `Security automation with Ansible`
+Si cette problématique des liens entre Ansible et sécurité vous intéresse, il existe un livre appelé `Security automation with Ansible`.
 
-Il est à noter tout de même qu'Ansible est généralement apprécié d'un point de vue sécurité car il n'augmente pas (vraiment) la surface d'attaque de vos infrastructure : il est basé sur ssh qui est éprouvé et ne nécessite généralement pas de réorganisation des infrastructures.
+Il est à noter tout de même qu'Ansible est généralement apprécié d'un point de vue sécurité car il n'augmente pas (vraiment) la surface d'attaque de vos infrastructures : il est basé sur ssh qui est éprouvé et ne nécessite généralement pas de réorganisation des infrastructures.
 
-Pour les cas plus spécifiques et si vous voulez éviter ssh, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
+Pour les cas plus spécifiques, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
 
 ## Authentification et SSH
 
-Un bonne pratique importante : changez le port de connexion ssh pour un port atypique. Ajoutez la variable `ansible_ssh_port=17728` dans l'inventaire.
+Un bonne pratique : changer le port de connexion ssh pour un port atypique. Vous pourrez ajouter la variable `ansible_ssh_port=17728` dans l'inventaire.
 
-Il faut idéalement éviter de créer un seul compte ansible de connexion pour toutes les machines:
+Il faut idéalement éviter de créer un seul compte Ansible de connexion pour toutes les machines :
 - difficile à bouger
 - responsabilité des connexions pas auditable (auth.log + syslog)
 
-Il faut utiliser comme nous avons fait dans les TP des logins ssh avec les utilisateurs humain réels des machines et des clés ssh. C'est à dire le même modèle d'authentification que l'administration traditionnelle.
+Il faut utiliser comme nous avons fait dans les TP des logins ssh avec des utilisateurs aux noms correspondant aux usages ou aux humains derrière, et des clés ssh. C'est-à-dire le même modèle d'authentification que l'administration traditionnelle.
 
 ## Les autres modes de connexion
 
-Le mode de connexion par défaut de Ansible est SSH cependant il est possible d'utiliser de nombreux autres modes de connexion spécifiques :
+Le mode de connexion par défaut de Ansible est SSH, cependant il est possible d'utiliser de nombreux autres modes de connexion spécifiques :
 
 - Pour afficher la liste des plugins  disponible lancez `ansible-doc -t connection -l`.
 
 - Une autre connexion courante est `ansible_connection=local` qui permet de configurer la machine locale sans avoir besoin d'installer un serveur ssh.
 
-- Citons également les connexions `ansible_connexion=docker` et `ansible_connexion=lxd` pour configurer des conteneurs linux ainsi que `ansible_connexion=` pour les serveurs windows
+- Citons également les connexions `ansible_connexion=docker` et `ansible_connexion=lxd` pour configurer des conteneurs linux ainsi que `ansible_connexion=winrm` pour les serveurs windows
 
-- Les questions de sécurités de la connexion se posent bien sur différemment selon le mode de connexion utilisés (port, authentification, etc.)
+- Les questions de sécurités de la connexion se posent bien sûr différemment selon le mode de connexion utilisé (port, authentification, etc.)
 
-- Pour débugger les connexions et diagnotiquer leur sécurité on peut afficher les détails de chaque connection ansible avec le mode de verbosité maximal (network) en utilisant le paramètre `-vvvv`.
+- Pour débugger les connexions et diagnotiquer leur sécurité on peut afficher les détails de chaque connexion ansible avec le mode de verbosité maximal en utilisant le paramètre `-vvvv`.
 
 ## Variables et secrets
 
-Le principal risque de sécurité lié à Ansible comme avec Docker et l'IaC en général consiste à laisser trainer des secrets (mot de passe, identités de clients, api token, secret de chiffrement / migration etc.) dans le code ou sur les serveurs (moins problématique).
+Le principal risque de sécurité lié à Ansible comme avec Docker et l'infrastructure-as-code en général consiste à laisser trainer des secrets (mot de passe, identités de clients, tokens d'API, secrets de chiffrement / migration etc.) dans le code (ou sur les serveurs à des endroits non prévus).
 
-Attention : les dépôt git peuvent cacher des secrets dans leur historique. Pour chercher et nettoyer un secret dans un dépôt l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/
+Attention : les dépôts git peuvent cacher des secrets dans leur historique. Pour nettoyer un secret dans un dépôt Git, l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/
 
 ## Désactiver le logging des informations sensibles
 
@@ -50,12 +50,14 @@ Ansible propose une directive `no_log: yes` qui permet de désactiver l'affichag
 
 Il est ainsi possible de limiter la prolifération de données sensibles.
 
-## Ansible vault
+Par exemple, si une tâche change une entrée en base qui contient un mot de passe, `no_log: yes` est tout indiqué.
+
+## Ansible Vault
 
 Pour éviter de divulguer des secrets par inadvertance, il est possible de gérer les secrets avec des variables d'environnement ou avec un fichier variable externe au projet qui échappera au versionning git, mais ce n'est pas idéal.
 
-Ansible intègre un trousseau de secret appelé , **Ansible Vault** permet de chiffrer des valeurs **variables par variables** ou des **fichiers complets**.
-Les valeurs stockées dans le trousseaux sont déchiffrée à l'exécution après dévérouillage du trousseau. 
+Ansible intègre un trousseau de secrets appelé **Ansible Vault**. Il permet de chiffrer des valeurs **variables par variables** ou via des **fichiers complets**.
+Les valeurs stockées dans le trousseau sont déchiffrées à l'exécution après déverrouillage du trousseau. 
 
 - `ansible-vault create /var/secrets.yml`
 - `ansible-vault edit /var/secrets.yml` ouvre `$EDITOR` pour changer le fichier de variables.
@@ -175,7 +177,7 @@ On peut explorer plus facilement la hiérarchie d'un inventaire statique ou dyna
 ansible-inventory --inventory <inventory> --graph
 ```
 
-### Principaux type de plugins possibles pour étendre Ansible
+### Principaux types de plugins possibles pour étendre Ansible
 
 [https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 

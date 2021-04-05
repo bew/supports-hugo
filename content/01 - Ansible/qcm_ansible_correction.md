@@ -67,10 +67,10 @@ Qu'est ce qu'une commande adhoc ?
 
 Quelle est la nouvelle syntaxe pour les boucles dans Ansible ?
 
-1. `for: {{ une_liste }}` à la fin d'une tache.
-1. `for_item_in: {{ une_liste }}` à la fin d'une tache.
-1. `with_items: {{ une_liste }}` à la fin d'une tache.
-1. **V** `loop: {{ une_liste }}` à la fin d'une tache.
+1. `for: {{ une_liste }}` à la fin d'une tâche.
+1. `for_item_in: {{ une_liste }}` à la fin d'une tâche.
+1. `with_items: {{ une_liste }}` à la fin d'une tâche.
+1. **V** `loop: {{ une_liste }}` à la fin d'une tâche.
 
 **Question 9**
 
@@ -78,14 +78,14 @@ Au sein d'un play, la section `roles:` s'exécute...
 
 1. Toujours après la section `tasks:`
 1. Toujours avant la section `tasks:` c'est d'ailleurs pour cela qu'il existe une section `pre_tasks:`
-1. En fonction de l'ordre des taches dans le playbook
+1. En fonction de l'ordre des tâches dans le playbook
 2. En fonction de la configuration dans `ansible.cfg`
 
 **Question 10**
 
 Quelle est la nouvelle syntaxe pour les boucles dans Ansible
 
-1. `for: {{ une_liste }}` à la fin d'une tache.
-1. `for_item_in: {{ une_liste }}` à la fin d'une tache.
-1. `with_items: {{ une_liste }}` à la fin d'une tache.
-1. **V** `loop: {{ une_liste }}` à la fin d'une tache.
+1. `for: {{ une_liste }}` à la fin d'une tâche.
+1. `for_item_in: {{ une_liste }}` à la fin d'une tâche.
+1. `with_items: {{ une_liste }}` à la fin d'une tâche.
+1. **V** `loop: {{ une_liste }}` à la fin d'une tâche.

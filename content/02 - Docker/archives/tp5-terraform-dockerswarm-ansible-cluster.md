@@ -190,9 +190,9 @@ fingerprint: 05:f7:18:15:4a:77:3c:4c:86:70:85:aa:cb:18:b7:68
 
 Avant de pouvoir continuer nous devons compléter les groupes dans `terraform/ansible_hosts`.
 
-Mais pour cela nous devons connaître les groupes utililisés pour le role ansible d'installation de docker swarm.
+Mais pour cela nous devons connaître les groupes utililisés pour le rôle ansible d'installation de docker swarm.
 
-## Chercher le role Docker Swarm Ansible
+## Chercher le rôle Docker Swarm Ansible
 
 - Visitez le dépôt officiel de role ansible nommé **Galaxy** [https://galaxy.ansible.com/](https://galaxy.ansible.com/)
 

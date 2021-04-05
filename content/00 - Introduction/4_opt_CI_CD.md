@@ -119,7 +119,7 @@ ansible_become_password=el4stic%
 
 - ## `vars:` des valeurs pour la configuration
 
-- ## `tasks:` les taches de configuration
+- ## `tasks:` les tâches de configuration
 
 - ## `handlers:` des postraitements
 

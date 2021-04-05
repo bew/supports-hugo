@@ -227,7 +227,7 @@ exemple: le module `file` permet de gérer de nombreuses opérations avec un seu
 
 Il est également à noter que la plupart des arguments sont facultatifs.
 
-- cela permet de garder les appel de modules très succints pour les taches par défaut
+- cela permet de garder les appel de modules très succints pour les tâches par défaut
 - il est également possible de rendre des paramètres par défaut explicites pour augmenter la clarté du code.
 
 Exemple et bonne pratique: toujours préciser `state: present` même si cette valeur est presque toujours le défaut implicite.

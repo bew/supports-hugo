@@ -12,11 +12,11 @@ weight: 24
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp4_correction` avec `git checkout tp4_correction`.
 
-## Facultatif: Infrastructure dans le cloud avec Terraform et Ansible
+## Facultatif: infrastructure dans le cloud avec Terraform et Ansible
 
 {{% expand "Facultatif  :" %}}
 
-### Digitalocean token et clé SSH
+### DigitalOcean token et clé SSH
 
 - Pour louer les machines dans le cloud pour ce TP vous aurez besoin d'un compte digitalocean : celui du formateur ici mais vous pouvez facilement utiliser le votre. Il faut récupérer les éléments suivant pour utiliser le compte de cloud du formateur:
     - un token d'API digitalocean fourni pour la formation. Cela permet de commander des machines auprès de ce provider.
@@ -33,9 +33,9 @@ weight: 24
 - Aller sur digital ocean dans la section `account` en haut à droite puis `security` et ajoutez un nouvelle clé ssh. Notez sa fingerprint dans le fichier précédent. -->
 
 
-### Installer terraform et le provider ansible
+### Installer Terraform et le provider Ansible
 
-Terraform est un outils pour décrire une infrastructure de machines virtuelles et ressources IaaS (infrastructure as a service) et les créer (commander). Il s'intègre en particulier avec AWS, DigitalOcean mais peut également créer des machines dans un cluster VMWare en interne (on premise) pour créer par exemple un cloud mixte.
+Terraform est un outil pour décrire une infrastructure de machines virtuelles et ressources IaaS (infrastructure as a service) et les créer (commander). Il s'intègre en particulier avec AWS, DigitalOcean mais peut également créer des machines dans un cluster VMWare en interne (on premise) pour créer par exemple un cloud mixte.
 
 Terraform est notamment à l'aide d'un dépôt ubuntu/debian. Pour l'installer lancez:
 
@@ -99,7 +99,7 @@ source .env
 
 Pour configurer notre infrastructure:
 
-- Installez les roles avec `ansible-galaxy install -r roles/requirements.yml -p roles`.
+- Installez les rôles avec `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
 - Si vous n'avez pas fait la partie Terraform:
   - complétez l'inventaire statique (inventory.cfg)
@@ -118,7 +118,7 @@ Pour configurer notre infrastructure:
     - Nous avons rajouté à notre infrastructure un loadbalancer installé à l'aide du fichier `balancers.yml`
     - Le playbook `upgrade_apps.yml` permet de mettre à jour l'application en respectant sa haute disponibilité. Il s'agit d'une opération d'orchestration simple en les 3 serveurs de notre infrastructure.
     - Cette opération utilise en particulier `serial` qui permet de d'exécuter séquentiellement un play sur un fraction des serveurs d'un groupe (ici 1 à la fois parmis les 2).
-    - Notez également l'usage de `delegate` qui permet d'exécuter une tache sur une autre machine que le groupe initialement ciblé. Cette directive est au coeur des possibilités d'orchestration Ansible en ce qu'elle permet de contacter un autre serveur ( déplacement latéral et non pas master -> node ) pour récupérer son état ou effectuer une modification avant de continuer l'exécution et donc de coordonner des opérations.
+    - Notez également l'usage de `delegate` qui permet d'exécuter une tâche sur une autre machine que le groupe initialement ciblé. Cette directive est au coeur des possibilités d'orchestration Ansible en ce qu'elle permet de contacter un autre serveur ( déplacement latéral et non pas master -> node ) pour récupérer son état ou effectuer une modification avant de continuer l'exécution et donc de coordonner des opérations.
     - notez également le playbook `exclude_backend.yml` qui permet de sortir un backend applicatif du pool. Il s'utilise avec des variables en ligne de commande
 
 
@@ -132,7 +132,7 @@ ansible-playbook --extra-vars="backend_name=<noeud a desactiver> backend_state=d
 
 - Nous allons maintenant mettre à jour
 
-## Falcultatif : ajoutons un serveur de control AWX (/ Ansible Tower)
+## Facultatif : ajoutons un serveur de control AWX (/ Ansible Tower)
 
 {{% expand "Facultatif  :" %}}
 - Choisissez un mot de passe et chiffrez le avec `ansible-vault encrypt_string <votre_mot_de_passe>`.
@@ -239,7 +239,7 @@ before_script: # some steps to execute before the main pipeline stage
 
 - Identifiez vous sur awx avec le login `admin` et le mot de passe précédemment configuré.
 
-- Dans la section modèle de projet, importez votre projet. Un job d'import se lance. Si vous avez mis le fichier `requirements.yml` dans  `roles` les roles devraient être automatiquement installés.
+- Dans la section modèle de projet, importez votre projet. Un job d'import se lance. Si vous avez mis le fichier `requirements.yml` dans  `roles` les rôles devraient être automatiquement installés.
 
 - Dans la section crédentials, créez un crédential de type machine. Dans la section clé privée copiez le contenu du fichier `~/.ssh/id_ssh_tp` que nous avons configuré comme clé ssh de nos machines. Ajoutez également la passphrase que vous avez configuré au moment de la création de cette clé.
 
@@ -249,7 +249,7 @@ before_script: # some steps to execute before the main pipeline stage
 
 - Allez dans la section modèle de job et créez un job en sélectionnant le playbook `site.yml`.
 
-- Exécutez ensuite le job en cliquant sur la fusée. Vous vous retrouvez sur la page de job de AWX. La sortie ressemble à celle de la commande mais vous pouvez en plus explorer les taches exécutées en cliquant dessus.
+- Exécutez ensuite le job en cliquant sur la fusée. Vous vous retrouvez sur la page de job de AWX. La sortie ressemble à celle de la commande mais vous pouvez en plus explorer les tâches exécutées en cliquant dessus.
 
 - Modifiez votre job, dans la section `Plannifier` configurer l'exécution du playbook site.yml toutes les 15 minutes.
 

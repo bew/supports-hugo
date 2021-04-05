@@ -234,7 +234,7 @@ Nous allons créer un tel projet de code pour la suite du tp1
 
 
 {{% expand "Facultatif  :" %}}
-- Initialisez le en dépôt git et configurez git:
+- Initialisez-le en dépôt git et configurez git:
 
 ```
 cd tp1
@@ -256,7 +256,7 @@ Un projet Ansible implique généralement une configuration Ansible spécifique 
 [defaults]
 inventory = ./inventory.cfg
 roles_path = ./roles
-host_key_checking = false # nécessaire pour les labs ou on créé et supprime des machines constamment avec des signatures SSH changées.
+host_key_checking = false # nécessaire pour les labs où l'on créé et supprime des machines constamment avec des signatures SSH changées.
 ```
 
 - Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`.
@@ -277,7 +277,7 @@ ansible_user=<votre_user>
 
 ## Contacter nos nouvelles machines
 
-Ansible cherche la configuration locale dans le dossier courant. Conséquence: on **lance généralement** toutes les commandes ansible depuis **la racine de notre projet**.
+Ansible cherche la configuration locale dans le dossier courant. Conséquence : on **lance généralement** toutes les commandes Ansible depuis **la racine de notre projet**.
 
 - Dans le dossier du projet, essayez de relancer la commande ad-hoc `ping` sur cette machine.
 

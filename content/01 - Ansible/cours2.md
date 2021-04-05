@@ -4,26 +4,26 @@ draft: false
 weight: 11
 ---
 
-Les commandes ad-hoc sont des appels directs de modules Ansible qui fonctionnent de façon idempotente mais ne présente pas les avantages du code qui donne tout son intérêt à l'IaC:
+Pour rappel, les avantages du code Ansible, qui donne tout son intérêt à l'Infrastructure-as-Code sont :
 
 - texte descriptif écrit une fois pour toute
 - logique lisible et auditable
-- versionnable avec git
+- versionnable avec Git
 - reproductible et incrémental
 
 La dimension incrémentale du code rend en particulier plus aisé de construire une infrastructure progressivement en la complexifiant au fur et à mesure plutôt que de devoir tout plannifier à l'avance.
 
-Le `playbook` est une sorte de script ansible, c'est à dire du code.
+Le `playbook` est une sorte de script Ansible, c'est-à-dire du code.
 Le nom provient du football américain : il s'agit d'un ensemble de stratégies qu'une équipe a travaillé pour répondre aux situations du match. Elle insiste sur la versatilité de l'outil.
 
-## Syntaxe yaml
+## Syntaxe YAML
 
 Les playbooks ansible sont écrits au format **YAML**.
 
 - YAML est basé sur les identations à base d'espaces (2 espaces par indentation en général). Comme le langage python.
 - C'est un format assez lisible et simple à écrire bien que les indentations soient parfois difficiles à lire.
 - C'est un format assez flexible avec des types liste et dictionnaires qui peuvent s'imbriquer.
-- Le YAML est assez proche du JSON (leur structures arborescentes typées sont isomorphes) mais plus facile à écrire.
+- Le YAML est assez proche du JSON (leur structures arborescentes typées sont dites isomorphes, en gros faciles à convertir de l'un vers l'autre) mais plus facile à écrire.
 
 A quoi ça ressemble ?
 
@@ -46,29 +46,27 @@ clé3: 3
 #### Un exemple imbriqué plus complexe
 
 ```yaml
-marché: # debut du dictionnaire global "marché"
+marché: # début du dictionnaire global "marché"
   lieu: Crimée Curial
   jour: dimanche
   horaire:
     unité: "heure"
     min: 9
-
-
     max: 14 # entier
-  fruits: #liste de dictionnaires décrivant chaque fruit
+  fruits: # liste de dictionnaires décrivant chaque fruit
     - nom: pomme
       couleur: "verte"
-      pesticide: avec #les chaines sont avec ou sans " ou '
-            # on peut sauter des lignes dans interrompre la liste ou le dictionnaire en court
+      pesticide: avec # les chaines sont avec ou sans " ou '
     - nom: poires
       couleur: jaune
       pesticide: sans
-  légumes: #Liste de 3 éléments
+  légumes: # liste de 3 éléments
     - courgettes
     - salade
+# on peut sauter des lignes sans interrompre la liste ou le dictionnaire en cours
 
     - potiron
-#fin du dictionnaire global
+# fin du dictionnaire global
 ```
 
 Pour mieux visualiser l'imbrication des dictionnaires et des listes en YAML on peut utiliser un convertisseur YAML -> JSON : [https://www.json2yaml.com/](https://www.json2yaml.com/).
@@ -128,7 +126,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
       set_fact:
         mavariable: "{{ inventory_hostname + 'prod' }}" #guillemets obligatoires
 
-  roles:
+  rôles:
     - flaskapp
     
   tasks:
@@ -155,17 +153,17 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 - Un playbook commence par un tiret car il s'agit d'une liste de plays.
 
-- Un play est un dictionnaire yaml qui décrit un ensemble de taches ordonnées en plusieurs sections. Un play commence par préciser sur quelles machines il s'applique puis précise quelques paramètres faculatifs d'exécution comme `become: yes` pour l'élévation de privilège (section `hosts`).
+- Un play est un dictionnaire yaml qui décrit un ensemble de tâches ordonnées en plusieurs sections. Un play commence par préciser sur quelles machines il s'applique puis précise quelques paramètres faculatifs d'exécution comme `become: yes` pour l'élévation de privilège (section `hosts`).
 
 - La section `hosts` est obligatoire. Toutes les autres sections sont **facultatives** !
 
-- La section `tasks` est généralement la section principale car elle décrit les taches de configuration à appliquer.
+- La section `tasks` est généralement la section principale car elle décrit les tâches de configuration à appliquer.
 
 - La section `tasks` peut être remplacée ou complétée par une section `roles` et des sections `pre_tasks` `post_tasks`
 
 - Les `handlers` sont des tâches conditionnelles qui s'exécutent à la fin (post traitements conditionnels comme le redémarrage d'un service)
 
-### Ordre d'execution
+### Ordre d'exécution
 
 1. `pre_tasks`
 2. `roles`
@@ -173,43 +171,15 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 4. `post_tasks`
 5. `handlers`
 
-Les roles ne sont pas des tâches à proprement parler mais un ensemble de tâches et ressources regroupées dans un module un peu comme une librairie developpement. Cf. cours 3.
+Les rôles ne sont pas des tâches à proprement parler mais un ensemble de tâches et ressources regroupées dans un module, un peu comme une librairie dans le développement. Nous explorerons les rôles au cours 3.
 
-### bonnes pratiques de syntaxe
+### Bonnes pratiques de syntaxe
 
 - Indentation de deux espaces.
-- Toujours mettre un `name:` qui décrit lors de l'execution la tache en court : un des principes de l'IaC est l'intelligibilité des opérations.
-- Utiliser les arguments au format yaml (sur plusieurs lignes) pour la lisibilité, sauf s'il y a peu d'arguments
+- Toujours mettre un `name:` qui décrit lors de l'exécution la tâche en cours : un des principes de l'Infrastructure-as-Code est l'intelligibilité des opérations.
+- Utiliser les arguments au format YAML (sur plusieurs lignes) pour la lisibilité, sauf s'il y a peu d'arguments
 
 Pour valider la syntaxe il est possible d'installer et utiliser `ansible-linter` sur les fichiers YAML.
-
-### Imports et includes
-
-Il est possible d'importer le contenu d'autres fichiers dans un playbook:
-
-- `import_tasks`: importe une liste de tâches (atomiques)
-- `import_playbook`: importe une liste de play contenus dans un playbook.
-
-Les deux instructions précédentes désignent un import **statique** qui est résolu avant l'exécution.
-
-Au contraire, `include_tasks` permet d'intégrer une liste de tâche **dynamiquement** pendant l'exécution
-
-Par exemple:
-
-```yaml
-vars:
-  apps:
-    - app1
-    - app2
-    - app3
-
-tasks:
-  - include_tasks: install_app.yml
-    loop: "{{ apps }}"
-```
-
-Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas facilement être connu à l'avance on **doit** utiliser `include_tasks`.
-
 ### Élévation de privilège
 
 L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` pour exécuter une commande ou plus généralement qu'on a besoin d'exécuter une commande avec un utilisateur différent de celui utilisé pour la connexion on peut utiliser:
@@ -241,7 +211,7 @@ Ce dictionnaire contient en particulier:
 
 La plupart des fichiers Ansible (sauf l'inventaire) sont traités avec le moteur de template python JinJa2.
 
-Ce moteur permet de créer des valeurs dynamiques dans le code des playbooks, des roles, et des fichiers de configuration.
+Ce moteur permet de créer des valeurs dynamiques dans le code des playbooks, des rôles, et des fichiers de configuration.
 
 - Les variables écrites au format `{{ mavariable }}` sont remplacées par leur valeur provenant du dictionnaire d'exécution d'Ansible.
 
@@ -265,14 +235,14 @@ On peut définir et modifier la valeur des variables à différents endroits du 
 - Un fichier de variables appelé avec `var_files:`
 - L'inventaire : variables pour chaque machine ou pour le groupe.
 - Dans des dossier extension de l'inventaire `group_vars`, `host_bars`
-- Dans le dossier `defaults` des roles (cf partie sur les roles)
-- Dans une tache avec le module `set_facts`.
+- Dans le dossier `defaults` des rôles (cf partie sur les rôles)
+- Dans une tâche avec le module `set_facts`.
 - A runtime au moment d'appeler la CLI ansible avec `--extra-vars "version=1.23.45 other_variable=foo"`
 
 Lorsque définies plusieurs fois, les variables ont des priorités en fonction de l'endroit de définition.
 L'ordre de priorité est plutôt complexe: `https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable`
 
-En résumé la règle peut être exprimée comme suit: les variables de runtime sont prioritaires sur les variables dans un playbook qui sont prioritaires sur les variables de l'inventaire qui sont prioritaires sur les variables par défaut d'un role.
+En résumé la règle peut être exprimée comme suit: les variables de runtime sont prioritaires sur les variables dans un playbook qui sont prioritaires sur les variables de l'inventaire qui sont prioritaires sur les variables par défaut d'un rôle.
 
 - Bonne pratique: limiter les redéfinitions de variables en cascade (au maximum une valeur par défaut, une valeur contextuelle et une valeur runtime) pour éviter que le playbook soit trop complexe et difficilement compréhensible et donc maintenable.
 
@@ -280,7 +250,7 @@ En résumé la règle peut être exprimée comme suit: les variables de runtime 
 
 - `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire.
 
-### variables spéciales
+### Variables spéciales
 
 https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
 
@@ -324,11 +294,11 @@ Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
   when: ansible_os_family == 'RedHat'
 ```
 
-Sinon la tache est sautée (skipped) durant l'exécution.
+Sinon la tâche est sautée (skipped) durant l'exécution.
 
 #### La directive `loop:`
 
-Cette directive permet d'executer une tache plusieurs fois basée sur une liste de valeur:
+Cette directive permet d'executer une tâche plusieurs fois basée sur une liste de valeur:
 
 [https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
 
@@ -386,8 +356,8 @@ Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
 
 - Rendre la sortie verbeuse (mode debug) avec `-vvv`.
 
-- Utiliser une tache avec le module `debug` : `debug msg="{{ mavariable }}"`.
+- Utiliser une tâche avec le module `debug` : `debug msg="{{ mavariable }}"`.
 
 - Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
 
-Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+Les commandes et l'usage du debugger sont décrits dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html

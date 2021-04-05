@@ -88,7 +88,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Commençons par installer les dépendances de cette application. Tous nos serveurs d'application sont sur ubuntu. Nous pouvons donc utiliser le module `apt` pour installer les dépendances. Il fournit plus d'option que le module `package`.
 
-- Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. Ajoutez, pour devenir root, la directive `become: yes` au début du playbook.
+- Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tâche le nom: `ensure basic dependencies are present`. Ajoutez, pour devenir root, la directive `become: yes` au début du playbook.
 
 ```yaml
     - name: Ensure apt dependencies are present
@@ -106,7 +106,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Lancez ce playbook sans rien appliquer avec la commande `ansible-playbook <nom_playbook> --check --diff`. La partie `--check` indique à Ansible de ne faire aucune modification. La partie `--diff` nous permet d'afficher ce qui changerait à l'application du playbook.
 
-- Relancez bien votre playbook à chaque tache : comme Ansible est idempotent il n'est pas grave en situation de développement d'interrompre l'exécution du playbook et de reprendre l'exécution après un échec.
+- Relancez bien votre playbook à chaque tâche : comme Ansible est idempotent il n'est pas grave en situation de développement d'interrompre l'exécution du playbook et de reprendre l'exécution après un échec.
 
 - Ajoutez une tâche `systemd` pour s'assurer que le service `nginx` est démarré.
 
@@ -117,7 +117,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
         state: started
 ```
 
-- Ajoutez une tache pour créer un utilisateur `flask` et l'ajouter au groupe `www-data`. Utilisez bien le paramètre `append: yes` pour éviter de supprimer des groupes à l'utilisateur.
+- Ajoutez une tâche pour créer un utilisateur `flask` et l'ajouter au groupe `www-data`. Utilisez bien le paramètre `append: yes` pour éviter de supprimer des groupes à l'utilisateur.
 
 ```yaml
     - name: Add the user running webapp
@@ -260,9 +260,11 @@ Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'i
 
 - Nous voulons installer ces dépendances dans un dossier `venv` également à la racine de l'application.
 
-- Nous voulons installer ces dépendance en version python3 avec l'argument `virtualenv_python: python3`.
+- Nous voulons installer ces dépendances en version python3 avec l'argument `virtualenv_python: python3`.
 
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
+
+{{% expand "Réponse  :" %}}
 
 ```yaml
     - name: Install python dependencies for the webapp in a virtualenv
@@ -271,12 +273,14 @@ Avec ces informations et la documentation du module `pip` installez les dépenda
         virtualenv: /home/flask/hello/venv
         virtualenv_python: python3
 ```
+{{% /expand %}}
 
-## Changer les permission sur le dossier application
+
+## Changer les permissions sur le dossier application
 
 Notre application sera executée en tant qu'utilisateur flask pour des raisons de sécurité. Pour cela le dossier doit appartenir à cet utilisateur or il a été créé en tant que root (à cause du `become: yes` de notre playbook).
 
-- Créez une tache `file` qui change le propriétaire du dossier de façon récursive.
+- Créez une tâche `file` qui change le propriétaire du dossier de façon récursive.
 
 ```yaml
     - name: Change permissions of app directory
@@ -337,9 +341,9 @@ server {
 
 - Utilisez `file` pour créer un lien symbolique de ce fichier dans `/etc/nginx/sites-enabled` (avec l'option `force:yes` pour écraser le cas échéant).
 
-- Ajoutez une tache pour supprimer le site `/etc/nginx/sites-enabled/default`.
+- Ajoutez une tâche pour supprimer le site `/etc/nginx/sites-enabled/default`.
 
-- Ajouter une tache de redémarrage de nginx.
+- Ajouter une tâche de redémarrage de nginx.
 
 - Ajoutez `hello.test` dans votre fichier `/etc/hosts` pointant sur l'ip d'un des serveur d'application.
 
@@ -509,7 +513,7 @@ app:
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_before_handlers_correction` avec `git checkout tp2_before_handlers_correction`.
 
-Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+Le dépôt contient également les corrigés du TP3 et TP4 dans d'autre branches.
 
 Vous pouvez consultez la correction également directement sur le site de github.
 
@@ -517,14 +521,14 @@ Vous pouvez consultez la correction également directement sur le site de github
 
 Pour le moment dans notre playbook, les deux tâches de redémarrage de service sont en mode `restarted` c'est à dire qu'elles redémarrent le service à chaque exécution (résultat: `changed`) et ne sont donc pas idempotentes. En imaginant qu'on lance ce playbook toutes les 15 minutes dans un cron pour stabiliser la configuration, on aurait un redémarrage de nginx 4 fois par heure sans raison.
 
-On désire plutôt ne relancer/recharger le service que lorsque la configuration conrespondante a été modifiée. c'est l'objet des taches spéciales nommées `handlers`.
+On désire plutôt ne relancer/recharger le service que lorsque la configuration conrespondante a été modifiée. c'est l'objet des tâches spéciales nommées `handlers`.
 
 Ajoutez une section `handlers:` à la suite
 
 - Déplacez la tâche de redémarrage/reload de `nginx` dans cette section et mettez comme nom `reload nginx`.
-- Ajoutez aux deux taches de modification de la configuration la directive `notify: <nom_du_handler>`.
+- Ajoutez aux deux tâches de modification de la configuration la directive `notify: <nom_du_handler>`.
 
-- Testez votre playbook. il devrait être idempotent sauf le restart de `hello.service`.
+- Testez votre playbook. Il devrait être idempotent sauf le restart de `hello.service`.
 - Testez le handler en ajoutant un commentaire dans le fichier de configuration `nginx.conf.j2`.
 
 ```yaml
@@ -550,14 +554,17 @@ Ajoutez une section `handlers:` à la suite
 Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d'application à installer (liste potentiellement définie durant l'exécution).
 
 - Identifiez dans le playbook précédent les tâches qui sont exactement communes aux deux installations.
+{{% expand "Réponse  :" %}}
+Il s'agit des tâches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+{{% /expand %}}
 
-!!! il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+- Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres tâches mais sans les handlers que vous laisserez à la fin du playbook.
+- 
+{{% expand "Réponse  :" %}}
+Il reste donc dans le playbook seulement les deux premières tâches et les handlers, les autres tâches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
+{{% /expand %}}
 
-- Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres taches mais sans les handlers que vous laisserez à la fin du playbook.
-
-!!! Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
-
-- Ce nouveau fichier n'est pas à proprement parlé un `playbook` mais une liste de taches. utilisez `include_tasks:` pour importer cette liste de tâche à l'endroit ou vous les avez supprimées.
+- Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de tâches. utilisez `include_tasks:` pour importer cette liste de tâche à l'endroit ou vous les avez supprimées.
 - Vérifiez que le playbook fonctionne et est toujours idempotent.
 - Ajoutez une tâche `debug: msg={{ app }}` au début du playbook pour visualiser le contenu de la variable.
 
@@ -579,7 +586,7 @@ flask_apps:
     repository: https://github.com/e-lie/flask_hello_ansible.git
 ```
 
-- Utilisez les directives `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications.
+- Utilisez les directives `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les tâches pour chacune des deux applications.
 
 - Créez le dossier `group_vars` et déplacez le dictionnaire `flask_apps` dans un fichier `group_vars/appservers.yml`. Comme son nom l'indique ce dossier permet de définir les variables pour un groupe de serveurs dans un fichier externe.
 
@@ -592,16 +599,16 @@ flask_apps:
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
 
-Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+Le dépôt contient également les corrigés du TP3 et TP4 dans d'autre branches.
 
 Vous pouvez consultez la correction également directement sur le site de github.
 
 ## Bonus
 
-Pour ceux ou celles qui sont allé-es vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
+Pour ceux ou celles qui sont allé-es vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre CentOS et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
 
 ## Bonus 2 pour pratiquer
 
 Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
 
-Il s'agit de l'application construite au fur et à mesure dans un [magnifique tutoriel python](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.
+Il s'agit de l'application construite au fur et à mesure dans un [super tutoriel Python sur Flask](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.

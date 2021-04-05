@@ -61,21 +61,21 @@ Découvrir le couteau suisse de l'automatisation et de l'infrastructure as code.
 #### TP2: Écriture d'un playbook simple de déploiement d'une application web flask en python.
 
 
-### Module 3 : Structurer un projet, utiliser les roles
+### Module 3 : Structurer un projet, utiliser les rôles
 
 #### Complexifier notre lab en ajoutant de nouvelles machines dans plusieurs groupes.
 - modules de provisionning de machines pour Ansible
 - organisation des variables de l'inventaire
 - la commande ansible-inventory
-#### Les roles 
-- Ansible Galaxy pour installer des roles.
-- Architecture d'un role et bonnes pratiques de gestion des roles.
-#### Écrire un role et organiser le projet
+#### Les rôles 
+- Ansible Galaxy pour installer des rôles.
+- Architecture d'un rôle et bonnes pratiques de gestion des rôles.
+#### Écrire un rôle et organiser le projet
 - Imports et includes réutiliser du code.
 - Bonne pratiques d'organisation d'un projet Ansible
 - Utiliser des modules personnalisés et des plugins pour étendre Ansible
 - gestion de version du code Ansible
-#### TP3: Transformation de notre playbook en role et utilisation de roles ansible galaxy pour déployer une infrastructure multitiers.
+#### TP3: Transformation de notre playbook en rôle et utilisation de rôles ansible galaxy pour déployer une infrastructure multitiers.
 
 
 
@@ -92,11 +92,11 @@ Découvrir le couteau suisse de l'automatisation et de l'infrastructure as code.
 - Exécution personnalisée avec des tags
 #### Sécurité
 - Ansible Vault : gestion des secrets pour l'infrastructure as code
-- desctiver les logs des taches sensibles
+- desctiver les logs des tâches sensibles
 - Renforcer le mode de connexion ansible avec un bastion SSH
 #### Exécution d'Ansible en production
 - Intégration et déploiement avec Gitlab
 - Gérer une production Ansible découvrir TOWER/AWX
-- Tester ses roles et gérer de multiples versions
+- Tester ses rôles et gérer de multiples versions
 #### TP4: Refactoring de notre code pour effectuer un rolling upgrade et déploiement dans le cloud + AWX
 
