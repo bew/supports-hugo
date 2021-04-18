@@ -23,3 +23,40 @@ TODOOOO: faire un TP5 avec un peu tous les trucs avancés (à l'occasion d'une f
 TODO    : améliorer ma connaissance du debug Ansible avec le debugger normal et https://gist.github.com/Deepakkothandan/daeb1ba8dc5b73d85ded03cb2a614e85
 
 TODO: ajout de changed_when / ignore_errors / check_mode / laïus sur include / import ?
+
+## TODO: post formation
+lxc list
+
+pas de  passphrase SSH, fournir précrées les VM + ajouter chemin clé dans inventory
+
+- correction tp1
+
+epel release demo bof
+
+adhoc partie pas ouf
+
+- virer loop var loop control ou simplifier
+
+- faire que dans une 2nde partie le loop sur le yaml non ?
+ rôles dans ex
+
+- isntall git de base
+
+- instructions en français dans playbook
+
+- dans le cours parler d'ansible-playbook
+
+- parler de l'ext vscode YAML et gitlens et git graph avec des screens
+
+- faire un vrai tp avec variables, conds, changed_when, etc.
+
+
+- import taks pas dans cour3
+
+- role lxc bof
+
+- ansible_connection
+
+- dans l'export, les solutions sont pas affichées...
+
+- tp4 optionnel ?
