@@ -1,6 +1,6 @@
 baseURL = "https://cours.hadrienpelissier.fr/"
 languageCode = "fr-FR"
-title = "Ansible - Avril 2021"
+title = "Docker - Avril 2021"
 
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"
@@ -11,7 +11,7 @@ home = [ "HTML", "RSS", "JSON" ]
 
 [params]
 editURL = "https://github.com/ketsapiwiq/hp_cursus_devops"
-globalTitle = "Ansible - Avril 2021"
+globalTitle = "Docker - Avril 2021"
 
 
 # [menu.shortcuts]
