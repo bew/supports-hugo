@@ -202,13 +202,15 @@ Observons les tests unitaires: le principe est d'appeler les fonctions à tester
 - Modifiez la fonction `render` de `monster_icon.py` en ajoutant: 
 
 ```python
-    for key, val in values:
-        val = val+100 if isinstance(val, int) else val
+    for key, val in values.items():
+        values2 = {}
+        values2[key] = val+1 if isinstance(val, int) else val
+        return page_template.format(**values2)
 ```
 
 - Relancez les tests et constatez que notre test nous a prévenu que la fonction `render` avait un comportement bizarre.
 
-- Corrigez à nouveau le code en enlevant les 2 lignes précédemment ajoutées.
+- Corrigez à nouveau le code en enlevant les lignes précédemment ajoutées.
 
 ## Tests d'intégration: tester si les différents composants de l'application sont bien intégrés
 
@@ -240,11 +242,17 @@ def test_redis_counter():
 
 - Expliquez ce que fait le test, en particulier l'initialisation du test et les assertions.
 
-- Lancez le test avec `python -m pytest --verbose src/tests/unit_tests.py` que se passe-t-il ?
+- Lancez le test avec `python -m pytest --verbose src/tests/integration_tests.py` que se passe-t-il ?
 
-- Lancez l'application complète avec `docker-compose up -d --build`
+- Lancez l'application complète avec `docker-compose up -d --build`.
 
-- Relancez le test précédent. L'intégration correct de redis a été testée.
+- Relancez le test précédent. Pourquoi cela ne fonctionne-t-il toujours pas ?
+
+- Redis n'est accessible que dans le réseau docker. Nous devons donc lancez les tests depuis l'intérieur du conteneur monstericon et non pas depuis les sources à l'extérieur du conteneur.
+
+- Pour cela on peut utiliser `docker-compose exec -it monstericon python -m pytest --verbose src/tests/unit_tests.py`
+
+L'intégration correct de redis a été testée.
 
 
 ## Tests fonctionnels: vérifier que l'application fonctionne d'un point de vue extérieur
