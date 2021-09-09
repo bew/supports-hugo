@@ -1,9 +1,7 @@
 ---
 title: TP3 - Simuler le pipeline hors de Jenkins
-draft: true
+draft: false
 ---
-
-
 
 ## Un pipeline classique
 
@@ -135,32 +133,44 @@ metadata:
   labels:
     component: ci
 spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
   containers:
-    - name: python
-      image: python:3.9
-      command: ["cat"]
-      tty: true
-    - name: kubectl
-      image: vfarcic/kubectl
-      command: ["cat"]
-      tty: true
+
+  - name: python
+    image: python:3.9
+    imagePullPolicy: Always
+    command: ["cat"]
+    tty: true
+    volumeMounts:
+    - name: shared-data
+      mountPath: /mount/shared
+
+  - name: kubectl
+    image: tecpi/kubectl-helm
+    command: ["cat"]
+    tty: true
+    volumeMounts:
+    - name: shared-data
+      mountPath: /mount/shared
 ```
 
 - Pour créer ce pod temporaire utilisez par exemple la fonction `+` de Lens à côté du terminal.
 
 - Rentrez dans le conteneur python avec `kubectl exec -it pod-test-pipeline-manuel --container python -- /bin/bash`
 
-- Il faut d'abord récupérer le code de notre application `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction`
+- Allez dans le dossier partagé entre les conteneurs : `cd /mount/shared`
 
- <!-- TODO faire un tag jenkins_application_correction avec seulement l'application mdu tp2 prête à déployer -->
+- Il faut d'abord récupérer le code de notre application `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction`
 
 - Allez dans le dossier de l'application corrigée : `cd jenkins_application_correction`
 
 - Installez les dépendances python avec `pip install -r requirements.txt`
 
-- Lancez les tests unitaires `pytest` comme dans le tp1.
+- Lancez les tests **unitaires** `pytest` comme dans le tp1.
 
-- Allez dans la VM docker agent avec `vagrant ssh`
+- Pour builder l'image beta, allez dans la VM docker agent avec `vagrant ssh`
 
 - Reclonez le code comme précédemment `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction && cd jenkins_application_correction`
 
@@ -177,27 +187,51 @@ Nous allons déployer une version dev de l'application dans notre cluster pour e
 
 - Sortez de la VM docker et retournez dans le pod cette fois dans le conteneur `kubectl` avec la commande suivante: `kubectl exec -it pod-test-pipeline-manuel --container kubectl -- /bin/bash`
 
-- Retournez dans le dossier de l'application avec `cd 
+Nous avons besoin d'utiliser kubectl pour effectuer un déploiement de test mais il n'est pas encore configuré pour se connecter au cluster. En réalité dans jenkins, `kubectl` utilisera automatiquement le `serviceAccount` de Jenkins pour se connecter donc les 3 étapes suivant ne seront pas nécessaire:
 
-- Déployez l'application en mode dev avec le tag beta grace à `
+- installer `nano` avec `apt update && apt install -y nano`
 
+- éditez la config `nano ~/.kube/config`
+
+- copier le contenu de `~/.kube/config` sur votre machine hote et collez dans nano. Sauvegardez et quittez (Crtl+S puis Ctrl+X)
+
+- Lancez `kubectl get nodes` pour vérifier la connexion
+
+- Retournez dans le dossier de l'application avec `cd jenkins_application_correction`.
+
+- Créez un namespace `beta`: `kubectl create namespace beta`
+
+- Déployez l'application en mode dev avec le tag `beta` grace à `kubectl apply -k k8s/overlay/dev -n beta`
+
+- Vérifiez l'état du déploiement avec `kubectl -n beta rollout status deployment monstericon` pour voir s'il converge vers l'état fonctionnel (ce qu'on a souvent fait avec Lens jusqu'ici).
+
+- Retournez dans le conteneur python et lancez les tests fonctionnels avec : `python3 src/test/functionnal_tests.py monstericon-beta.<votrenom>.vagrantk3s.dopl.uk`
 ## Release
 
-
 ![](../../images/jenkins/00010.jpeg)
+
+- Retournez dans la VM docker et tagguez l'image en `registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:latest`
+
+- Poussez l'image latest.
 
 ## Déploiement
 
 ![](../../images/jenkins/00011.jpeg)
 
+- Retournez dans le conteneur `kubectl`
 
+- Redéployer mais cette fois dans le contexte de production (namespace `prod` et `k8s/overlay/prod`)
 
 ## Tests fonctionnels de la production
 
 ![](../../images/jenkins/00012.jpeg)
 
-
+- Relancer les tests fonctionnels (+ d'autres éventuellement en réalité)
 
 ## Nettoyage !!!
 
 ![](../../images/jenkins/00013.jpeg)
+
+- Penser à bien nettoyer, supprimer les images et namespaces temporaires
+
+- Le nettoyage doit être lancé même si le pipeline échoue
