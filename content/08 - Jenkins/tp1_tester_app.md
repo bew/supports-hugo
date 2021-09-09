@@ -252,7 +252,7 @@ def test_redis_counter():
 
 - Pour cela on peut utiliser `docker-compose exec -it monstericon python -m pytest --verbose src/tests/unit_tests.py`
 
-L'intégration correct de redis a été testée.
+L'intégration correcte de redis a été testée.
 
 
 ## Tests fonctionnels: vérifier que l'application fonctionne d'un point de vue extérieur
