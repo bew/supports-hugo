@@ -232,6 +232,6 @@ Nous avons besoin d'utiliser kubectl pour effectuer un déploiement de test mais
 
 ![](../../images/jenkins/00013.jpeg)
 
-- Penser à bien nettoyer, supprimer les images et namespaces temporaires
+- Pensez à bien nettoyer, supprimer les images et namespaces temporaires
 
-- Le nettoyage doit être lancé même si le pipeline échoue
+- Dans le contexte d'un pipeline Jenkins, le nettoyage doit être lancé même le pipeline échoue ce que nous ferons avec un peu de logique jenkins par la suite.
