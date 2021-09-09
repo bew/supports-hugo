@@ -53,3 +53,5 @@ Kustomize est :
 - disponible dans kubectl
 - plus rigide
 - plus adapté lorsque les modifications ne sont pas trop importantes comme pour nous (peu de usecases différents)
+
+Associé à Kustomize la méthode la plus simple pour déployer plusieurs instance d'une application est d'utiliser plusieurs namespaces pour chaque déploiement de notre application.

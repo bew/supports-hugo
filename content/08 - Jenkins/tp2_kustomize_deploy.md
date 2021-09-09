@@ -102,9 +102,9 @@ Kustomize fonctionne en partant de fichiers ressource kubernetes de base et en �
 
 L'idée générale est de supprimer tous ces paramètres variables des fichiers de base pour les reporter dans un autre ensemble de fichier pour chaque environnement.
 
-### Environnement de production : `prod`
+### Environnement de production
 
-Il contiendra une seule version de l'application avec des paramètres de production.
+La prod contiendra une seule version de l'application avec des paramètres de production.
 
 - Commitez vos modifications puis lancez `git checkout jenkins_tp2_correction`.
 
@@ -118,25 +118,85 @@ Il contiendra une seule version de l'application avec des paramètres de product
 
 - Supprimez le fichier précédent et appliquez la configuration de prod avec `kubectl apply -k overlays/prod -n prod`
 
-### Environnement par défaut : `dev`
+### Autres déploiement de version de développement de notre application
 
-Il contiendra potentiellement plusieurs version de l'application dans le même namespace.
+Nous voulons déployer plusieurs version de la même application automatiquement:
 
-- Donc il faut idéalement que **chaque release ait un nom différent pour ses objets.
-- Il faut également que la version de l'image puisse changer dynamiquement au moment du déploiement.
+- Donc il faut éviter les conflits de nom pour nos objets. Une solution simple est d'utiliser de multiples namespaces
+- Il faut également que la version de l'image et le nom de domaine du ingress puisse changer dynamiquement au moment du déploiement.
 
-Cependant pour garder l'installation simple notre overlay de dev ne permettra d'installer qu'une seule version beta pour le moment.
-
-
-Sinon le principe est un peu le même que pour la production seules les valeurs sont différentes : moins de replicat, le port de dev, une image beta et un nom de domaine beta.
+Sinon le principe est un peu le même que pour la production seules les valeurs sont différentes : moins de replicat, le port de dev.
 
 - Depuis le dossier `k8s` vous pouvez lancer la commande `kubectl kustomize overlays/dev > result.yaml` pour observez le résultat dans le fichier `result.yaml`
 
-- Puis déployer dans le namespace default: `kubectl apply -k overlays/dev -n default`
+- Puis déployer dans le namespace default: `kubectl apply -k overlays/dev`
+
+- vérifiez le fonctionnement en visitant le domaine de l'ingress.
+
+- Supprimez cette installation avec `kubectl delete -k overlays/dev`
+
+### Changer le nom de domaine avec une variable
+
+Pour changer le nom de domaine dynamiquement, nous allons utiliser une configMap contenant une variable d'environnement et une variable kustomize.
+
+- Ajoutez au fichier `overlays/dev/kustomization.yaml` la section suivante:
+
+```yaml
+vars:
+- name: INGRESS_SUBDOMAIN
+  objref:
+    kind: ConfigMap
+    name: environment-variables
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.INGRESS_SUBDOMAIN
+
+configMapGenerator:
+- name: environment-variables
+  envs: [release.env]
+  behavior: create
+```
+
+Cette section très verbeuse indique à kubectl/kustomize de:
+
+- créer une `configMap` pour configurer notre application à partir d'un fichier `release.env`
+- utiliser la valeur `INGRESS_SUBDOMAIN` provenant de cette configmap pour faire une substitution dans les fichiers k8s.
+
+Maintenant:
+
+- Ajoutez un fichier `overlay/dev/release.env` contenant : `INGRESS_SUBDOMAIN=monstericon-beta`. On pourrait utiliser ce fichier pour ajouter pleins de variables d'environnement pour configurer notre application.
+
+- Remplacez dans `overlay/dev/monster-ingress.yaml` le sous domaine `monstericon` par `$(INGRESS_SUBDOMAIN)`
+
+### Changer l'image à déployer dans la kustomization
+
+On voudrait également pouvoir changer rapidement l'image à déployer depuis la kustomization pour pouvoir déployer des instances de développement dans de nombreuses versions.
+
+- Pour cela ajoutez à `overlay/dev/kustomization.yaml` la section:
+
+```yaml
+images:
+- name: monstericon
+  newName: registry.<votrenom>.vagrantk3s.dopl.uk/monstericon
+  newTag: beta
+```
+
+- Modifiez également dans `overlay/dev/monstericon-deploy.yaml` l'image en `monstericon`
+
+### Déployer dans un namespace à part
+
+- Créez un namespace `beta` avec `kubectl create namespace beta`.
+
+- Déployez `kubectl apply -k overlays/dev -n beta`
+
+- Testez le fonctionnement en visitant le domaine de l'ingress dans le namespace `beta`
+
 
 ## Désinstaller et nettoyer
 
-Pour désinstaller une release on peut simplement remplace `apply` par `delete` dans les commandes précédentes.
+- Désinstallez vos `prod` et `dev` en remplacant simplement `apply` par `delete` dans les commandes `kubectl apply` précédentes.
+
+- Supprimez ensuite le namespace `beta` (une fois qu'il ne contient plus rien sinon la suppression se bloquera)
 
 ## Correction
 
