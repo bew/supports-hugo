@@ -81,6 +81,12 @@ secrets:
 - Poussez une image par exemple `python:3.9` en la tagguant avec l'adresse du dépot:
     - `docker tag python:3.9 registry.<votrenom>.vagrantk3s.dopl.uk/python:3.9`
 
+- Maintenant buildez l'image monstericon en lançant `docker build -t monstericon .` depuis le dossier `tp2_monstericon_multienv_deploy`.
+
+- Tagguez l'image avec `docker tag monstericon registry.<votrenom>.vagrantk3s.dopl.uk/monstericon`
+
+- Puis `docker push registry.<votrenom>.vagrantk3s.dopl.uk/monstericon`
+
 ## Faire varier une installation kubernetes
 
 Nous avons besoin de pouvoir déployer notre application **monsterstack** dans Kubernetes de façon légèrement différente selon les environnements `prod` et `dev`.
