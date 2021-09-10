@@ -79,7 +79,7 @@ secrets:
 - Connectez vous avec `docker login registry.<votrenom>.vagrantk3s.dopl.uk -u <votreuser> -p <votrepassword>`
 
 - Poussez une image par exemple `python:3.9` en la tagguant avec l'adresse du dépot:
-    - `docker tag registry.<votrenom>.vagrantk3s.dopl.uk/python:3.9 python:3.9`
+    - `docker tag python:3.9 registry.<votrenom>.vagrantk3s.dopl.uk/python:3.9`
 
 ## Faire varier une installation kubernetes
 
