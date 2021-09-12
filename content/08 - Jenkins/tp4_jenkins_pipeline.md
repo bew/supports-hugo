@@ -1,6 +1,6 @@
 ---
 title: TP4 - Créer le pipeline Jenkins 
-draft: true
+draft: false
 ---
 
 
