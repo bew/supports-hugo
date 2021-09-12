@@ -120,6 +120,9 @@ Désinstaller la release de test et supprimer l'image beta
 
 désinstaller la release de dev si les tests sont ok
 
+
+
+
 ## Release : pousser une version validée de notre logiciel
 
 
@@ -130,3 +133,8 @@ désinstaller la release de dev si les tests sont ok
 
 <!-- virer les différents artefacts inutiles -->
 <!-- prune les images beta, garder les releases -->
+
+
+## Utiliser un Jenkinsfile et un pipeline multibranches
+
+<!-- quel nom de domaine pour les stagiaires -->
