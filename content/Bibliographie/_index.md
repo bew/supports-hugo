@@ -1,6 +1,7 @@
 ---
 title: Bibliographie
-draft: true
+weight: 406
+draft: false
 ---
 
 ## Linux
@@ -60,6 +61,7 @@ draft: true
 <!-- TODO: Ajout 12factor -->
 
 - Kubernetes Up and Running, O'Reilly 2019
+- Luksa, Kubernetes in Action, 2018
 
 ### Ressources
 
@@ -116,118 +118,27 @@ Sur MetalLB, les autres vidéos de la chaîne sont très bien :
 - [Rancher](https://rancher.com/)
 - Charts Helm : [https://hub.kubeapps.com](https://hub.kubeapps.com)
 - Stratégies de déploiement : <https://blog.container-solutions.com/kubernetes-deployment-strategies>
-
-#### Azure AKS
-
-##### Documentation
-
-- https://docs.microsoft.com/fr-fr/azure/aks/
-- https://github.com/microsoft/kubernetes-learning-path
-
-##### Scaling d'application dans Azure
-
-- https://docs.microsoft.com/fr-fr/azure/aks/tutorial-kubernetes-scale
-
-##### Stockage dans Azure
-
-- https://docs.microsoft.com/fr-fr/azure/aks/azure-files-dynamic-pv
-
-<!-- https://docs.microsoft.com/fr-fr/azure/aks/azure-files-dynamic-pv
-https://docs.microsoft.com/fr-fr/azure/aks/azure-disks-dynamic-pv
-https://docs.microsoft.com/fr-fr/azure/aks/concepts-storage -->
-
-##### Registry dans Azure
-
-- https://docs.microsoft.com/fr-fr/azure/container-registry/container-registry-quickstart-task-cli
-
-##### Le réseau dans Azure
-
-- Vidéo "K8s Networking in Azure" : https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2
-- https://docs.microsoft.com/fr-fr/azure/aks/internal-lb
-- https://docs.microsoft.com/fr-fr/azure/aks/load-balancer-standard
-- https://docs.microsoft.com/fr-fr/azure/aks/http-application-routing
-- https://docs.microsoft.com/fr-fr/azure/aks/concepts-network
-- https://blog.crossplane.io/azure-secure-connectivity-for-aks-azure-db/
-- https://docs.microsoft.com/fr-fr/azure/mysql/concepts-aks
-
-##### Terraform avec Azure
-
-Terraform est un outil permettant de décrire des ressources cloud dans un fichier pour utiliser le concept d'infrastructure-as-code avec tous les objets des fournisseurs de Cloud.
-
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
-- https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/kubernetes
-
-- https://registry.terraform.io/modules/Azure/appgw-ingress-k8s-cluster/azurerm/latest
-- https://docs.microsoft.com/fr-fr/azure/aks/ingress-basic#create-an-ingress-controller
-
-##### Autres
-
-- Les CRD : utiliser des objets Kubernetes pour définir des ressources Azure : https://github.com/Azure/azure-service-operator
-- Demo : <https://github.com/Microsoft/RockPaperScissorsLizardSpock>
-
 ### Pour aller plus loin
-
-- Luksa, Kubernetes in Action, 2018
 
 ### Cheatsheets
 
 - <https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/>
 - Short names in k8s : <https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202>
+## Jenkins
 
-<!-- ## AKS
-
-https://docs.microsoft.com/fr-fr/azure/aks/kubernetes-walkthrough
-https://docs.microsoft.com/fr-fr/azure/aks/
-https://github.com/microsoft/kubernetes-learning-path
-
-### HPA
-https://docs.microsoft.com/fr-fr/azure/aks/tutorial-kubernetes-scale
-
-### Stockage
-https://docs.microsoft.com/fr-fr/azure/aks/azure-files-dynamic-pv
-https://docs.microsoft.com/fr-fr/azure/aks/azure-disks-dynamic-pv
-https://docs.microsoft.com/fr-fr/azure/aks/concepts-storage
-
-### CRD
-https://github.com/Azure/azure-service-operator
-
-### Network
-https://docs.microsoft.com/fr-fr/azure/aks/internal-lb
-https://docs.microsoft.com/fr-fr/azure/aks/load-balancer-standard
-https://docs.microsoft.com/fr-fr/azure/aks/http-application-routing
-https://docs.microsoft.com/fr-fr/azure/aks/concepts-network
-https://blog.crossplane.io/azure-secure-connectivity-for-aks-azure-db/
-https://docs.microsoft.com/fr-fr/azure/mysql/concepts-aks
-
-### Terraform
-https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
-https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/kubernetes
-https://docs.microsoft.com/fr-fr/azure/aks/ingress-basic#create-an-ingress-controller
-https://registry.terraform.io/modules/Azure/appgw-ingress-k8s-cluster/azurerm/latest
-https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
-
-### Demo
-https://github.com/Microsoft/RockPaperScissorsLizardSpock -->
-
-<!-- ## Jenkins
-
+- Farcic2018 - The DevOps Toolkit 2.4 : Continuous Deployment To Kubernetes  http://leanpub.com/the-devops-2-4-toolkit
 - Leszko2017 - Continuous Delivery with Docker and Jenkins - Packt
 - Le wiki Jenkins
 
-## Terraform
+<!-- ## Terraform
 
-- Brikman2019 - Terraform Up&Running - O Reilly -->
+- Brikman2019 - Terraform Up&Running - O Reilly  -->
 
-<!-- ## Linux -->
 
 ## DevOps
 
 - Krief - Learning DevOps - The complete guide (Azure Devops, Jenkins, Kubernetes, Terraform, Ansible, sécurité) - 2019
 - The DevOps Handbook
-
-<!-- ### Sécurité et DevOps
-
-- Madhu,Akash2017 - Security automation with Ansible 2 - Packt -->
 
 ## Suite Elastic
 
