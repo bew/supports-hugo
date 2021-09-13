@@ -179,9 +179,9 @@ spec:
 
 - Allez dans le dossier de l'application avec `cd jenkins_application_correction`
 
-- Lancer la construction de l'image monstericon beta avec `docker build -t registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:beta .`
+- Lancer la construction de l'image monstericon beta avec `docker build -t registry.vagrantk3s.dopl.uk/monstericon:beta .`
 
-- Poussez l'image sur le dépôt `docker push registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:beta`
+- Poussez l'image sur le dépôt `docker push registry.vagrantk3s.dopl.uk/monstericon:beta`
 
 ## Deploy et Tests fonctionnels
 
@@ -210,12 +210,12 @@ Nous avons besoin d'utiliser kubectl pour effectuer un déploiement de test mais
 
 - Vérifiez l'état du déploiement avec `kubectl -n beta rollout status deployment monstericon` pour voir s'il converge vers l'état fonctionnel (ce qu'on a souvent fait avec Lens jusqu'ici).
 
-- Retournez dans le conteneur python et lancez les tests fonctionnels avec : `python3 src/test/functionnal_tests.py monstericon-beta.<votrenom>.vagrantk3s.dopl.uk`
+- Retournez dans le conteneur python et lancez les tests fonctionnels avec : `python3 src/test/functionnal_tests.py monstericon-beta.vagrantk3s.dopl.uk`
 ## Release
 
 ![](../../images/jenkins/00010.jpeg)
 
-- Retournez dans la VM docker et tagguez l'image en `registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:latest`
+- Retournez dans la VM docker et tagguez l'image en `registry.vagrantk3s.dopl.uk/monstericon:latest`
 
 - Poussez l'image latest.
 

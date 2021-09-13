@@ -221,10 +221,10 @@ controller:
     enabled: true
     paths: []
     apiVersion: "networking.k8s.io/v1"
-    hostName: jenkins.<votrenom>.vagrantk3s.dopl.uk
+    hostName: jenkins.vagrantk3s.dopl.uk
     tls:
       - hosts:
-        - jenkins.<votrenom>.vagrantk3s.dopl.uk
+        - jenkins.vagrantk3s.dopl.uk
         secretName: jenkins-tls-cert
     annotations:
       kubernetes.io/ingress.class: "nginx"

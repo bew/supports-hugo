@@ -78,7 +78,7 @@ import java.text.SimpleDateFormat
 currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date())
 
 // ###############
-env.BASE_DOMAIN = "<votre domaine de base>" // e.g. myjenkinscluster.domain.eu
+env.BASE_DOMAIN = "vagrantk3s.dopl.uk" // e.g. myjenkinscluster.domain.eu
 // ###############
 
 env.REPO_ADDRESS = "https://github.com/Uptime-Formation/corrections_tp.git"
@@ -418,4 +418,59 @@ C'est pour cela qu'on utilise généralement un job Jenkins de type `multibranch
 
 - Sélectionnez type `Git` et ajoutez le dépôt `https://github.com/Uptime-Formation/corrections_tp.git` sans credential.
 
-- Le pipeline se lance
+- Le pipeline se lance... et bugge probablement (loi de murphy)
+
+
+## Créez votre propre dépôt application et automatiser le déclenchement du pipeline
+
+Pour relancer ce pipeline synchronisé avec un dépôt nous allons devoir ajouter un déclencheur (trigger) associé au dépôt git qui peut être:
+
+- soit un idéalement un git hook c'est à dire une requête envoyée par notre dépôt de code lorsqu'une  branche est poussée dessus. Mais pour cela nous devons avoir une ip publique au niveau de notre cluster et de Jenkins pour que github puisse nous contacter.
+
+- soit dans l'autre sens une consultation périodique par jenkins du dépôt git (on parle de `polling` du dépôt) pour vérifier si de nouveaux commits on été poussés. Nous allons utiliser cette méthode car nous n'avons pas de Jenkins public.
+
+Pour faire fonctionner cela il faut que vous poussiez le contenu de la correction de l'application pour ce TP Jenkins (la branche `jenkins_application` de `https://github.com/Uptime-Formation/corrections_tp.git` ) dans un nouveau dépôt **que vous controllez**:
+
+- Créez un nouveau dépôt github `myjenkinsapp` ou autre.
+
+- Clonez : `git clone -b jenkins_application https://github.com/Uptime-Formation/corrections_tp.git myjenkinsapp`
+
+- Allez dans le dossier `cd myjenkinsapp`
+
+- Attention ! Vérifiez bien que vous ête dans le dossier `myjenkinsapp` avec `pwd`
+
+- Supprimez git de ce dossier avec `rm -Rf ./.git`
+
+- Créez un nouveau dépôt : `git init`
+
+- Ajoutez un nouveau remote (dépot serveur) git avec `git remote add origin https://github.com/<votredepot>.git`
+
+- Commitez tous les fichiers : `git add -A && git commit -m init`
+
+- Poussez sur votre nouveau dépôt : `git push origin main`
+
+## Créer un pipeline automatique
+
+- Modifiez le `Jenkinsfile` à la racine du dépôt pour ajouter la ligne `triggers { pollSCM '* * * * *' }` tel que:
+
+```groovy
+...
+"""
+      tty: true
+"""
+) {
+    triggers { pollSCM '* * * * *' }
+    node(nodelabel){
+        stage("unit tests") {
+            container('python') {
+            git url: "${env.REPO_ADDRESS}", branch: "${env.REPO_BRANCH}"
+            sh "pip install -r requirements.txt"
+...
+
+```
+
+- Poussez cette modification sur le dépôt.
+
+- A l'accueil de BlueOcean, ajoutez un nouveau pipeline en mettant l'adresse de votre nouveau dépôt.
+
+- Désormais à chaque push sur le dépôt le pipeline sera déclenché.

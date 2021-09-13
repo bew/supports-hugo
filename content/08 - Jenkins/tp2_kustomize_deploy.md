@@ -40,10 +40,10 @@ ingress:
   enabled: true
   path: /
   hosts:
-    - registry.<votrenom>.vagrantk3s.dopl.uk
+    - registry.vagrantk3s.dopl.uk
   tls:
     - hosts:
-      - registry.<votrenom>.vagrantk3s.dopl.uk
+      - registry.vagrantk3s.dopl.uk
       secretName: docker-registry-tls-cert
   annotations:
     kubernetes.io/ingress.class: "nginx"
@@ -74,18 +74,18 @@ secrets:
 
 - Appliquez le helmfile comme dans le tp0.
 
-- Ajoutez le nom de domaine `registry.<votrenom>.vagrantk3s.dopl.uk` aux deux fichiers `/etc/hosts` de votre machine hote et de votre machine vagrant k3s (pour que le cluster connaisse aussi le nom). 
+- Ajoutez le nom de domaine `registry.vagrantk3s.dopl.uk` aux deux fichiers `/etc/hosts` de votre machine hote et de votre machine vagrant k3s (pour que le cluster connaisse aussi le nom). 
 
-- Connectez vous avec `docker login registry.<votrenom>.vagrantk3s.dopl.uk -u <votreuser> -p <votrepassword>`
+- Connectez vous avec `docker login registry.vagrantk3s.dopl.uk -u <votreuser> -p <votrepassword>`
 
 - Poussez une image par exemple `python:3.9` en la tagguant avec l'adresse du dépot:
-    - `docker tag python:3.9 registry.<votrenom>.vagrantk3s.dopl.uk/python:3.9`
+    - `docker tag python:3.9 registry.vagrantk3s.dopl.uk/python:3.9`
 
 - Maintenant buildez l'image monstericon en lançant `docker build -t monstericon .` depuis le dossier `tp2_monsterstack_deploy_multienv`.
 
-- Tagguez l'image avec `docker tag monstericon registry.<votrenom>.vagrantk3s.dopl.uk/monstericon`
+- Tagguez l'image avec `docker tag monstericon registry.vagrantk3s.dopl.uk/monstericon`
 
-- Puis `docker push registry.<votrenom>.vagrantk3s.dopl.uk/monstericon`
+- Puis `docker push registry.vagrantk3s.dopl.uk/monstericon`
 
 ## Faire varier une installation kubernetes
 
@@ -183,7 +183,7 @@ On voudrait également pouvoir changer rapidement l'image à déployer depuis la
 ```yaml
 images:
 - name: monstericon
-  newName: registry.<votrenom>.vagrantk3s.dopl.uk/monstericon
+  newName: registry.vagrantk3s.dopl.uk/monstericon
   newTag: beta
 ```
 
