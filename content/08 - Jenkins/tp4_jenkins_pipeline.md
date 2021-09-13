@@ -63,6 +63,7 @@ spec:
         }
     }
   }
+}
 ```
 
 ## Tests unitaires dans un conteneur Python
