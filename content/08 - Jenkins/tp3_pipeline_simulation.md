@@ -177,6 +177,8 @@ spec:
 
 - Reclonez le code comme précédemment `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction && cd jenkins_application_correction`
 
+- Allez dans le dossier de l'application avec `cd jenkins_application_correction`
+
 - Lancer la construction de l'image monstericon beta avec `docker build -t registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:beta .`
 
 - Poussez l'image sur le dépôt `docker push registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:beta`
