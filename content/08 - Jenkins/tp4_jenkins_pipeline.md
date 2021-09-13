@@ -89,7 +89,7 @@ env.APP_ADDRESS_PROD = "monstericon.${BASE_DOMAIN}"
 env.APP_NAME="monstericon"
 env.IMAGE = "${env.REGISTRY_ADDRESS}/${env.APP_NAME}"
 env.TAG = "${currentBuild.displayName}"
-env.TAG_BETA = "${env.TAG}-${env.BRANCH_NAME}"
+env.TAG_BETA = "${env.TAG}-${env.REPO_BRANCH}"
 
 def nodelabel = "jenkins-k8sagent-${UUID.randomUUID().toString()}"
 
@@ -241,7 +241,6 @@ rules:
         # - policy
         # - rbac.authorization.k8s.io
     resources:
-      - pods
       # - componentstatuses
       - configmaps
       # - daemonsets
