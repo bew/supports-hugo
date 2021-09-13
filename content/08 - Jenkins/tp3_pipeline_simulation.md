@@ -173,6 +173,8 @@ spec:
 
 - Pour builder l'image beta, allez dans la VM docker agent avec `vagrant ssh`
 
+- Passez en `root` pour utiliser docker dans la machine virtuelle avec `sudo -i`
+
 - Reclonez le code comme précédemment `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction && cd jenkins_application_correction`
 
 - Lancer la construction de l'image monstericon beta avec `docker build -t registry.<votrenom>.vagrantk3s.dopl.uk/monstericon:beta .`
