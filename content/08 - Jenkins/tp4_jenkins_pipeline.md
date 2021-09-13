@@ -62,6 +62,7 @@ spec:
           sh "echo 'hello k8s plugin'"
         }
     }
+  }
 ```
 
 ## Tests unitaires dans un conteneur Python
