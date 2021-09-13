@@ -116,7 +116,9 @@ spec:
       tty: true
 """
 ) {
+    node(nodelabel){
     // instructions ici
+    }
 }
 ```
 
