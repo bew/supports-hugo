@@ -164,7 +164,7 @@ Comme discuté dans le TP3 nous allons utiliser pour cela un noeud docker à par
 - Ajoutez le code suivant après le premier stage:
 
 ```groovy
-    node("ssh-docker-agent") {
+    node("docker-agent") {
       stage("build") {
         git url: "${env.REPO_ADDRESS}", branch: "${env.REPO_BRANCH}"
         sh "sudo docker image build -t ${env.IMAGE}:${env.TAG_BETA} ."
