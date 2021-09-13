@@ -175,7 +175,7 @@ spec:
 
 - Passez en `root` pour utiliser docker dans la machine virtuelle avec `sudo -i`
 
-- Reclonez le code comme précédemment `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction && cd jenkins_application_correction`
+- Reclonez le code comme précédemment `git clone -b jenkins_application_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_application_correction`
 
 - Allez dans le dossier de l'application avec `cd jenkins_application_correction`
 
