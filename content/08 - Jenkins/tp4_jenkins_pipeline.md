@@ -413,3 +413,6 @@ C'est pour cela qu'on utilise généralement un job Jenkins de type `multibranch
 
 - Allez sur la page d'accueil de `BlueOcean` pour créer un nouveau pipeline.
 
+- Sélectionnez type `Git` et ajoutez le dépôt `https://github.com/Uptime-Formation/corrections_tp.git` sans credential.
+
+- Le pipeline se lance

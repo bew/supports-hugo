@@ -37,12 +37,13 @@ Vagrant.configure('2') do |config|
     v.memory = 1024
     v.cpus = 1
   end
-
-  config.vm.define :master do |master|
-    master.vm.box = 'ubuntu/focal64'
-    master.vm.hostname = 'master'
-    master.vm.network :private_network, ip: '10.12.0.11'
-    master.vm.provision :shell, privileged: false, inline: <<-SHELL
+  # si le montage du dossier partagé ne fonctionne pas décommentez la ligne suivante
+    # config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.define :dockeragent do |dockeragent|
+    dockeragent.vm.box = 'ubuntu/focal64'
+    dockeragent.vm.hostname = 'dockeragent'
+    dockeragent.vm.network :private_network, ip: '10.12.0.11'
+    dockeragent.vm.provision :shell, privileged: false, inline: <<-SHELL
       sudo rm /etc/resolv.conf && echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf && sudo chattr +i /etc/resolv.
       sudo apt update && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
       curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
