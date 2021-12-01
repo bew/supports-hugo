@@ -116,23 +116,18 @@ services:
     container_name: "traefik"
     command:
     # - "--log.level=DEBUG"
-
     - "--api.insecure=true"
     - "--providers.docker=true"
-
     # Config pour Docker Swarm
     - "--providers.docker.swarmMode=true"
-
     - "--entrypoints.web.address=:80"
-
-    #     Config pour Let's Encrypt
-    #     - "--entrypoints.websecure.address=:443"
-    #     - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-    #     - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-    #     #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    #     - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
-    #     - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-
+    # Config pour Let's Encrypt
+    # - "--entrypoints.websecure.address=:443"
+    # - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+    # - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+    # #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    # - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
+    # - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
     - target: 80
       published: 80
@@ -143,7 +138,6 @@ services:
     # - target: 443
     #   published: 443
     #   mode: host
-
     deploy:
       mode: global
       placement:
@@ -151,7 +145,6 @@ services:
         - node.role == manager
       restart_policy:
         condition: on-failure
-
     volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
     # - "./letsencrypt:/letsencrypt"
