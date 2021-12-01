@@ -6,28 +6,7 @@ weight: 1045
 
 ## Articuler deux images avec Docker compose
 
-<!-- ### Dans une VM -->
-
-<!-- - Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ? -->
-<!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
-
 - Installez docker-compose avec `sudo apt install docker-compose`. (ou pip)
-  <!-- - S'il y a un bug  -->
-  <!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
-
-<!-- ### Avec Gitpod
-
-`brew update` (si ça reste bloqué plus de 5min, arrêtez avec Ctrl+C)
-`brew install docker-compose`
-Si la dernière commande ne marche pas, installez `docker-compose` de la façon suivante :
-
-````bash
-mkdir bin
-curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o bin/docker-compose
-chmod +x bin/docker-compose
-export PATH="./bin:$PATH"
-``` -->
-
 ### `identidock` : une application Flask qui se connecte à `redis`
 
 - Démarrez un nouveau projet dans VSCode (créez un dossier appelé `identidock` et chargez-le avec la fonction _Add folder to workspace_)
@@ -38,6 +17,7 @@ from flask import Flask, Response, request, abort
 import requests
 import hashlib
 import redis
+import socket
 import os
 import logging
 
@@ -52,22 +32,43 @@ default_name = 'toi'
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
 
+    try:
+        visits = cache.incr("counter")
+    except redis.RedisError:
+        visits = "<i>cannot connect to Redis, counter disabled</i>"
+
     name = default_name
     if request.method == 'POST':
         name = request.form['name']
 
     salted_name = salt + name
     name_hash = hashlib.sha256(salted_name.encode()).hexdigest()
-    header = '<html><head><title>Identidock</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"></head><body>'
-    body = '''<form method="POST">
-                Salut <input type="text" name="name" value="{0}"> !
-                <input type="submit" value="submit">
+    page = '''
+        <html>
+          <head>
+            <title>Monster Icon</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+          </head>
+          <body style="text-align: center">
+                <h1>Monster Icon</h1>
+                <form method="POST">
+                <strong>Salut <input type="text" name="name" value="{name}">
+                <input type="submit" value="submit"> !
                 </form>
-                <p>Tu ressembles à ça :
-                <img src="/monster/{1}"/>
-            '''.format(name, name_hash)
-    footer = '</body></html>'
-    return header + body + footer
+                <div>
+                  <h4>Tu ressembles à ça :</h4>
+                  <img src="/monster/{name_hash}"/>
+                <div>
+          </br></br><h4> Info du conteneur </h4>
+          <ul>
+           <li>Nom du conteneur (Hostname): {hostname}</li>
+           <li>Nombre de visites: {visits} </li>
+          </ul></strong>
+        </body>
+       </html>
+    '''.format(name=name, name_hash=name_hash, hostname=socket.gethostname(), visits=visits)
+
+    return page
 
 
 @app.route('/monster/<name>')

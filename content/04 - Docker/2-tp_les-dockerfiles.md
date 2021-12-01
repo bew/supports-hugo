@@ -16,25 +16,26 @@ git clone https://github.com/uptime-formation/microblog/
 - Dans VSCode, vous pouvez faire `Terminal > New Terminal` pour obtenir un terminal en bas de l'écran.
 
 <!-- - Pour la tester d’abord en local (sans conteneur) nous avons besoin des outils python. Vérifions s'ils sont installés :
-    `sudo apt install python-pip python-dev build-essential` -->
+    `sudo apt install python-pip python-dev build-essential`
 
-<!-- - Créons l’environnement virtuel : `virtualenv -p python3 venv`
+- Créons l’environnement virtuel : `virtualenv -p python3 venv`
 
-- Activons l’environnement : `source venv/bin/activate` -->
+- Activons l’environnement : `source venv/bin/activate`
 
-<!-- - Installons la librairie `flask` et exportons une variable d’environnement pour déclarer l’application.
+- Installons la librairie `flask` et exportons une variable d’environnement pour déclarer l’application.
     a) `pip install flask`
-    b) `export FLASK_APP=microblog.py` -->
+    b) `export FLASK_APP=microblog.py`
 
-<!-- - Maintenant nous pouvons tester l’application en local avec la commande : `flask run` -->
+- Maintenant nous pouvons tester l’application en local avec la commande : `flask run`
 
-<!-- - Visitez l’application dans le navigateur à l’adresse indiquée. -->
+- Visitez l’application dans le navigateur à l’adresse indiquée.
+
+- Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ?
+
+- Changez le prénom Miguel par le vôtre dans l’application.
+- Relancez l'app flask et testez la modification en rechargeant la page. -->
 
 - Observons ensemble le code dans VSCode.
-<!-- - Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ? -->
-
-<!-- - Changez le prénom Miguel par le vôtre dans l’application. -->
-<!-- - Relancez l'app flask et testez la modification en rechargeant la page. -->
 
 ## Passons à Docker
 
@@ -73,8 +74,6 @@ RUN apt-get update -y
 RUN apt-get install -y python3-pip
 ```
 
-  <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
-
 - Reconstruisez votre image. Si tout se passe bien, poursuivez.
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
@@ -100,9 +99,8 @@ Nous n'avons pas copié les requirements en même temps pour pouvoir tirer parti
 Puis, dans la 2e ligne, le dossier courant dans le conteneur est déplacé à `/`.
 
 - Reconstruisez votre image. **Observons que le build recommence à partir de l'instruction modifiée. Les layers précédents avaient été mis en cache par le Docker Engine.**
-- Si tout se passe bien, poursuivez.
 
-  <!-- - `RUN pip3 install flask` -->
+- Si tout se passe bien, poursuivez.
 
 - Enfin, ajoutons la section de démarrage à la fin du Dockerfile, c'est un script appelé `boot.sh` :
 
@@ -165,26 +163,6 @@ fi
 - Construisez l'image avec `build`.
 - Puis, grâce aux bons arguments allant avec `docker run`, lancez une instance de l'app en configuration `PROD` et une instance en environnement `DEV` (joignables sur deux ports différents).
 - Avec `docker ps` ou en lisant les logs, vérifiez qu'il existe bien une différence dans le programme lancé.
-
-<!--
-- Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
-
-{{% expand "Solution :" %}}
-
-```Dockerfile
-# Ajoute un user et groupe appelés microblog
-RUN addgroup -S microblog && adduser -S microblog -G microblog
-RUN chown -R microblog:microblog ./
-USER microblog
-```
-
-{{% /expand %}} -->
-
-<!-- Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
-
-{{% expand "Réponse :" %}}
-La construction reprend depuis la dernière étape modifiée. Sinon, la construction utilise les layers précédents, qui avaient été mis en cache par le Docker Engine.
-{{% /expand %}} -->
 
 ### Exposer le port
 

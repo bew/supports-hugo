@@ -44,7 +44,7 @@ sudo apt install bash-completion curl
 sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 ```
 
-**Important:** Vous pouvez désormais appuyer sur la touche <TAB> pour utiliser l'autocomplétion quand vous écrivez des commandes Docker
+**Important:** Vous pouvez désormais appuyer sur la touche `<TAB>` pour utiliser l'autocomplétion quand vous écrivez des commandes Docker
 
 ---
 

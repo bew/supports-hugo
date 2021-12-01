@@ -19,11 +19,13 @@ weight: 1010
 # Retour sur les technologies de virtualisation
 
 On compare souvent les conteneurs aux machines virtuelles. Mais ce sont de grosses simplifications parce qu'on en a un usage similaire : isoler des programmes dans des "contextes".
-Une chose essentielle à retenir sur la différence technique : **les conteneurs utilisent les mécanismes internes du \_kernel de l'OS **Linux**\_ tandis que les VM tentent de communiquer avec l'OS (quel qu'il soit) pour directement avoir accès au matériel de l'ordinateur.**
+Une chose essentielle à retenir sur la différence technique : **les conteneurs utilisent les mécanismes internes du kernel de l'OS Linux pour isoler les processus au niveau de l'hôte (le matériel de l'hote est utilisé directement) tandis que les VM créent un nouvel OS virtualisé par dessus l'hote (hyperviseur) pour avoir accès a un "matériel virtuel"**
 
 <!-- ![](../../images/hyperv-vs-containers.png) -->
 
 ![](../../images/vm_vs_containers.png)
+
+La comparaison VM / conteneurs est un thème extrêmement vaste et complexe...
 
 - **VM** : une abstraction complète pour simuler des machines
 
@@ -61,8 +63,6 @@ Les conteneurs mettent en œuvre un vieux concept d'isolation des processus perm
   - ce n'était pas suffisant, l'idée de "tout-est-fichier" possède en réalité plusieurs exceptions
   - un process _chrooté_ n'est pas isolé du reste des process et peut agir de façon non contrôlée sur le système sur plusieurs aspects
     <!-- - expliquer chroot: notamment démo de comment on en échappe ? -->
-
-- En 2005, Sun introduit les **conteneurs Solaris** décrits comme un « chroot sous stéroïdes » : comme les _jails_ de FreeBSD
 
 ### Les _namespaces_ (espaces de noms)
 
@@ -179,14 +179,16 @@ VM et conteneurs proposent une flexibilité de manipulation des ressources de ca
 
 ---
 
+Ce qui nous amène à dire que la notion de conteneur sert de base pour la création de "cloud" open source.
+
 # Avantages des machines virtuelles
 
-- Les VM se rapprochent plus du concept de "boite noire": l'isolation se fait au niveau du matériel et non au niveau du noyau de l'OS.
+- Les VM se rapprochent plus du concept de "boite noire": l'isolation se fait au niveau du matériel (virtuel) et non au niveau du noyau de l'OS.
 
 - même si une faille dans l'hyperviseur reste possible car l'isolation n'est pas qu'uniquement matérielle
 
 - Les VM sont-elles "plus lentes" ? Pas forcément.
-  - La RAM est-elle un facteur limite ? Non elle n'est pas cher
+  - La RAM est-elle un facteur limite ? Non elle n'est pas chère
   - Les CPU pareil : on est rarement bloqués par la puissance du CPU
   - Le vrai problème c'est l'I/O : l'accès en entrée-sortie au disque et au réseau
     - en réalité Docker peut être plus lent (par défaut) pour l'implémentation de la sécurité réseau (usage du NAT), ou l'implémentation du réseau de Docker Swarm
@@ -206,7 +208,7 @@ Docker est pensé dès le départ pour faire des **conteneurs applicatifs** :
 
 - se baser sur l'**immutabilité** : la configuration d'un conteneur n'est pas faite pour être modifiée après sa création.
 
-- avoir un **cycle de vie court** -> logique DevOps du "bétail vs. animal de compagnie"
+- avoir un **cycle de vie court** -> logique DevOps du "bétail vs. animal de compagnie" (pet vs cattle)
 
 ---
 
@@ -252,7 +254,7 @@ Docker modifie beaucoup la **"logistique"** applicative.
 
 - **Apache Mesos** : un logiciel de gestion de cluster qui permet de se passer de Docker, mais propose quand même un support pour les conteneurs OCI (Docker) depuis 2016.
 
-- **Podman** : une alternative à Docker qui utilise la même syntaxe que Docker pour faire tourner des conteneurs OCI (Docker) qui propose un mode _rootless_ et _daemonless_ intéressant.
+- **Podman** : une alternative à Docker qui utilise la même syntaxe que Docker pour faire tourner des conteneurs OCI (images compatibles Docker) qui propose un mode _rootless_ et _daemonless_ intéressant.
 
 - **systemd-nspawn** : technologie de conteneurs isolés proposée par systemd
 

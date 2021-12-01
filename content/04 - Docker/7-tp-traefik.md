@@ -111,50 +111,50 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 ```yaml
 version: "3.8"
 services:
-      reverse-proxy:
-            image: "traefik:v2.3"
-            container_name: "traefik"
-            command:
-            # - "--log.level=DEBUG"
+  reverse-proxy:
+    image: "traefik:v2.3"
+    container_name: "traefik"
+    command:
+    # - "--log.level=DEBUG"
 
-            - "--api.insecure=true"
-            - "--providers.docker=true"
+    - "--api.insecure=true"
+    - "--providers.docker=true"
 
-            # Config pour Docker Swarm
-            - "--providers.docker.swarmMode=true"
+    # Config pour Docker Swarm
+    - "--providers.docker.swarmMode=true"
 
-            - "--entrypoints.web.address=:80"
+    - "--entrypoints.web.address=:80"
 
-            #     Config pour Let's Encrypt
-            #     - "--entrypoints.websecure.address=:443"
-            #     - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-            #     - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-            #     #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-            #     - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
-            #     - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    #     Config pour Let's Encrypt
+    #     - "--entrypoints.websecure.address=:443"
+    #     - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+    #     - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+    #     #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    #     - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
+    #     - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
 
-            ports:
-            -     target: 80
-                  published: 80
-                  mode: host
-            -     target: 8080
-                  published: 8080
-                  mode: host
-            # -     target: 443
-            #       published: 443
-            #       mode: host
+    ports:
+    - target: 80
+      published: 80
+      mode: host
+    - target: 8080
+      published: 8080
+      mode: host
+    # - target: 443
+    #   published: 443
+    #   mode: host
 
-            deploy:
-                  mode: global
-                  placement:
-                        constraints:
-                        - node.role == manager
-                  restart_policy:
-                        condition: on-failure
+    deploy:
+      mode: global
+      placement:
+        constraints:
+        - node.role == manager
+      restart_policy:
+        condition: on-failure
 
-            volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
-            #     - "./letsencrypt:/letsencrypt"
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    # - "./letsencrypt:/letsencrypt"
 ```
 
 
@@ -162,16 +162,16 @@ Ensuite, en adaptant le nom de domaine, ajoutez des labels  **à la section `dep
 
  <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 ```yaml
-      whoami:
-            image: "traefik/whoami"
-            deploy:
-                  replicas: 5
-                  labels:
-                        - traefik.http.routers.whoami-service.rule=Host(`example.com`)
-                        - traefik.http.services.whoami-service.loadbalancer.server.port=80
-      #   Config TLS
-      #     - "traefik.http.routers.whoami-service.entrypoints=websecure"
-      #     - "traefik.http.routers.whoami-service.tls.certresolver=myresolver"
+  whoami:
+    image: "traefik/whoami"
+    deploy:
+      replicas: 5
+      labels:
+        - traefik.http.routers.whoami-service.rule=Host(`example.com`)
+        - traefik.http.services.whoami-service.loadbalancer.server.port=80
+  #   Config TLS
+  #     - "traefik.http.routers.whoami-service.entrypoints=websecure"
+  #     - "traefik.http.routers.whoami-service.tls.certresolver=myresolver"
 ```
 
 {{% /expand %}}
