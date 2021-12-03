@@ -70,7 +70,7 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
 - Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
 ```Dockerfile
-RUN apt-get update -y
+RUN apt-get update
 RUN apt-get install -y python3-pip
 ```
 
@@ -117,6 +117,11 @@ CMD ["./boot.sh"]
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse `localhost:5001`
 
 ## Docker Hub
+
+
+- Visitez le docker hub https://hub.docker.com.
+
+- Créez le cas échéant un compte gratuit avec `Sign up`.
 
 - Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
 
