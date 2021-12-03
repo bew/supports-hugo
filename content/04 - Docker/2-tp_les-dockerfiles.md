@@ -201,6 +201,8 @@ CMD ["./boot.sh"]
 
 `HEALTHCHECK` permet de vérifier si l'app contenue dans un conteneur est en bonne santé.
 
+Nous allons pour cela créer une nouvelle application web python/flask capable de renseigner son état de santé.
+
 - Dans un nouveau dossier ou répertoire, créez un fichier `Dockerfile` dont le contenu est le suivant :
 
 ```Dockerfile
