@@ -98,9 +98,12 @@ Il faut cependant l'initialiser avec : `lxd init`
 ## Configurer des images prêtes pour Ansible
 
 Nous avons besoin d'images Linux configurées avec SSH, Python et un utilisateur de connexion (disposant idéalement d'une clé ssh configurée pour éviter d'avoir à utiliser un mot de passe de connection)
+
+Pour les générer rapidement nous allons utiliser un script bash à lancer avec `bash /opt/lxd.sh`
+
 ### Facultatif : Configurer un conteneur pour Ansible manuellement
 
-Si vous devez refaire les travaux pratiques from scratch (sans la VM de TP actuelles), vous pouvez les générer vous même avec les instructions suivantes:
+Si vous devez refaire les travaux pratiques from scratch (sans la VM de TP actuelle et le script de génération lxd.sh), vous pouvez générer les images LXD pour la suite avec les instructions suivantes:
 
 {{% expand "Facultatif :" %}}
 
