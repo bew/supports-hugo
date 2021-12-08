@@ -19,7 +19,7 @@ $ sudo apt install ansible
 
 ```
 ansible --version
-=> 2.8.x
+=> 2.9.x
 ```
 
 
@@ -94,7 +94,14 @@ Il faut cependant l'initialiser avec : `lxd init`
 
 - Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1`
 
-## Facultatif : Configurer un conteneur pour Ansible manuellement
+
+## Configurer des images prêtes pour Ansible
+
+Nous avons besoin d'images Linux configurées avec SSH, Python et un utilisateur de connexion (disposant idéalement d'une clé ssh configurée pour éviter d'avoir à utiliser un mot de passe de connection)
+### Facultatif : Configurer un conteneur pour Ansible manuellement
+
+Si vous devez refaire les travaux pratiques from scratch (sans la VM de TP actuelles), vous pouvez les générer vous même avec les instructions suivantes:
+
 {{% expand "Facultatif :" %}}
 
 
@@ -183,8 +190,8 @@ lxc delete centos1 centos2 centos3 --force
 ```
 
 {{% /expand %}}
-
-### Récupérer les images de correction depuis un remote LXD
+<!-- 
+### Facultatif: Récupérer les images de correction depuis un remote LXD
 
 Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
 
@@ -204,6 +211,7 @@ lxc image copy tp-images:centos_ansible local: --copy-aliases --auto-update
 lxc image copy tp-images:ubuntu_ansible local: --copy-aliases --auto-update
 ```
 
+{{% /expand %}} -->
 
 ### Lancer et tester les conteneurs
 
