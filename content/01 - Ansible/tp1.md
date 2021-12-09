@@ -80,9 +80,10 @@ LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu)
 
 LXD est déjà installé et initialisé sur notre ubuntu (sinon `apt install snapd` + `snap install lxd` + ajouter votre utilisateur courant au group unix `lxd`).
 
-Il faut cependant l'initialiser avec : `lxd init`
 
-- Cette commande vous pose un certain nombre de questions pour la configuration et vous pouvez garder TOUTES les valeurs par défaut en fait ENTER simplement à chaque question.
+Pour initialiser LXD et générer les images de base nous allons utiliser un script bash à lancer avec `bash /opt/lxd.sh`.
+
+(Pour initialiser à la main on peut utiliser la commande `lxd init` mais utilisez plutôt ici la configuration avec le script précédent)
 
 - Affichez la liste des conteneurs avec `lxc list`. Aucun conteneur ne tourne.
 - Maintenant lançons notre premier conteneur `centos` avec `lxc launch images:centos/7/amd64 centos1`.
@@ -99,7 +100,6 @@ Il faut cependant l'initialiser avec : `lxd init`
 
 Nous avons besoin d'images Linux configurées avec SSH, Python et un utilisateur de connexion (disposant idéalement d'une clé ssh configurée pour éviter d'avoir à utiliser un mot de passe de connection)
 
-Pour les générer rapidement nous allons utiliser un script bash à lancer avec `bash /opt/lxd.sh`
 
 ### Facultatif : Configurer un conteneur pour Ansible manuellement
 
