@@ -193,28 +193,7 @@ lxc delete centos1 centos2 centos3 --force
 ```
 
 {{% /expand %}}
-<!-- 
-### Facultatif: Récupérer les images de correction depuis un remote LXD
 
-Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
-
-- Ajoutez le remote `tp-images` avec la commande:
-
-```bash
-lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
-```
-
-- Le mot de passe est: `formation_ansible`.
-
-
-- Copiez ensuite les images depuis ce remote dans le dépot d'image local avec :
-
-```bash
-lxc image copy tp-images:centos_ansible local: --copy-aliases --auto-update
-lxc image copy tp-images:ubuntu_ansible local: --copy-aliases --auto-update
-```
-
-{{% /expand %}} -->
 
 ### Lancer et tester les conteneurs
 
