@@ -21,3 +21,5 @@ TODOOOO: faire un TP5 avec un peu tous les trucs avancés (à l'occasion d'une f
     - comment faire un role multi linux
 
 TODO : améliorer ma connaissance du debug Ansible avec le debugger normal et https://gist.github.com/Deepakkothandan/daeb1ba8dc5b73d85ded03cb2a614e85
+
+test
