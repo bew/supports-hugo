@@ -49,7 +49,7 @@ spec:
   selector:
     matchLabels:
       nom-app: demonstration
-      partie: pods-demo
+      partie: les-petits-pods-demo
   strategy:
     type: Recreate
   replicas: 1
