@@ -136,7 +136,7 @@ docker push <your-docker-registry-account>/microblog:latest
 
 ### Une image plus simple
 
-- A l'aide de l'image `python:3-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` car ce programme est désormais inclus dans l'image de base), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
+- A l'aide de l'image `python:3.9-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` car ce programme est désormais inclus dans l'image de base), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
 
 ### Faire varier la configuration en fonction de l'environnement
 
@@ -196,19 +196,31 @@ La construction reprend depuis la dernière étape modifiée. Sinon, la construc
 {{% expand "`Dockerfile` final :" %}}
 
 ```Dockerfile
-FROM python:3-alpine
+FROM python:3.9-alpine
 
-COPY ./requirements.txt /requirements.txt
-RUN pip3 install -r requirements.txt
+# Permet à flask de savoir quel fichier exécuter
 ENV FLASK_APP microblog.py
 
-COPY ./ /microblog
+# Par défaut, l'image ci-dessus a comme utilisateur courant `root` : c'est une bonne pratique de sécurité de créer un user adéquat pour notre application (la justification détaillée se trouve dans les articles de la bibliographie)
+COPY requirements.txt /requirements.txt
+# On fait une étape d'installation des requirements avant pour tirer partie du système de cache de Docker lors de la construction des images
+RUN pip3 install -r /requirements.txt
+RUN useradd --system flask
+USER flask
+# On copie des fichiers qui changent moins souvent avant pour le cache
+COPY --chown=flask microblog.py config.py boot.sh /microblog/
+COPY app/ /microblog/
 WORKDIR /microblog
 
 ENV CONTEXT PROD
 
+# A titre de documentation entre le maintainer de l'image et les gens l'utilisant :
 EXPOSE 5000
+# Comment a-t-on trouvé? l'info ? Ici c'est une connaissance du fonctionnement de l'app python : par dé?faut, les serveurs web python choisissent le port 5000
+# Au niveau Docker ou Kubernetes on choisira ensuite le port sur lequel on pré?fè?re exposer ce conteneur au reste du monde
+# Et dans le cas de Kubernetes, si on couple cette app avec un objet Ingress (on voit ç?a cette aprè?m) (reverse proxy)
 
+# Pratique très courante, pour avoir un Dockerfile synthé?tique tout en ajoutant des é?lé?ments de logique (ici, faire varier le contexte en fonction de l'environnement)
 CMD ["./boot.sh"]
 ```
 
@@ -224,7 +236,7 @@ CMD ["./boot.sh"]
 FROM python:alpine
 
 RUN apk add curl
-RUN pip install flask==0.10.1
+RUN pip install flask==2.0.3
 
 ADD /app.py /app/app.py
 WORKDIR /app
