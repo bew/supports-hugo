@@ -290,6 +290,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
     - host: monsterstack.local # à changer si envie/besoin
       http:
