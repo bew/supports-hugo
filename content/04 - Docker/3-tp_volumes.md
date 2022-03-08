@@ -110,8 +110,8 @@ docker run -d --name redis --network moby-network --volume __VOLUME__:__POINT_DE
 - recréons le conteneur `redis`, mais **par erreur nous allons oublier de le connecter à un volume à la création** :
 
 ```bash
-docker run -d --name redis redis
-docker run -d --name moby-counter -p 8000:80 russmckendrick/moby-counter
+docker run -d --name redis --network moby-network redis
+docker run -d --name moby-counter --network moby-network -p 8000:80 russmckendrick/moby-counter
 ```
 
 - Visitez votre application dans le navigateur. **Faites un motif reconnaissable en cliquant.**
