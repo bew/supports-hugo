@@ -274,11 +274,13 @@ Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services
 - Pour **Minikube** : Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
 - Pour les autres types de cluster (**cloud** ou **k3s**), lire la documentation sur les prérequis pour les objets Ingress et installez l'ingress controller appelé `ingress-nginx` : <https://kubernetes.io/docs/concepts/services-networking/ingress/#prerequisites>. Si besoin, aidez-vous du TP suivant sur l'utilisation de Helm.
 
+- Avant de continuer, vérifiez l'installation du contrôleur Ingress Nginx avec `kubectl get svc -n ingress-nginx ingress-nginx-controller` : le service `ingress-nginx-controller` devrait avoir une IP externe.
+
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
-- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utilisez l'ingress à la place pour afficher la page.
+- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utiliser l'ingress à la place pour afficher la page.
 
-- Ajoutez également l'objet `Ingress` de configuration du loadbalancer suivant dans le fichier `monster-ingress.yaml` :
+- Ajoutez également l'objet `Ingress` suivant dans le fichier `monster-ingress.yaml` :
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -289,7 +291,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: monsterstack.local
+    - host: monsterstack.local # à changer si envie/besoin
       http:
         paths:
           - path: /
