@@ -216,11 +216,11 @@ ENV CONTEXT PROD
 
 # A titre de documentation entre le maintainer de l'image et les gens l'utilisant :
 EXPOSE 5000
-# Comment a-t-on trouvé? l'info ? Ici c'est une connaissance du fonctionnement de l'app python : par dé?faut, les serveurs web python choisissent le port 5000
-# Au niveau Docker ou Kubernetes on choisira ensuite le port sur lequel on pré?fè?re exposer ce conteneur au reste du monde
-# Et dans le cas de Kubernetes, si on couple cette app avec un objet Ingress (on voit ç?a cette aprè?m) (reverse proxy)
+# Comment a-t-on trouvé l'info ? Ici c'est une connaissance du fonctionnement de l'app python : par défaut, les serveurs web python choisissent le port 5000
+# Au niveau Docker ou Kubernetes on choisira ensuite le port sur lequel on préfère exposer ce conteneur au reste du monde
+# Et dans le cas de Kubernetes, si on couple cette app avec un objet Ingress (reverse proxy)
 
-# Pratique très courante, pour avoir un Dockerfile synthé?tique tout en ajoutant des é?lé?ments de logique (ici, faire varier le contexte en fonction de l'environnement)
+# Pratique très courante, pour avoir un Dockerfile synthétique tout en ajoutant des éléments de logique (ici, faire varier le contexte en fonction de l'environnement)
 CMD ["./boot.sh"]
 ```
 
