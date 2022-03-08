@@ -4,7 +4,7 @@ draft: false
 weight: 2050
 ---
 
-Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3_base https://github.com/Uptime-Formation/corrections_tp.git tp3`
+Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3_base https://github.com/Uptime-Formation/corrections_tp.git tp3`. On peut ouvrir une fenêtre VSCode directement dans le dossier qui nous intéresse avec : `code tp3/kubernetes/TP3-monsterstack`
 
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
@@ -14,6 +14,7 @@ Elle est composée :
 - et d'un datastore `redis` servant de cache pour les images de monstericon
 
 Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `monstericon` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans `minikube`.
+
 
 # Etudions le code et testons avec `docker-compose`
 
