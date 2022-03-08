@@ -270,9 +270,9 @@ Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
 
-<!-- FIXME: faire avec k3s et chain avec helm -->
 
-- Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
+- Pour **Minikube** : Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
+- Pour les autres types de cluster (**cloud** ou **k3s**), lire la documentation sur les prérequis pour les objets Ingress et installez l'ingress controller appelé `ingress-nginx` : <https://kubernetes.io/docs/concepts/services-networking/ingress/#prerequisites>. Si besoin, aidez-vous du TP suivant sur l'utilisation de Helm.
 
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
