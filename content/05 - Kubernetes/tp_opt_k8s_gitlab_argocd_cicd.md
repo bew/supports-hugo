@@ -1,16 +1,16 @@
 ---
 title: TP opt. - CI/CD avec Gitlab et ArgoCD 
-draft: true
+draft: false
 weight: 2100
 ---
 
-## Tester en local (TP3 k8S)
+<!-- ## Tester en local (TP3 k8s)
 
 Avant de pouvoir déployer notre application automatiquement (Continuous Delivery) il faut s'assurer de pouvoir bien déployer l'application dans K8S en version développement.
 
-- Assurez-vous d'avoir bien suivi le TP3 Kubernetes de cette formation. Nous allons réutiliser cette application pour la déployer automatiquement dans un kluster de production Kubernetes (K3S).
+- Assurez-vous d'avoir bien suivi le TP3 Kubernetes de cette formation. Nous allons réutiliser cette application pour la déployer automatiquement dans un cluster de production Kubernetes (K3S).
 
-- Une fois le TP3 terminé pensez à arrêter minikube (si vous installez k3s sur la même machine il n'y aura peut-être pas assez de RAM) avec `minikube stop`.
+- Une fois le TP3 terminé pensez à arrêter minikube (si vous installez k3s sur la même machine il n'y aura peut-être pas assez de RAM) avec `minikube stop`. -->
 
 <!-- ## Une vue d'ensemble (Schéma) -->
 
