@@ -36,13 +36,14 @@ Pour l'essayer installons d'abord Kompose :
 
 ```bash
 # Linux
-curl -L https://github.com/kubernetes/kompose/releases/download/v1.16.0/kompose-linux-amd64 -o kompose
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.1/kompose-linux-amd64 -o kompose
 
 chmod +x kompose
 sudo mv ./kompose /usr/local/bin/kompose
 ```
 
 Puis, utilisons la commande `kompose convert` et observons les fichiers générés. On peut aussi faire `kompose up`, qui regroupe `kompose convert` et `kubectl apply` avec les ressources créées à partir du fichier Compose.
+
 
 ## Déploiements pour le backend d'image `dnmonster` et le datastore `redis`
 
