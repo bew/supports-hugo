@@ -258,8 +258,10 @@ spec:
 
 Ajoutez le code précédent au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
 
-<!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) --> - le nom du service et le nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`) - le port par le port du service
-<!-- - pourquoi pas selector = celui du deployment? --> - les selectors `app` et `partie` par ceux du pod correspondant.
+- le nom du service (`name:` dans `metadata:`) par le nom de notre programme. En particulier, il faudra forcément appeler les services `redis` et `dnmonster` comme ça car cela permet à Kubernetes de créer les entrées DNS correspondantes. Le pod `monstericon` pourra ainsi les joindre en demandant à Kubernetes l'IP derrière `dnmonster` et `redis`.
+- nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`)
+- le port par le port du service
+- les selectors `app` et `partie` par ceux du pod correspondant.
 
 Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
 
