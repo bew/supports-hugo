@@ -62,7 +62,7 @@ ls /tmp/dossier-hote/
 
 Le fichier `test-depuis-conteneur` a été crée par le conteneur au dossier que l'on avait connecté grâce à `-v /tmp/dossier-hote:/dossier-conteneur`
 
-- Tentez de créer un fichier depuis l'ĥôte dans ce dossier. Que se passe-t-il ? Que faut-il faire ? Pourquoi ?
+- Tentez de créer un fichier **depuis l'hôte** dans ce dossier. Que se passe-t-il ? Que faut-il faire ? Pourquoi ?
 
 
 ## L'app `moby-counter`, Redis et les volumes
