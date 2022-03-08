@@ -63,6 +63,8 @@ ls /tmp/data/
 
 Le fichier `testfile` a été crée par le conteneur au dossier que l'on avait connecté grâce à `-v /tmp/data:/data`
 
+
+
 ## L'app `moby-counter`, Redis et les volumes
 
 Pour ne pas interférer avec la deuxième partie du TP :
@@ -73,28 +75,48 @@ Pour ne pas interférer avec la deuxième partie du TP :
 <!-- - Lancez `docker volume ls` pour vérifier qu'aucun volume n'est créé (sauf `portainer_data` si vous utilisez encore Portainer) sinon supprimez-les avec `docker volume rm --force <id_volume>` -->
 - Lancez aussi `docker network prune` pour nettoyer les réseaux inutilisés
 
-Passons à l'exploration des volumes:
 
-- Recréez le réseau `moby-network` et les conteneurs `redis` et `moby-counter` à l'intérieur :
+### Volumes nommés
+
+
+Lorsqu'un répertoire hôte spécifique est utilisé dans un volume (la syntaxe `-v HOST_DIR:CONTAINER_DIR`), elle est souvent appelée **bind mounting**.
+C'est quelque peu trompeur, car tous les volumes sont techniquement "bind mounted". La différence, c'est que le point de montage est explicite plutôt que caché dans un répertoire géré par Docker.
+
+Nous allons recréer un conteneur avec cette fois-ci un volume nommé.
+
+En effet, la bonne façon de créer des volumes consiste à les créer manuellement dans un premier temps (volumes nommés), puis d'y associer un conteneur : `docker volume create redis_data`.
+
+- Lancez `docker volume inspect redis_data`.
+
+- Créez le conteneur `moby-counter` à l'intérieur (pour simplifier, nous n'allons pas préciser de configuration réseau ici):
 
 ```bash
-docker network create moby-network
-docker run -d --name redis --network moby-network redis
-docker run -d --name moby-counter --network moby-network -p 8000:80 russmckendrick/moby-counter
+docker run -d --name moby-counter -p 8000:80 russmckendrick/moby-counter
+```
+
+- Puis, à l'aide de la documentation disponible sur le Docker Hub, trouvons le point de montage où connecter un conteneur Redis pour que ses données persistent à la suppression du conteneur.
+- créons le conteneur Redis connecté à notre volume nommé (il faut remplacer `__VOLUME__:__POINT_DE_MONTAGE__` par les bonnes informations) :
+
+```bash
+docker run -d --name redis redis
+```
+
+
+#### Récupérer un volume d'un conteneur supprimé
+
+- supprimez le conteneur `redis` : `docker stop redis` puis `docker rm redis`
+
+
+- recréons le conteneur `redis`, mais **par erreur nous allons oublier de le connecter à un volume à la création** :
+
+```bash
+docker run -d --name redis redis
+docker run -d --name moby-counter -p 8000:80 russmckendrick/moby-counter
 ```
 
 - Visitez votre application dans le navigateur. **Faites un motif reconnaissable en cliquant.**
 
-<!-- - Recréez le conteneur `redis` dans le réseau `moby-network` :
-```bash
-docker run -d --name redis --network moby-network redis
-```
-
-- Rechargez la page. Que s'est-il passé ? -->
-
-### Récupérer un volume d'un conteneur supprimé
-
-- supprimez le conteneur `redis` : `docker stop redis` puis `docker rm redis`
+- supprimez le nouveau conteneur `redis` : `docker stop redis` puis `docker rm redis`
 
 - Visitez votre application dans le navigateur. Elle est maintenant déconnectée de son backend.
 
@@ -149,36 +171,6 @@ Beaucoup de conteneurs Docker sont des applications _stateful_, c'est-à-dire qu
 
 - Affichez le contenu du volume avec la commande : `docker exec redis ls -lha /data`
 
-### Bind mounting
-
-Finalement, nous allons recréer un conteneur avec un volume qui n'est pas anonyme.
-
-En effet, la bonne façon de créer des volumes consiste à les créer manuellement (volumes nommés) : `docker volume create redis_data`.
-
-- Supprimez l'ancien conteneur `redis` puis créez un nouveau conteneur attaché à ce volume nommé : `docker container run -d --name redis -v redis_data:/data --network moby-network redis:alpine`
-
-Lorsqu'un répertoire hôte spécifique est utilisé dans un volume (la syntaxe `-v HOST_DIR:CONTAINER_DIR`), elle est souvent appelée **bind mounting**.
-C'est quelque peu trompeur, car tous les volumes sont techniquement "bind mounted". La différence, c'est que le point de montage est explicite plutôt que caché dans un répertoire géré par Docker.
-
-- Lancez `docker volume inspect redis_data`.
-
-<!-- ### Deux conteneurs Redis sur un seul volume
-
-- Créez un réseau `moby-network2` et ajoutez un deuxième conteneur `redis2` qui va partager les même données que le premier :
-  - situé à l'intérieur du nouveau réseau (`moby-network2`) comme à la partie précédent.
-  - utilisant l'option `--network-alias redis` pour pouvoir être joignable par `moby-counter2` (que nous n'avons pas encore créé).
-  - partageant le volume de données du premier (cf. cours)
-      - monté en read-only (`:ro` après le paramètre de la question précédente)
-
-{{% expand "Indice :" %}}
-`docker run -v redis_data:/data -d --name redis2 --network moby-network2 --network-alias redis redis:alpine`
-{{% /expand %}}
-
-Le read-only est nécessaire pour que les deux Redis n'écrivent pas de façon contradictoire dans la base de valeurs.
-
-- Ajoutez une deuxième instance de l'application dans le deuxième réseau connectée à ce nouveau Redis.
-
-- Visitez la deuxième application : vous devriez voir également le motif de moby apparaître. -->
 
 ### Supprimer les volumes et réseaux
 
@@ -224,7 +216,7 @@ Cela indique que l'on va demander à Python d'utiliser SQLite pour stocker la ba
 Voici le `Dockerfile` complet :
 
 ```Dockerfile
-FROM python:3-alpine
+FROM python:3.9-alpine
 
 COPY ./requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
@@ -287,6 +279,27 @@ Il faut donc remplacer la variable `DATABASE_URL` au lancement.
 Il va falloir configurer des options de démarrage pour le conteneur `mysql`, à lire sur le [Docker Hub](https://hub.docker.com/).
 
 {{% /expand %}} -->
+
+
+
+### (facultatif) Deux conteneurs Redis sur un seul volume
+
+- Créez un réseau `moby-network2` et ajoutez un deuxième conteneur `redis2` qui va partager les même données que le premier :
+  - situé à l'intérieur du nouveau réseau (`moby-network2`) comme à la partie précédent.
+  - utilisant l'option `--network-alias redis` pour pouvoir être joignable par `moby-counter2` (que nous n'avons pas encore créé).
+  - partageant le volume de données du premier (cf. cours)
+      - monté en read-only (`:ro` après le paramètre de la question précédente)
+
+{{% expand "Indice :" %}}
+`docker run -v redis_data:/data -d --name redis2 --network moby-network2 --network-alias redis redis:alpine`
+{{% /expand %}}
+
+Le read-only est nécessaire pour que les deux Redis n'écrivent pas de façon contradictoire dans la base de valeurs.
+
+- Ajoutez une deuxième instance de l'application dans le deuxième réseau connectée à ce nouveau Redis.
+
+- Visitez la deuxième application : vous devriez voir également le motif de moby apparaître.
+
 
 ### _Facultatif :_ Packagez votre propre app
 
