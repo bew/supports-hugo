@@ -17,7 +17,7 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 ### Installer Helm
 
 - Pour installer Helm sur Ubuntu, utilisez : `sudo snap install helm --classic`
-
+<!-- https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 -->
 - Suivez le Quickstart : <https://helm.sh/docs/intro/quickstart/>
 
 #### Autocomplete

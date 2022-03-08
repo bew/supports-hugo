@@ -4,6 +4,8 @@ title: "09 - TP 4 - Déployer Wordpress Avec une base de donnée persistante"
 weight: 2055
 ---
 
+<!-- FIXME: éviter k8s -->
+
 ## Déployer Wordpress et MySQL avec du stockage et des Secrets
 
 Nous allons suivre ce tutoriel pas à pas : https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
