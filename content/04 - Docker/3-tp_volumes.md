@@ -36,17 +36,17 @@ docker run --detach --name portainer \
 
 ## Introduction aux volumes
 
-- Pour comprendre ce qu'est un volume, lançons un conteneur en mode interactif et associons-y le dossier `/tmp/data` de l'hôte au dossier `/data` sur le conteneur :
+- Pour comprendre ce qu'est un volume, lançons un conteneur en mode interactif et associons-y le dossier `/tmp/dossier-hote` de l'hôte au dossier `/dossier-conteneur` sur le conteneur :
 
 ```bash
-docker run -it -v /tmp/data:/data ubuntu /bin/bash
+docker run -it -v /tmp/dossier-hote:/dossier-conteneur ubuntu /bin/bash
 ```
 
 - Dans le conteneur, navigons dans ce dossier et créons-y un fichier :
 
 ```bash
-cd /data/
-touch testfile
+cd /dossier-conteneur/
+touch test-depuis-conteneur
 ```
 
 - Sortons ensuite de ce conteneur avec la commande `exit`
@@ -58,11 +58,12 @@ exit
 - Après être sorti·e du conteneur, listons le contenu du dossier **sur l'hôte** avec la commande suivante ou avec le navigateur de fichiers d'Ubuntu :
 
 ```bash
-ls /tmp/data/
+ls /tmp/dossier-hote/
 ```
 
-Le fichier `testfile` a été crée par le conteneur au dossier que l'on avait connecté grâce à `-v /tmp/data:/data`
+Le fichier `test-depuis-conteneur` a été crée par le conteneur au dossier que l'on avait connecté grâce à `-v /tmp/dossier-hote:/dossier-conteneur`
 
+- Tentez de créer un fichier depuis l'ĥôte dans ce dossier. Que se passe-t-il ? Que faut-il faire ? Pourquoi ?
 
 
 ## L'app `moby-counter`, Redis et les volumes
