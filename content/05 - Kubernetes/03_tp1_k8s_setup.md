@@ -205,6 +205,8 @@ La/Les configurations de kubectl sont à déclarer dans la variable d'environnem
 
 - Testons quelle connexion nous utilisons avec avec `kubectl get nodes`.
 
+- Observons les derniers évènements arrivés à notre cluster avec `kubectl get events --watch`.
+
 
 ## Au délà de la ligne de commande...
 

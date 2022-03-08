@@ -6,6 +6,8 @@ weight: 2045
 
 Dans ce court TP nous allons redéployer notre application `demonstration` du TP1 mais cette fois en utilisant `kubectl apply -f` et en visualisant le résultat dans `Lens`.
 
+N'hésitez pas aussi à observer les derniers évènements arrivés à votre cluster avec `kubectl get events --watch`.
+
 - Changez de contexte pour k3s avec `kubectl config use-context k3s` ou `kubectl config use-context default`
 - Chargez également la configuration de k3s dans `Lens` en cliquant à nouveau sur plus et en selectionnant `k3s` ou `default`
 - Commencez par supprimer les ressources `demonstration` et `demonstration-service` du TP1
@@ -98,9 +100,9 @@ spec:
 - Visitez votre application avec l'Internal ip du noeud (à trouver dans les information du node) et le nodeport (port 3xxxx) associé au service, le nombre de réplicat devrait apparaître.
 - Pour tester, changez le label du selector dans le **service** (lignes `nom-app: demonstration` et `partie: les-petits-pods-demo` à remplacer dans le fichier ) et réappliquez.
 - Constatez que l'application n'est plus accessible dans le navigateur. Pourquoi ?
-- Allez voir la section endpoints dans lens, constatez que quand l'étiquette est la bonne la liste des ips des pods est présente et après la maodification du selector la liste est vide (None)
+- Allez voir la section endpoints dans lens, constatez que quand l'étiquette est la bonne la liste des IPs des pods est présente et après la modification du selector la liste est vide (`None`)
 
-=> Les services kubernetes redirigent le trafic basés sur les étiquettes(labels) appliquées sur les pods du cluster. Il faut donc de même éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
+=> Les services kubernetes redirigent le trafic basés sur les étiquettes (labels) appliquées sur les pods du cluster. Il faut donc de même éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
 
 ### Solution
 
