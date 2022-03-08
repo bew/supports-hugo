@@ -272,6 +272,8 @@ Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
 
+<!-- FIXME: faire avec k3s et chain avec helm -->
+
 - Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
 
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
@@ -281,28 +283,12 @@ Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'ada
 - Ajoutez également l'objet `Ingress` de configuration du loadbalancer suivant dans le fichier `monster-ingress.yaml` :
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: monster-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-    - host: monsterstack.local
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: monstericon
-              servicePort: 5000
-```
-
-- Ajoutez ce fichier avec `skaffold run`. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
-
-- Pour corriger ce warning remplacez l'`apiVersion` par `networking.k8s.io/v1`. La syntaxe de la `spec` a légèrement changée depuis la v1beta1, modifiez comme suit:
-
-```yaml
 spec:
   rules:
     - host: monsterstack.local
@@ -317,7 +303,7 @@ spec:
                   number: 5000
 ```
 
-<!-- TODO changer la correction pour intégrer la bonne syntaxe et renommer l'ancienne en old-->
+- Ajoutez ce fichier avec `skaffold run`.
 
 - Récupérez l'ip de minikube avec `minikube ip`, (ou alors allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`).
 
