@@ -25,12 +25,11 @@ docker run --detach --name portainer \
     portainer/portainer-ce
 ```
 
-<!-- - Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus. -->
+- Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus.
 
-<!-- - Visitez ensuite la page [http://localhost:9000](http://localhost:9000) pour accéder à l'interface.
+- Visitez ensuite la page [http://localhost:9000](http://localhost:9000) pour accéder à l'interface.
 - Créez votre user admin avec le formulaire.
 - Explorez l'interface de Portainer.
-- Créez un conteneur -->
 
 # Partie 2 : Volumes Docker
 
@@ -89,19 +88,19 @@ En effet, la bonne façon de créer des volumes consiste à les créer manuellem
 
 - Lancez `docker volume inspect redis_data`.
 
-- Créez le conteneur `moby-counter` à l'intérieur (pour simplifier, nous n'allons pas préciser de configuration réseau ici):
+- Créez le conteneur `moby-counter` à l'intérieur :
 
 ```bash
-docker run -d --name moby-counter -p 8000:80 russmckendrick/moby-counter
+docker network create moby-network
+docker run -d --network moby-network --name moby-counter -p 8000:80 russmckendrick/moby-counter
 ```
 
 - Puis, à l'aide de la documentation disponible sur le Docker Hub, trouvons le point de montage où connecter un conteneur Redis pour que ses données persistent à la suppression du conteneur.
 - créons le conteneur Redis connecté à notre volume nommé (il faut remplacer `__VOLUME__:__POINT_DE_MONTAGE__` par les bonnes informations) :
 
 ```bash
-docker run -d --name redis redis
+docker run -d --name redis --network moby-network --volume __VOLUME__:__POINT_DE_MONTAGE__ redis
 ```
-
 
 #### Récupérer un volume d'un conteneur supprimé
 
