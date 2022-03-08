@@ -151,7 +151,12 @@ L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notr
 Il y a plusieurs possibilités :
 - utiliser **minikube** : minikube a la capacité de se connecter au registry de notre installation Docker locale
 - **sur k3s ou sur un cluster cloud** : pousser à chaque itération notre image sur un registry distant (Docker Hub)
-  - pour ce faire, il faut éditer le  fichier `skaffold.yaml` et le fichier de **Deployment** correspondant pour remplacer le nom de l'image `monstericon` pour faire référence à l'adresse à laquelle on souhaite pousser l'image sur le registry distant (ex: `docker.io/MON_COMPTE_DOCKER_HUB/monstericon:latest`)
+  - pour ce faire, il faut éditer le fichier `skaffold.yaml` et le fichier de **Deployment** correspondant pour remplacer le nom de l'image `monstericon` pour faire référence à l'adresse à laquelle on souhaite pousser l'image sur le registry distant (ex: `docker.io/MON_COMPTE_DOCKER_HUB/monstericon`)
+  - il est possible qu'il faille ajouter au même niveau que `artifacts:` dans le fichier `skaffold.yaml` ceci :
+```yaml
+  local:
+    push: true
+```
   - heureusement le mécanisme de layers des images Docker ne nous oblige à uploader que les layers modifiés de notre image à chaque build
 - (plus long) configurer un registry local (en Docker ou en Kubernetes) auquel Skaffold et Kubernetes peuvent accéder
   - c'est plus long car il faut simplement configurer les certificats HTTPS ou expliciter que l'on peut utiliser un registry non sécurisé (HTTP)
