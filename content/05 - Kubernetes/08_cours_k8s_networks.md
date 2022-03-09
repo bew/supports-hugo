@@ -18,11 +18,13 @@ Les Services sont de trois types principaux :
 - `ClusterIP`: expose le service **sur une IP interne** au cluster appelée ClusterIP. Les autres pods peuvent alors accéder au service mais pas l'extérieur.
 
 - `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
+  - Dans la pratique, on utilise très peu ce type de service.
 
 ![](../../images/kubernetes/nodeport.png?width=400px)
 *Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
 
 - `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
+  - Dans la pratique, on utilise que ponctuellement ce type de service, pour du HTTP/s on ne va pas exposer notre service (ce sera un service de type ClusterIP) et on va utiliser à la place un objet Ingress (voir ci-dessous).
 
 ![](../../images/kubernetes/loadbalancer.png?width=400px)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
@@ -84,7 +86,7 @@ Pour pouvoir créer des objets ingress il est d'abord nécessaire d'installer un
 
 - Il s'agit d'un déploiement conteneurisé d'un logiciel de reverse proxy (comme nginx) et intégré avec l'API de kubernetes
 - Le controlleur agit donc au niveau du protocole HTTP et doit lui-même être exposé (port 80 et 443) à l'extérieur, généralement via un service de type LoadBalancer.
-- Le controlleur redirige ensuite vers différents services (généralement configurés en ClusterIP) qui à leur tour redirigent vers différents ports sur les pods selon l'URL del a requête.
+- Le controleur redirige ensuite vers différents services (généralement configurés en **ClusterIP**) qui à leur tour redirigent vers différents ports sur les pods selon l'URL de la requête.
 
 Il existe plusieurs variantes d'**ingress controller**:
 
