@@ -1,3 +1,6 @@
+---
+draft: true
+---
 
 Sur quels pans préfèreriez-vous investir du temps cet aprèm ? (plusieurs choix possibles)
 
