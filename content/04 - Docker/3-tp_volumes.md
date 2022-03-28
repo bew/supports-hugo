@@ -102,7 +102,7 @@ docker run -d --network moby-network --name moby-counter -p 8000:80 russmckendri
 docker run -d --name redis --network moby-network --volume __VOLUME__:__POINT_DE_MONTAGE__ redis
 ```
 
-#### Récupérer un volume d'un conteneur supprimé
+### Récupérer un volume d'un conteneur supprimé
 
 - supprimez le conteneur `redis` : `docker stop redis` puis `docker rm redis`
 
