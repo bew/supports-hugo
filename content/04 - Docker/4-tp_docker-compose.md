@@ -281,7 +281,7 @@ On se propose ici d'essayer de déployer plusieurs services pré-configurés com
 
 - Vérifiez que le service est bien accessible sur le port donné.
 
-- Le cas échéant, lisez les logs s'il y a un bug et adaptez les variables d'environnement.
+- Si besoin, lisez les logs en quête bug et adaptez les variables d'environnement.
 
 <!-- Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet). -->
 
