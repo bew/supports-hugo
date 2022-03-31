@@ -12,6 +12,15 @@ weight: 1045
 <!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
 
 - Installez docker-compose avec `sudo apt install docker-compose`.
+
+- Pour vous faciliter la vie et si ce n'est pas déjà le cas, ajoutez le plugin _autocomplete_ pour Docker et Docker Compose à `bash` en copiant les commandes suivantes :
+
+```bash
+sudo apt update
+sudo apt install bash-completion curl
+sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+```
+
   <!-- - S'il y a un bug  -->
   <!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
 
@@ -246,7 +255,7 @@ networks:
     driver: bridge
 ```
 
-- Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
+- Lancez l'application et vérifiez que le cache fonctionne en cherchant les messages dans les logs de l'application.
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). Cette documentation indique aussi les différences entre la version 2 et la version 3 des fichiers Docker Compose.
 
@@ -262,7 +271,7 @@ networks:
 
 ## D'autres services
 
-### Exerciced de _google-fu_
+### Exercices de _google-fu_
 
 #### ex: un pad HedgeDoc
 
