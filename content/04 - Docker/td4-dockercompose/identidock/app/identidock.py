@@ -1,4 +1,3 @@
-
 from flask import Flask, Response, request, abort
 import requests
 import hashlib
@@ -13,7 +12,6 @@ app = Flask(__name__)
 cache = redis.StrictRedis(host='redis', port=6379, db=0)
 salt = "UNIQUE_SALT"
 default_name = 'toi'
-
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
@@ -53,8 +51,7 @@ def get_identicon(name):
     if not found_in_cache:
         logging.info("Image non trouvée dans le cache")
         try:
-            r = requests.get(
-                'http://dnmonster:8080/monster/' + name + '?size=80')
+            r = requests.get('http://dnmonster:8080/monster/' + name + '?size=80')
             image = r.content
             logging.info("Image générée grâce au service dnmonster")
 
@@ -67,6 +64,5 @@ def get_identicon(name):
 
     return Response(image, mimetype='image/png')
 
-
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+  app.run(debug=True, host='0.0.0.0', port=5000)

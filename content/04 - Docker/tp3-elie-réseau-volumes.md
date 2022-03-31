@@ -23,7 +23,7 @@ docker run --detach --name portainer \
     portainer/portainer-ce
 ```
 
-- Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus.
+- Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--volume` ci-dessus.
 
 - Visitez ensuite la page [http://localhost:9000](http://localhost:9000) pour accéder à l'interface.
 - Créez votre user admin avec le formulaire.
