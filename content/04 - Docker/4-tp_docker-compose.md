@@ -346,7 +346,12 @@ networks:
     driver: bridge
 ```
 
-Il suffit ensuite de se rendre sur Kibana (port `5601`) et de configurer l'index en tapant `*` dans le champ indiqué, de valider et de sélectionner le champ `@timestamp`, puis de valider. L'index nécessaire à Kibana est créé, vous pouvez vous rendre dans la partie Discover à gauche (l'icône boussole 🧭) pour lire vos logs.
+Il suffit ensuite :
+- de se rendre sur Kibana (port `5601`)
+- de vous rendre dans la partie Discover à gauche (l'icône boussole 🧭)
+- de configurer l'index en tapant `*` dans le champ indiqué, de valider
+- puis de sélectionner le champ `@timestamp`, puis de valider.
+- L'index nécessaire à Kibana est créé, vous pouvez lire vos logs.
 
 ### _Facultatif :_ Ajouter un nœud Elasticsearch
 
