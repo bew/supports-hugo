@@ -346,6 +346,7 @@ networks:
     driver: bridge
 ```
 
+<<<<<<< HEAD
 Il suffit ensuite de :
 - se rendre sur Kibana (port `5601`)
 - de configurer l'index en tapant `*` dans le champ indiqué, de valider
@@ -355,6 +356,14 @@ L'index nécessaire à Kibana est créé, vous pouvez vous rendre dans la partie
 
 Il est temps de faire un petit `docker stats` pour découvrir l'utilisation du CPU et de la RAM de vos conteneurs !
 
+=======
+Il suffit ensuite :
+- de se rendre sur Kibana (port `5601`)
+- de vous rendre dans la partie Discover à gauche (l'icône boussole 🧭)
+- de configurer l'index en tapant `*` dans le champ indiqué, de valider
+- puis de sélectionner le champ `@timestamp`, puis de valider.
+- L'index nécessaire à Kibana est créé, vous pouvez lire vos logs.
+>>>>>>> 7d1e027 (instructions elk)
 
 ### _Facultatif :_ Ajouter un nœud Elasticsearch
 
