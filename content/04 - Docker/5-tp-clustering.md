@@ -11,7 +11,7 @@ Initialisez Swarm avec `docker swarm init`.
 
 ## Créer un service
 
-A l'aide de `docker service create`, créer un service à partir de l'image `traefik/whoami` accessible sur le port `9999` et connecté au port `80` et avec 5 répliques.
+A l'aide de `docker service create`, créer un service à partir de l'image `traefik/whoami` accessible sur le port `9999` et connecté au port `80` des 5 répliques.
 
 
 {{% expand "Solution :" %}}
