@@ -196,7 +196,7 @@ La construction reprend depuis la dernière étape modifiée. Sinon, la construc
 {{% expand "`Dockerfile` final :" %}}
 
 ```Dockerfile
-FROM python:3.9-alpine
+FROM python:3.9-slim
 
 # Permet à flask de savoir quel fichier exécuter
 ENV FLASK_APP microblog.py
