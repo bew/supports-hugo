@@ -70,14 +70,13 @@ reverse-proxy:
     #- "--log.level=DEBUG"
     - "--api.insecure=true"
     - "--providers.docker=true"
-    - "--providers.docker.exposedbydefault=false"
     - "--entrypoints.web.address=:80"
-    - "--entrypoints.websecure.address=:443"
-    - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-    - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+    - "--entrypoints.web-securise.address=:443"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.httpchallenge=true"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.httpchallenge.entrypoint=web"
     #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
-    - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.email=postmaster@example.com"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.storage=/letsencrypt/acme.json"
   ports:
     - "80:80"
     - "443:443"
@@ -95,10 +94,9 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
     image: "traefik/whoami"
     container_name: "simple-service"
     labels:
-      - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`example.com`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.whoami.entrypoints=web-securise"
+      - "traefik.http.routers.whoami.tls.certresolver=letsencrypt-certifgratuit"
 ```
 
 {{% /expand %}}
