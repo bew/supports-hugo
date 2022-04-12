@@ -118,6 +118,15 @@ htop
     - [Flocker](https://flocker.readthedocs.io/en/latest/docker-integration/tutorial-swarm-compose.html), [Convoy](https://github.com/rancher/convoy), visent à intégrer une technologie de réplication
     - c'est un moyen, pas une solution : reste un outil pour configurer ce que l'on souhaite
 
+## DataOps
+- Doit se baser sur une solution applicative complète comme Kafka
+- Peut-être plus orienté Kubernetes
+- On peut quand même arriver à quelque chose avec Compose et Swarm
+- Ressources :
+    - Pas-à-pas très détaillé d'une pipeline "ETL" https://medium.com/sfu-cspmp/building-data-pipeline-kafka-docker-4d2a6cfc92ca
+      - dépôt lié : https://github.com/salcaino/sfucmpt733
+    - Exemple avec Kafka : https://github.com/rogaha/data-processing-pipeline/blob/master/docker-compose.yml
+
 ## Aller plus loin
 
 - Le livre _Mastering Docker_, de Russ McKendrick et Scott Gallagher
