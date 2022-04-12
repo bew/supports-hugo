@@ -121,8 +121,8 @@ htop
 
 ## DataOps
 - Doit se baser sur une solution applicative complète comme Kafka
-- Peut-être plus orienté Kubernetes
-- On peut quand même arriver à quelque chose avec Compose et Swarm
+- avec Compose pour les différents services et Swarm pour le scaling
+- Solutions actuelles peut-être plus orientées Kubernetes
 - Ressources :
     - Pas-à-pas très détaillé d'une pipeline "ETL" https://medium.com/sfu-cspmp/building-data-pipeline-kafka-docker-4d2a6cfc92ca
       - dépôt lié : https://github.com/salcaino/sfucmpt733
