@@ -168,7 +168,7 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`.
 - [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/compose-file-v3/) est essentielle.
-- Cette documentation indique aussi les différences entre les mots-clés supportés dans la version 2 et la version 3 des fichiers Docker Compose.
+
 - il est aussi possible d'utiliser des variables d'environnement dans Docker Compose : se référer au [mode d'emploi](https://docs.docker.com/compose/compose-file/#variable-substitution) pour les subtilités de fonctionnement
 
 ---
