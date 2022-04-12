@@ -107,22 +107,9 @@ networks:
 Un deuxième exemple :
 ```yaml
 services:
-
-  mysql:
-    container_name: mysqlpourwordpress
-    environment:
-      - MYSQL_ROOT_PASSWORD=motdepasseroot
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=monwordpress
-    networks:
-    - wordpress
-    image: "mysql:5.7"
-
   wordpress:
     depends_on:
-      - mysql
-    container_name: wordpressavecmysql
+      - mysqlpourwordpress
     environment:
       - "WORDPRESS_DB_HOST=mysqlpourwordpress:3306"
       - WORDPRESS_DB_PASSWORD=monwordpress
@@ -135,11 +122,25 @@ services:
     volumes:
       - wordpress_config:/var/www/html/
 
+  mysqlpourwordpress:
+    image: "mysql:5.7"
+    environment:
+      - MYSQL_ROOT_PASSWORD=motdepasseroot
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=monwordpress
+    networks:
+    - wordpress
+    volumes:
+      - wordpress_data:/var/lib/mysql/
+
 networks:
   wordpress:
 
 volumes:
   wordpress_config:
+  wordpress_data:
+
 ```
 
 ---
