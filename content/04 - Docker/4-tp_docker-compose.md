@@ -254,7 +254,8 @@ networks:
 
 - Lancez l'application et vérifiez que le cache fonctionne en cherchant les messages dans les logs de l'application.
 
-- N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). Cette documentation indique aussi les différences entre la version 2 et la version 3 des fichiers Docker Compose.
+- N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). 
+
 
 <!-- ## Le Docker Compose de `microblog` -->
 
