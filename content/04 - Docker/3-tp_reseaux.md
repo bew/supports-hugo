@@ -41,7 +41,7 @@ Récupérons les images depuis Docker Hub:
 - `docker image pull redis:alpine`
 - `docker image pull russmckendrick/moby-counter`
 
-- Lancez la commande `ip -br a` pour lister vos interfaces réseau et les écrire dans le fichier
+- Lancez la commande `ip -br a` pour lister vos interfaces réseau
 
 Pour connecter les deux applications créons un réseau manuellement:
 
@@ -54,7 +54,7 @@ Maintenant, lançons les deux applications en utilisant notre réseau :
 - `docker run -d --name redis --network <réseau> redis:alpine`
 - `docker run -d --name moby-counter --network <réseau> -p 80:80 russmckendrick/moby-counter`
 
-- Visitez la page de notre application. Qu'en pensez vous ? Moby est le nom de la mascotte Docker 🐳 😊. Faites un motif reconnaissable en cliquant.
+- Visitez la page de notre application. Qu'en pensez vous ? Moby est le nom de la mascotte Docker 🐳 😊. Faites un motif en cliquant.
 
 Comment notre application se connecte-t-elle au conteneur redis ? Elle utilise ces instructions JS dans son fichier `server.js`:
 
@@ -73,7 +73,7 @@ Explorons un peu notre réseau Docker.
 docker exec moby-counter ping -c3 redis
 ```
 
-<!-- - De même, affichez le contenu des fichiers `/etc/hosts` du conteneur (c'est la commande `cat` couplée avec `docker exec`). Nous constatons que Docker a automatiquement configuré l'IP externe **du conteneur dans lequel on est** avec l'identifiant du conteneur. -->
+- De même, affichez le contenu des fichiers `/etc/hosts` du conteneur (c'est la commande `cat` couplée avec `docker exec`). Nous constatons que Docker a automatiquement configuré l'IP externe **du conteneur dans lequel on est** avec l'identifiant du conteneur.
 <!-- - De même, affichez `/etc/resolv.conf` : le résolveur DNS a été configuré par Docker. C'est comme ça que le conteneur connaît l'adresse IP de `redis`. -->
 - Qu'est-ce que Docker fournit qui permet que ce ping fonctionne ?
 - Pour s'en assurer, interrogeons le serveur DNS de notre réseau `moby-network` en lançant la commande `nslookup redis` grâce à `docker exec` :
@@ -91,8 +91,9 @@ Par contre, notre deuxième réseau fonctionne complètement isolé de notre pre
 - Lorsque vous pingez `redis` depuis cette nouvelle instance de l'application, quelle IP obtenez-vous ?
 
 <!-- - Récupérez comme auparavant l'adresse IP du nameserver local pour `moby-counter2`.
+-->
 
-- Puis lancez `nslookup redis <nameserver_ip>` dans le conteneur `moby-counter2` pour tester la résolution de DNS. -->
+- Lancez `nslookup redis` dans le conteneur `moby-counter2` pour tester la résolution de DNS. 
 
 - Vous pouvez retrouver la configuration du réseau et les conteneurs qui lui sont reliés avec `docker network inspect moby-network2`.
   Notez la section IPAM (IP Address Management).
