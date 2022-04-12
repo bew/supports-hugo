@@ -61,8 +61,6 @@ weight: 1040
 ## Ok, lançons Wordpress puis faisons un cluster ELK avec filebeats et les labels pour y envoyer les logs nginx + wordpress. -->
 
 ```yml
-version: 3
-
 services:
   postgres:
     image: postgres:10
@@ -108,7 +106,6 @@ networks:
 
 Un deuxième exemple :
 ```yaml
-version: "3.3"
 services:
 
   mysql:

@@ -71,7 +71,6 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 ---
 
 ```yml
-version: "3"
 services:
   web:
     image: username/repo

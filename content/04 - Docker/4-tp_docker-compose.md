@@ -162,7 +162,6 @@ Une fois dans le conteneur lancez:
 - A la racine de notre projet `identidock` (à côté du Dockerfile), créez un fichier de déclaration de notre application appelé `docker-compose.yml` avec à l'intérieur :
 
 ```yml
-version: "3.7"
 services:
   identidock:
     build: .
@@ -190,7 +189,6 @@ dnmonster:
 Le `docker-compose.yml` doit pour l'instant ressembler à ça :
 
 ```yml
-version: "3.7"
 services:
   identidock:
     build: .
@@ -230,7 +228,6 @@ redis:
 `docker-compose.yml` final :
 
 ```yaml
-version: "3.7"
 services:
   identidock:
     build: .
@@ -307,8 +304,6 @@ sudo chmod go-w filebeat.yml
 Enfin, créons un fichier `docker-compose.yml` pour lancer une stack Elasticsearch :
 
 ```yaml
-version: "3"
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0

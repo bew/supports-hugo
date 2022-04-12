@@ -15,8 +15,6 @@ Nous allons nous baser sur le guide d'introduction [Traefik - Getting started](h
  <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
-version: "3"
-
 services:
   reverse-proxy:
     # The official v2 Traefik docker image
@@ -109,7 +107,6 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
  <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
-version: "3.8"
 services:
       reverse-proxy:
             image: "traefik:v2.3"
