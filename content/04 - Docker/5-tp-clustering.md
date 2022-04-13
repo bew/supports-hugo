@@ -11,11 +11,24 @@ Initialisez Swarm avec `docker swarm init`.
 
 ## Créer un service
 
-A l'aide de `docker service create`, créer un service à partir de l'image `traefik/whoami` accessible sur le port `9999` et connecté au port `80` des 5 répliques.
+A l'aide de la propriété `deploy:` de docker compose, créer un service en 5 exemplaires (`replicas`) à partir de l'image `traefik/whoami` accessible sur le port `9999` et connecté au port `80` des 5 replicas.
 
 
 {{% expand "Solution :" %}}
+
+```yml
+services:
+  whoami:
+    image: traefik/whoami
+    ports:
+      - 9999:80
+    deploy:
+      replicas: 5
+```
+
+En ligne de commande :
 `docker service create --name whoami --replicas 5 -p 9999:80 traefik/whoami`
+
 {{% /expand %}}
 
 Accédez à votre service et actualisez plusieurs fois la page. Les informations affichées changent. Pourquoi ?
