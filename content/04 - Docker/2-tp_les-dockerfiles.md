@@ -282,6 +282,22 @@ if __name__ == "__main__":
 
 ---
 
+##  _Facultatif_ : construire une image "à la main"
+
+Avec `docker commit`, trouvons comment ajouter une couche à une image existante.
+La commande `docker diff` peut aussi être utile.
+
+{{% expand "Solution :" %}}
+
+```bash
+docker run --name debian-updated -d debian apt-get update
+docker diff debian-updated 
+docker commit debian-updated debian:updated
+docker image history debian:updated 
+```
+
+{{% /expand %}}
+
 ## _Facultatif_ : Décortiquer une image
 
 Une image est composée de plusieurs layers empilés entre eux par le Docker Engine et de métadonnées.
