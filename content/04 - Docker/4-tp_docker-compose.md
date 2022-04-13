@@ -257,6 +257,37 @@ networks:
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). 
 
 
+
+### Le Hot Code Reloading (rechargement du code à chaud)
+
+En s'inspirant des exercices sur les volumes (TP3) et du fichier `boot.sh` de l'app microblog (TP2), modifions le `docker compose.yml` pour y inclure des instructions pour lancer le serveur python en mode debug : la modification du code source devrait immédiatement être répercutée dans les logs d'`identidock`, et recharger la page devrait nous montrer la nouvelle version du code de l'application.
+
+{{% expand "Solution :" %}}
+
+```yml
+services:
+  identidock:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - identinet
+    # ---
+    # Config dev à commenter si prod
+    volumes:
+    # le dossier app sur l'hôte contient le code source à la dernière version
+      - "./app:/app"
+    # les variables d'environnement nécessaires
+    environment:
+      - FLASK_APP=/app/identidock.py
+      - FLASK_ENV=development
+    # on surcharge la commande de lancement du conteneur
+    command: flask run -h 0.0.0.0
+    # ---
+```
+
+{{% /expand %}}
+
 <!-- ## Le Docker Compose de `microblog` -->
 
 <!-- Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git clone https://github.com/uptime-formation/microblog`) avec MySQL. -->
@@ -487,6 +518,7 @@ Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_
 --- -->
 
 <!-- Galera automagic docker-compose : https://gist.github.com/lucidfrontier45/497341c4b848dfbd6dfb -->
+
 
 ### _Facultatif :_ Utiliser Traefik
 
