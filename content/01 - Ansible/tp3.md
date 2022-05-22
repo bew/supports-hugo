@@ -4,7 +4,7 @@ draft: false
 weight: 23
 ---
 
-## Ajouter un provisionneur d'infra maison pour créer les machines automatiquement
+<!-- ## Ajouter un provisionneur d'infra maison pour créer les machines automatiquement
 
 - Clonez la correction du TP2 (lien à la fin du TP2) et renommez là en `tp3_provisionner_roles`.
 - Chargez ce dossier dans VSCode (vous pouvez fermer le tp2).
@@ -27,7 +27,7 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Remplacez `x` et `y` dans l'adresse IP par celle fournies par votre réseau virtuel lxd (faites `lxc list` et copier simple les deux chiffre du milieu des adresses IP)
 
-- Ajoutez un playbook `provision_lxd_infra.yml` dans un dossier `provisionners` contenant:
+- Ajoutez un playbook `provision_lxd_infra.yml` dans un dossier `provisioners` contenant:
 
 ```yaml
 - hosts: localhost
@@ -80,7 +80,7 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Lancez le playbook avec `sudo` car `lxd` se contrôle en root sur localhost: `sudo ansible-playbook provision_lxd_infra` (c'est le seul cas exceptionnel ou ansible-playbook doit être lancé avec sudo, pour les autre playbooks ce n'est pas le cas)
 
-- Lancez `lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé.
+- Lancez `lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé. -->
 
 ## Facultatif: Ajouter une machine mysql simple avec un role externe
 
@@ -187,12 +187,13 @@ Nous aimerions maintenant créer un playbook `upgrade_apps.yml` qui contrairemen
 
 ## Correction
 
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Pour la correction clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>.
 - Renommez le clone en tp3.
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp3_correction` avec `git checkout tp3_correction`.
 
 Il contient également les corrigés du TP2 et TP4 dans d'autre branches.
+
 ## Bonus 
 
 Essayez différents exemples de projets de Geerlingguy accessibles sur github à l'adresse [https://github.com/geerlingguy/ansible-for-devops](https://github.com/geerlingguy/ansible-for-devops).
@@ -200,7 +201,28 @@ Essayez différents exemples de projets de Geerlingguy accessibles sur github à
 
 ## Bonus 2 - Unit testing de role avec Molecule
 
-Pour des roles fiable il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau role pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker:
+Pour des rôles fiables il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau rôle pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker.
 
-- Tutoriel : https://www.adictosaltrabajo.com/2020/05/08/ansible-testing-using-molecule-with-ansible-as-verifier/
-- Documentation : https://molecule.readthedocs.io/en/latest/
+<!-- On peut créer des scénarios. -->
+
+<!-- Et du coup ça fait du tdd des le début -->
+
+<!-- Y a un template
+Et il faut commencer par la -->
+
+<!-- Plein de drivers pas fonctionnels sauf docker -->
+<!-- Pour des cas compliqués genre wireguard ou ynh ça marche pas du coup driver hcloud est le meilleur driver vps -->
+
+<!-- - `check.yml`
+- `converge.yml`
+- `idempotent.yml`
+- `verify.yml` -->
+
+<!-- -  tu peux l'écrire avec ansible qui vérifie tout tâche par tâche écrite originalement
+- Ou alors avec testinfra la lib python spécialisée en collecte de facts os -->
+
+
+- Documentation : <https://molecule.readthedocs.io/en/latest/>
+
+- Suivre le tutoriel *Getting started* : <https://molecule.readthedocs.io/en/latest/getting-started.html>
+<!-- - Tutoriel : https://www.adictosaltrabajo.com/2020/05/08/ansible-testing-using-molecule-with-ansible-as-verifier/ -->

@@ -53,11 +53,11 @@ ansible all -m ping
 git init   # à executer à la racine du projet
 ```
 
-- Ajoutez un fichier `.gitignore` avec à l'intérieur:
+<!-- - Ajoutez un fichier `.gitignore` avec à l'intérieur:
 
 ```bash
 *.retry   # Fichiers retry produits lors des execution en echec de ansible-playbook
-```
+``` -->
 
 - Committez vos modifications avec git.
 
@@ -67,7 +67,7 @@ git commit -m "démarrage tp2"
 ```
 {{% /expand %}}
 
-## Premier playbook : installer les dépendances
+## Créer le playbook : installer les dépendances
 
 Le but de ce projet est de déployer une application flask, c'est a dire une application web python.
 Le code (très minimal) de cette application se trouve sur github à l'adresse: [https://github.com/e-lie/flask_hello_ansible.git](https://github.com/e-lie/flask_hello_ansible.git).

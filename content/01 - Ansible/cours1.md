@@ -195,7 +195,8 @@ Plus récemment avec l'arrivé d'`Ansible container`  il est possible de constru
 {{% /notice %}}
 
 
-## Partie 1, Installation, configuration et commandes ad hoc.
+## Partie 1, Installation, configuration
+<!-- et commandes ad hoc. -->
 
 Pour l'installation plusieurs options sont possibles:
 
@@ -221,10 +222,10 @@ Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles,
 
 La solution classique pour cela est vagrant qui permet de décrire dans un Vagrantfile des machines et de piloter par exemple virtualbox pour créer ces machines virtuelles.
 
-Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
+<!-- Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
 
 - plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
-- seulement sur linux
+- seulement sur linux -->
 
 Il est également très indiqué de faire des labs dans le cloud en louant des machines à la volée.
 Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
@@ -270,15 +271,15 @@ Liste des paramètre de configuration:
 Alternativement on peut configurer ansible par projet avec un fichier `ansible.cfg` présent à la racine. Toute commande ansible lancée à la racine du projet récupère automatiquement cette configuration.
 
 
-### La commande `ansible`
+### La commande `ansible-playbook`
 
 - version minimale : 
-`ansible <groupe_machine> -m <module> -a <arguments_module>`
+`ansible-playbook mon-playbook.yml`
 
-- `ansible all -m ping`: Permet de tester si les hotes sont joignables et ansible utilisable (SSH et python sont présents et configurés).
+<!-- - `ansible all -m ping`: Permet de tester si les hotes sont joignables et ansible utilisable (SSH et python sont présents et configurés). -->
 
 - version plus complète :
-`ansible <groupe_machine> --inventory <fichier_inventaire> --become -m <module> -a <arguments_module>`
+`ansible-playbook <fichier_playbook> --limit <groupe_machine> --inventory <fichier_inventaire> --become -vv --diff` 
 
 
 ### Les modules Ansible
@@ -292,11 +293,11 @@ Il en existe pour un peu toute les tâches raisonnablement courantes : un slogan
 
 - `yum/apt`: pour gérer les paquets sur les distributions basées respectivement sur Red Hat ou Debian.
 
-`... -m yum -a "name=openssh-server state=present"` 
+<!-- `... -m yum -a "name=openssh-server state=present"`  -->
   
 - `systemd` (ou plus générique `service`): gérer les services/daemons d'un système.
 
-`... -m systemd -a "name=openssh-server state=started"` 
+<!-- `... -m systemd -a "name=openssh-server state=started"`  -->
 
 - `user`: créer des utilisateurs et gérer leurs options/permission/groupes
 
@@ -319,7 +320,20 @@ Il est également à noter que la plupart des arguments sont facultatifs.
 
 Exemple et bonne pratique: toujours préciser `state: present` même si cette valeur est presque toujours le défaut implicite.
 
+<!-- FIXME: ajout de liens vers module ynh créé et "quand doit-on créer un module ? -->
 
+<!-- 
+### La commande `ansible`
+
+- version minimale : 
+`ansible <groupe_machine> -m <module> -a <arguments_module>`
+
+- `ansible all -m ping`: Permet de tester si les hotes sont joignables et ansible utilisable (SSH et python sont présents et configurés).
+
+- version plus complète :
+`ansible <groupe_machine> --inventory <fichier_inventaire> --become -m <module> -a <arguments_module>` -->
+
+<!-- 
 ### La console `ansible-console`
 
 Pour exécuter des commandes ad-hoc ansible propose aussi un interpréteur spécifique avec la commande `ansible-console`:
@@ -349,7 +363,7 @@ app2 | SUCCESS => {
 
 - Une fois loggué sur un groupe de serveur, on peut y exécuter les même commandes qu'avec `ansible` an fournissant les arguments à la suite.
 
-- Exemple: `systemd name=nginx state=started`
+- Exemple: `systemd name=nginx state=started` -->
 
 
 ## Commençons le TP1

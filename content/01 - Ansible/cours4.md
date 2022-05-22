@@ -183,19 +183,19 @@ ansible-inventory --inventory <inventory> --graph
 - Inventory plugins
 - Connection plugins
 
-### Intégration Ansible et AWS
+<!-- ### Intégration Ansible et AWS
 
 Pour les VPS de base Amazon EC2 : utiliser un plugin d'inventaire AWS et les modules adaptés.
 
 - Module EC2: [https://docs.ansible.com/ansible/latest/modules/ec2_module.html](https://docs.ansible.com/ansible/latest/modules/ec2_module.html).
-- Plugin d'inventaire: [https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html](https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html).
+- Plugin d'inventaire: [https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html](https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html). -->
 
-### Intégration Ansible Nagios
+<!-- ### Intégration Ansible Nagios
 
 
 **Possibilité 1** : Gérer l'exécution de tâches Ansible et le monitoring Nagios séparément, utiliser le [module nagios](https://docs.ansible.com/ansible/latest/modules/nagios_module.html) pour désactiver les alertes Nagios lorsqu'on manipule les ressources monitorées par Nagios.
 
-**Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes.
+**Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes. -->
 
 ### Ansible et Terraform
 
@@ -219,7 +219,6 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
   - très puissant
   - plein de plugins d'intégration
   - logging des exécutions assez optimal
-  - 
 
 - Jenkins
   - Un peu vieux mais très versatile

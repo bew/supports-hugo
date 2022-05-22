@@ -74,7 +74,7 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 {{% /expand %}}
 
 
-## Explorer LXD 
+<!-- ## Explorer LXD 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
@@ -93,23 +93,22 @@ Pour initialiser LXD et générer les images de base nous allons utiliser un scr
 
 - Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH).
 
-- Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1`
+- Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1` -->
 
 
 ## Configurer des images prêtes pour Ansible
 
 Nous avons besoin d'images Linux configurées avec SSH, Python et un utilisateur de connexion (disposant idéalement d'une clé ssh configurée pour éviter d'avoir à utiliser un mot de passe de connection)
 
+{{% expand "Facultatif :" %}}
 
 ### Facultatif : Configurer un conteneur pour Ansible manuellement
 
 Si vous devez refaire les travaux pratiques from scratch (sans la VM de TP actuelle et le script de génération lxd.sh), vous pouvez générer les images LXD pour la suite avec les instructions suivantes:
 
-{{% expand "Facultatif :" %}}
-
 
 - Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur  lancez les commandes suivantes:
-
+<!-- 
 ##### Pour centos
 
 ```bash
@@ -132,7 +131,7 @@ useradd -m -s /bin/bash -G wheel stagiaire
 passwd stagiaire
 
 exit
-```
+``` -->
 
 ##### Pour ubuntu
 
@@ -168,7 +167,7 @@ ssh-copy-id -i ~/.ssh/id_ed25519 stagiaire@<ip_conteneur>
 ssh stagiaire@<ip_conteneur>
 ```
 
-### Exporter nos conteneurs en image pour pouvoir les multipliers
+<!-- ### Exporter nos conteneurs en image pour pouvoir les multiplier
 
 LXD permet de gérer aisément des snapshots de nos conteneurs sous forme d'images (archive du systeme de fichier + manifeste).
 
@@ -191,6 +190,7 @@ lxc launch centos_ansible_ready centos2 centos3
 ```bash
 lxc delete centos1 centos2 centos3 --force
 ```
+ -->
 
 {{% /expand %}}
 
@@ -296,7 +296,8 @@ centos1 ansible_host=<ip>
 En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des modes de connexion différents pour chaque machine.
 
 
-## Installons nginx avec quelques modules et commandes ad-hoc
+## Installons nginx avec quelques modules
+ <!-- et commandes ad-hoc -->
 
 - Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
 
@@ -323,43 +324,71 @@ Dans un inventaire ansible on commence toujours par créer les plus petits sous 
 Nous allons maintenant installer `nginx` sur les 2 machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
 
 - Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois impossible d'utiliser `apt` car centos utilise `yum`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
-  - Allez voir la documentation de ce module
-  - utilisez `--become` pour devenir root avant d'exécuter la commande (cf élévation de privilège dans le cours2)
-  - Utilisez le pour installer `nginx`
+- 
+- N'hésitez pas consulter extensivement la documentation des modules avec leur exemple ou d'utiliser la commande de documentation `ansible-doc <module>`
+  <!-- - utilisez `become` pour devenir root avant d'exécuter la commande (cf élévation de privilège dans le cours2) -->
 
+
+
+## Premier playbook
+
+
+- Créons un playbook : ajoutez un fichier `tp1.yml` avec à l'intérieur:
+
+```yaml
+- hosts: <hotes_cible>
+  
+  tasks:
+    - name: ping
+      ping:
+```
+
+- Lancez ce playbook avec la commande `ansible-playbook <nom_playbook>`.
+
+<!-- - Commençons par installer les dépendances de cette application. Tous nos serveurs d'application sont sur ubuntu. Nous pouvons donc utiliser le module `apt` pour installer les dépendances. Il fournit plus d'option que le module `package`. -->
+
+- Créons un playbook rudimentaire pour installer `nginx`.
+
+- Relancez le playbook après avoir sauvegardé les modifications.
+- Re-relancez le même playbook une seconde fois. Que se passe-t-il ?
+
+{{% expand "Réponse  :" %}}
+C'est l'idempotence: ansible nous indique via les couleurs vertes ou jaunes si nginx était déjà présent sur le serveur.
+{{% /expand %}} -->
+<!-- 
 {{% expand "Réponse  :" %}}
 ```
 ansible adhoc_lab --become -m package -a "name=nginx state=present"
 ```
-{{% /expand %}}
+{{% /expand %}} -->
 
-- Pour résoudre le problème installez `epel-release` sur la  machine centos.
+<!-- - Pour résoudre le problème installez `epel-release` sur la  machine centos.
 
 {{% expand "Réponse  :" %}}
 ```
 ansible centos_hosts --become -m package -a "name=epel-release state=present"
 ```
-{{% /expand %}}
+{{% /expand %}} -->
 
-- Relancez la commande d'installation de `nginx`. Que remarque-t-on ?
+<!-- - Relancez la commande d'installation de `nginx`. Que remarque-t-on ? -->
 
-{{% expand "Réponse  :" %}}
+<!-- {{% expand "Réponse  :" %}}
 ```
 ansible adhoc_lab -m package -a name=nginx state=present
-```
+``` -->
 
-la machine centos a un retour changed jaune alors que la machine ubuntu a un retour ok vert. C'est l'idempotence: ansible nous indique que nginx était déjà présent sur le serveur ubuntu.
-{{% /expand %}}
+<!-- la machine centos a un retour changed jaune alors que la machine ubuntu a un retour ok vert. C'est l'idempotence: ansible nous indique que nginx était déjà présent sur le serveur ubuntu.
+{{% /expand %}} -->
 
 - Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur la machine ubuntu et non démarré sur la machine centos.
 
-{{% expand "Réponse  :" %}}
+<!-- {{% expand "Réponse  :" %}}
 ```
 ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
 ```
-{{% /expand %}}
+{{% /expand %}} -->
 
-- L'option `--check` à vérifier l'état des ressources sur les machines mais sans modifier la configuration`. Relancez la commande précédente pour le vérifier. Normalement le retour de la commande est le même (l'ordre peu varier).
+- L'option `--check` sert à vérifier l'état des ressources sur les machines mais sans modifier la configuration`. Relancez la commande précédente pour le vérifier. Normalement le retour de la commande est le même (l'ordre peut varier).
 
 - Lancez la commande avec `state=stopped` : le retour est inversé.
 
@@ -389,7 +418,7 @@ Il existe trois façon de lancer des commandes unix avec ansible:
 - Relancez la commande. Le retour est toujours `changed` car ces modules ne sont pas idempotents.
 
 - Relancer l'un des modules `shell` ou `command` avec `touch` et l'option `creates` pour rendre l'opération idempotente. Ansible détecte alors que le fichier témoin existe et n'exécute pas la commande.
-
+<!-- 
 ```
 ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
-```
+``` -->

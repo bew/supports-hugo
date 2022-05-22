@@ -379,6 +379,7 @@ Pour transformer la valeur des variables à la volée lors de leur appel on peut
   - [https://www.tailored.cloud/devops/advanced-list-operations-ansible/](https://www.tailored.cloud/devops/advanced-list-operations-ansible/)
 
 La liste complète des filtres ansible se trouve ici : [https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html)
+<!-- TODO: ajout de liens vers jinja filter custom -->
 
 #### Debugger un playbook.
 

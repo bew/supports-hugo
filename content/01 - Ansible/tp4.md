@@ -95,13 +95,15 @@ source .env
 
 {{% /expand %}}
 
-## Infrastructure multi-tiers avec load balancer
+<!-- ## Infrastructure multi-tiers avec load balancer
 
 Pour configurer notre infrastructure:
 
 - Installez les roles avec `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
 - Si vous n'avez pas fait la partie Terraform:
+{{% expand "Facultatif  :" %}}
+
   - complétez l'inventaire statique (inventory.cfg)
   - changer dans ansible.cfg l'inventaire en `./inventory.cfg` comme pour les TP précédents
   - Supprimez les conteneurs app1 et app2 du TP précédent puis lancez le playbook de provisionning lxd : `sudo ansible-playbook provisionner/provision_lxd_infra.yml`
@@ -132,7 +134,10 @@ ansible-playbook --extra-vars="backend_name=<noeud a desactiver> backend_state=d
 
 - Nous allons maintenant mettre à jour
 
-## Falcultatif : ajoutons un serveur de control AWX (/ Ansible Tower)
+{{% /expand %}} -->
+
+
+## Falcultatif : ajoutons un serveur de contrôle AWX (/ Ansible Tower)
 
 {{% expand "Facultatif  :" %}}
 - Choisissez un mot de passe et chiffrez le avec `ansible-vault encrypt_string <votre_mot_de_passe>`.
@@ -251,8 +256,8 @@ before_script: # some steps to execute before the main pipeline stage
 
 - Exécutez ensuite le job en cliquant sur la fusée. Vous vous retrouvez sur la page de job de AWX. La sortie ressemble à celle de la commande mais vous pouvez en plus explorer les taches exécutées en cliquant dessus.
 
-- Modifiez votre job, dans la section `Plannifier` configurer l'exécution du playbook site.yml toutes les 15 minutes.
+- Modifiez votre job, dans la section `Planifier` configurer l'exécution du playbook site.yml toutes les 15 minutes.
 
-- Allez dans la section plannification. Puis visitez l'historique des Jobs.
+- Allez dans la section planification. Puis visitez l'historique des Jobs.
 
 
