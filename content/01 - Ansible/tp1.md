@@ -1,5 +1,5 @@
 ---
-title: 'TP1 - Mise en place et Ansible ad-hoc'
+title: 'TP1 - Mise en place d'Ansible et premier playbook'
 draft: false
 weight: 21
 ---
@@ -354,7 +354,8 @@ Nous allons maintenant installer `nginx` sur les 2 machines. Il y a plusieurs fa
 
 {{% expand "Réponse  :" %}}
 C'est l'idempotence: ansible nous indique via les couleurs vertes ou jaunes si nginx était déjà présent sur le serveur.
-{{% /expand %}} -->
+{{% /expand %}}
+
 <!-- 
 {{% expand "Réponse  :" %}}
 ```
