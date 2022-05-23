@@ -3,7 +3,7 @@ title: "TP2 - Créer un playbook de déploiement d'application flask"
 draft: false
 weight: 22
 ---
-
+<!-- 
 ## Création du projet
 
 - Créez un nouveau dossier `tp2_flask_deployment`.
@@ -51,7 +51,7 @@ ansible all -m ping
 
 ```
 git init   # à executer à la racine du projet
-```
+``` -->
 
 <!-- - Ajoutez un fichier `.gitignore` avec à l'intérieur:
 
@@ -59,13 +59,13 @@ git init   # à executer à la racine du projet
 *.retry   # Fichiers retry produits lors des execution en echec de ansible-playbook
 ``` -->
 
-- Committez vos modifications avec git.
+<!-- - Committez vos modifications avec git.
 
 ```
 git add -A
 git commit -m "démarrage tp2"
 ```
-{{% /expand %}}
+{{% /expand %}} -->
 
 ## Créer le playbook : installer les dépendances
 
