@@ -392,3 +392,5 @@ Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
 - Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
 
 Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+
+<!-- TODO: laïus sur register a et a.stdout -->

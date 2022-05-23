@@ -168,9 +168,9 @@ Avec ces informations et la documentation du module `pip` installez les dépenda
         virtualenv_python: python3
 ```
 
-## Changer les permission sur le dossier application
+## Changer les permissions sur le dossier application
 
-Notre application sera executée en tant qu'utilisateur flask pour des raisons de sécurité. Pour cela le dossier doit appartenir à cet utilisateur or il a été créé en tant que root (à cause du `become: yes` de notre playbook).
+Notre application sera exécutée en tant qu'utilisateur flask pour des raisons de sécurité. Pour cela le dossier doit appartenir à cet utilisateur or il a été créé en tant que root (à cause du `become: yes` de notre playbook).
 
 - Créez une tache `file` qui change le propriétaire du dossier de façon récursive.
 
@@ -441,7 +441,7 @@ Ajoutez une section `handlers:` à la suite
 # => penser aussi à supprimer la tâche de restart de nginx précédente
 ```
 
-## Rendre le playbook dynamique avec une boucle.
+## Facultatif: Rendre le playbook dynamique avec une boucle.
 
 Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d'application à installer (liste potentiellement définie durant l'exécution).
 
