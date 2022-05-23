@@ -3,7 +3,7 @@ title: 'Cours 1 - Présentation'
 draft: false
 weight: 10
 ---
-
+<!-- 
 ## Plan
  
 ### Module 1 : Installer ansible, configurer la connexion et commandes ad hoc ansible
@@ -88,7 +88,7 @@ weight: 10
 - Intégration et déploiement avec Gitlab
 - Gérer une production Ansible découvrir TOWER/AWX
 - Tester ses roles et gérer de multiples versions
-#### TP4: Refactoring de notre code pour effectuer un rolling upgrade et déploiement dans le cloud + AWX
+#### TP4: Refactoring de notre code pour effectuer un rolling upgrade et déploiement dans le cloud + AWX -->
 
 
 ## Présentation d'Ansible

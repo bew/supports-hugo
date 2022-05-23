@@ -1,5 +1,5 @@
 ---
-title: 'TP1 - Mise en place d'Ansible et premier playbook'
+title: "TP1 - Mise en place d'Ansible et premier playbook"
 draft: false
 weight: 21
 ---

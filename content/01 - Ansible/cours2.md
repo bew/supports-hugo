@@ -126,7 +126,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
   pre_tasks:
     - name: dynamic variable
       set_fact:
-        mavariable: "{{ inventory_hostname + 'prod' }}" #guillemets obligatoires
+        mavariable: "{{ inventory_hostname + '_prod' }}" #guillemets obligatoires
 
   roles:
     - flaskapp
