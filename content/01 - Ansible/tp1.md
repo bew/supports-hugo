@@ -247,6 +247,8 @@ Un projet Ansible implique généralement une configuration Ansible spécifique 
 inventory = ./inventory.cfg
 roles_path = ./roles
 host_key_checking = false # nécessaire pour les labs ou on créé et supprime des machines constamment avec des signatures SSH changées.
+stdout_callback = yaml
+bin_ansible_callbacks = True
 ```
 
 - Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`. Il faut pour cela lister les conteneurs lxc lancés.
@@ -299,10 +301,10 @@ En précisant les paramètres de connexion dans le playbook il et aussi possible
 ## Installons nginx avec quelques modules
  <!-- et commandes ad-hoc -->
 
-- Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
+<!-- - Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`) -->
 
 
-```ini
+<!-- ```ini
 [all:vars]
 ansible_user=<votre_user>
 
@@ -315,19 +317,18 @@ centos1 ansible_host=<ip>
 [adhoc_lab:children]
 ubuntu_hosts
 centos_hosts
-```
+``` -->
 
-Dans un inventaire ansible on commence toujours par créer les plus petits sous groupes puis on les rassemble en plus grands groupes.
+<!-- Dans un inventaire ansible on commence toujours par créer les plus petits sous groupes puis on les rassemble en plus grands groupes. -->
 
-- Pinguer chacun des 3 groupes avec une commande ad hoc.
+<!-- - Pinguer chacun des 3 groupes avec une commande ad hoc. -->
 
-Nous allons maintenant installer `nginx` sur les 2 machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
+Nous allons maintenant installer `nginx` sur nos machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
 
-- Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois impossible d'utiliser `apt` car centos utilise `yum`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
+- Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois, impossible d'utiliser `apt` car centos utilise `yum`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
 - 
 - N'hésitez pas consulter extensivement la documentation des modules avec leur exemple ou d'utiliser la commande de documentation `ansible-doc <module>`
-  <!-- - utilisez `become` pour devenir root avant d'exécuter la commande (cf élévation de privilège dans le cours2) -->
-
+  - utilisez `become` pour devenir root avant d'exécuter la commande (cf élévation de privilège dans le cours2)
 
 
 ## Premier playbook
