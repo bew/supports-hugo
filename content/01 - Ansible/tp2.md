@@ -441,7 +441,29 @@ Ajoutez une section `handlers:` à la suite
 # => penser aussi à supprimer la tâche de restart de nginx précédente
 ```
 
-## Facultatif: Rendre le playbook dynamique avec une boucle.
+## Solution
+
+- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Renommez le clone en tp2.
+- ouvrez le projet avec VSCode.
+- Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
+
+Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+
+Vous pouvez consultez la correction également directement sur le site de github.
+
+## Bonus 1
+
+Pour ceux ou celles qui sont allés vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
+
+## Bonus 2 : pour pratiquer
+
+Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
+
+Il s'agit de l'application construite au fur et à mesure dans un [magnifique tutoriel python](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.
+
+
+## Bonus 3 : Rendre le playbook dynamique avec une boucle.
 
 Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d'application à installer (liste potentiellement définie durant l'exécution).
 
@@ -480,24 +502,3 @@ flask_apps:
 - Créez le dossier `group_vars` et déplacez le dictionnaire `flask_apps` dans un fichier `group_vars/appservers.yml`. Comme son nom l'indique ce dossier permet de définir les variables pour un groupe de serveurs dans un fichier externe.
 
 - Testez en relançant le playbook que le déplacement des variables est pris en compte correctement.
-
-## Correction
-
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
-- Renommez le clone en tp2.
-- ouvrez le projet avec VSCode.
-- Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
-
-Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
-
-Vous pouvez consultez la correction également directement sur le site de github.
-
-## Bonus
-
-Pour ceux ou celles qui sont allés vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
-
-## Bonus 2 pour pratiquer
-
-Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
-
-Il s'agit de l'application construite au fur et à mesure dans un [magnifique tutoriel python](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.
