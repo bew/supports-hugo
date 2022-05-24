@@ -103,6 +103,22 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
         state: present
 ```
 
+ou bien en utilisant une `loop`, plus passe-partout :
+
+```yaml
+    - name: Ensure apt dependencies are present
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3-dev
+        - python3-pip
+        - python3-virtualenv
+        - virtualenv
+        - nginx
+        - git
+```
+
 - Relancez bien votre playbook à chaque tache : comme Ansible est idempotent il n'est pas grave en situation de développement d'interrompre l'exécution du playbook et de reprendre l'exécution après un échec.
 
 - Ajoutez une tâche `systemd` pour s'assurer que le service `nginx` est démarré.
