@@ -135,7 +135,10 @@ flaskapp
 ```
 
 - Les templates et les listes de handlers/tasks sont a mettre dans les fichiers correspondants (voir plus bas)
-- Le fichier `defaults/main.yml` permet de définir des valeurs par défaut pour les variables du role. Mettez à l'intérieur une application par défaut:
+- Le fichier `defaults/main.yml` permet de définir des valeurs par défaut pour les variables du role.
+
+- **Si vous avez fait le Bonus 2 du TP2** *"Rendre le playbook dynamique avec une boucle"*
+  - Mettez à l'intérieur une application par défaut dans la variable `flask_apps`
 
 ```yaml
 flask_apps:
@@ -144,6 +147,17 @@ flask_apps:
     repository: https://github.com/e-lie/flask_hello_ansible.git
     version: master
     user: defaultflask
+```
+- **Sinon :**
+  - Mettez à l'intérieur des valeurs par défaut pour la variable `app` :
+
+```yaml
+app:
+  name: defaultflask
+  domain: defaultflask.test
+  repository: https://github.com/e-lie/flask_hello_ansible.git
+  version: master
+  user: defaultflask
 ```
 
 Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (la liste de deux applications du TP2). Elle est présente pour éviter que le role plante en l'absence de variable (valeurs de fallback).

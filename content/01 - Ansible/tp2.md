@@ -176,6 +176,8 @@ Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'i
 
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
 
+{{% expand "Cliquez pour voir la solution :" %}}
+
 ```yaml
     - name: Install python dependencies for the webapp in a virtualenv
       pip:
@@ -183,6 +185,8 @@ Avec ces informations et la documentation du module `pip` installez les dépenda
         virtualenv: /home/flask/hello/venv
         virtualenv_python: python3
 ```
+
+{{% /expand %}}
 
 ## Changer les permissions sur le dossier application
 
@@ -258,12 +262,12 @@ server {
 - Visitez l'application dans un navigateur et debugger le cas échéant.
 
 
-# Correction intermédiaire
+# Solution intermédiaire
 
 `flaskhello_deploy.yml`
 
 
-{{% expand "Code de correction :" %}}
+{{% expand "Code de solution :" %}}
 ```yaml
 - hosts: appservers
   become: yes
@@ -355,8 +359,8 @@ server {
 ```
 
 - Renommez votre fichier `flaskhello_deploy.yml` en `flaskhello_deploy_precorrection.yml`.
-- Copiez la correction dans un nouveau fichier `flaskhello_deploy.yml`.
-- Lancez le playbook de correction `ansible-playbook flaskhello_deploy.yml`.
+- Copiez la solution dans un nouveau fichier `flaskhello_deploy.yml`.
+- Lancez le playbook de solution `ansible-playbook flaskhello_deploy.yml`.
 - Après avoir ajouté `hello.test` à votre `/etc/hosts` testez votre application en visitant la page `hello.test`.
 {{% /expand %}}
 
@@ -366,11 +370,11 @@ server {
   
 ```
 git add -A
-git commit -m "tp2 correction intermediaire"
+git commit -m "tp2 solution intermediaire"
 ```
 
 - Installez l'extension `git graph` dans vscode.
-- Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 correction intermediaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
+- Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 solution intermediaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
 
 !!! Nous constatons que git a mémorisé les versions successives du code et permet de revenir à une version antérieure de votre déploiement.
 
@@ -416,14 +420,14 @@ app:
 ```
 {{% /expand %}}
 
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Pour la solution clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>
 - Renommez le clone en tp2_before_handlers.
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_before_handlers_correction` avec `git checkout tp2_before_handlers_correction`.
 
 Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
 
-Vous pouvez consultez la correction également directement sur le site de github.
+Vous pouvez consultez la solution également directement sur le site de github.
 
 ## Ajouter un handler pour nginx et le service
 
@@ -454,47 +458,47 @@ Ajoutez une section `handlers:` à la suite
         name: "nginx"
         state: reloaded
 
-# => penser aussi à supprimer la tâche de restart de nginx précédente
+# => penser aussi à supprimer la tâche maintenant inutile de restart de nginx précédente
 ```
 
 ## Solution
 
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Pour la solution clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>
 - Renommez le clone en tp2.
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
 
 Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
 
-Vous pouvez consultez la correction également directement sur le site de github.
+Vous pouvez consultez la solution également directement sur le site de github.
 
-## Bonus 1
+## Bonus 1 : faire varier le playbook selon les OS
 
 Pour ceux ou celles qui sont allés vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
 
-## Bonus 2 : pour pratiquer
 
-Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
-
-Il s'agit de l'application construite au fur et à mesure dans un [magnifique tutoriel python](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.
-
-
-## Bonus 3 : Rendre le playbook dynamique avec une boucle.
+## Bonus 2 : Rendre le playbook dynamique avec une boucle
 
 Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d'application à installer (liste potentiellement définie durant l'exécution).
 
 - Identifiez dans le playbook précédent les tâches qui sont exactement communes aux deux installations.
+{{% expand "Réponse  :" %}}
 
-!!! il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+> Il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+
+{{% /expand %}}
 
 - Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres taches mais sans les handlers que vous laisserez à la fin du playbook.
+- 
+{{% expand "Réponse  :" %}}
 
-!!! Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
+> Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
+> 
+{{% /expand %}}
 
-- Ce nouveau fichier n'est pas à proprement parlé un `playbook` mais une liste de taches. utilisez `include_tasks:` pour importer cette liste de tâche à l'endroit ou vous les avez supprimées.
+- Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de taches. Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit ou vous les avez supprimées.
 - Vérifiez que le playbook fonctionne et est toujours idempotent.
 - Ajoutez une tâche `debug: msg={{ app }}` au début du playbook pour visualiser le contenu de la variable.
-
 
 - Ensuite remplacez la variable `app` par une liste `flask_apps` de deux dictionnaires (avec `name`, `domain`, `user` différents les deux dictionnaires et `repository` et `version` identiques).
 
@@ -518,3 +522,9 @@ flask_apps:
 - Créez le dossier `group_vars` et déplacez le dictionnaire `flask_apps` dans un fichier `group_vars/appservers.yml`. Comme son nom l'indique ce dossier permet de définir les variables pour un groupe de serveurs dans un fichier externe.
 
 - Testez en relançant le playbook que le déplacement des variables est pris en compte correctement.
+
+## Bonus 3 : pour pratiquer
+
+Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
+
+Il s'agit de l'application construite au fur et à mesure dans un [magnifique tutoriel python](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.
