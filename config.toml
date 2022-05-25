@@ -1,7 +1,7 @@
 baseURL = "https://supports.uptime-formation.fr/"
 languageCode = "fr-FR"
 title = "Formations Uptime"
-theme = ["hugo-theme-learn", "reveal-hugo"]
+theme = ["hugo-theme-learn"]
 
 # Pour la fonctionnalité de recherche
 [outputs]
@@ -11,8 +11,8 @@ home = [ "HTML", "RSS", "JSON" ]
 editURL = "https://github.com/Uptime-Formation/hugo_supports"
 globalTitle = "Cursus DevOps - 2021"
 
-[params.reveal_hugo]
-custom_theme = "reveal-hugo/themes/robot-lung.css"
+# [params.reveal_hugo]
+# custom_theme = "reveal-hugo/themes/robot-lung.css"
 
 # [menu.shortcuts]
 
