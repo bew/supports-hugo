@@ -1,16 +1,25 @@
-baseURL = "https://cursus-janvier2020.uptime-formation.fr/"
+baseURL = "https://supports.uptime-formation.fr/"
 languageCode = "fr-FR"
-title = "Formation Ansible"
-
-# Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
-theme = "hugo-theme-learn"
+title = "Formations Uptime"
+theme = ["hugo-theme-learn", "reveal-hugo"]
 
 # Pour la fonctionnalité de recherche
 [outputs]
 home = [ "HTML", "RSS", "JSON" ]
 
 [params]
-editURL = "https://github.com/e-lie/hugo_cursus_janvier2020"
+editURL = "https://github.com/Uptime-Formation/hugo_supports"
+globalTitle = "Cursus DevOps - 2021"
 
+[params.reveal_hugo]
+custom_theme = "reveal-hugo/themes/robot-lung.css"
 
 # [menu.shortcuts]
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
