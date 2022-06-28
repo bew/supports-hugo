@@ -120,7 +120,7 @@ apiVersion: skaffold/v1
 kind: Config
 build:
   artifacts:
-  - image: registry.kluster.ptych.net/frontend
+  - image: registry.kluster.ptych.net/frontend # change with your registry and log to it with docker login
 deploy:
   kubectl:
     manifests:

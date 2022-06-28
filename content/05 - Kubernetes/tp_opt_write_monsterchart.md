@@ -91,11 +91,8 @@ Enfin nous allons ajouter la gestion dynamique du ingress en copiant celle du ch
 ### Idées d'amélioration
 
 <!-- TODO 
-- utiliser dès le départ une application avec domaine depuis un variable d'env
-
 tester et ajouter la question:
-- De même trouvez dans l'exemple de wordpress comment ajouter un paramètre de réplication et répartir les réplicats sur plusieurs noeuds du cluster. Testons cette configuration sur un cluster multinoeud loué. lien vers le dépot scalelaab.-ty-
-
+- De même trouvez dans l'exemple de wordpress comment ajouter un paramètre de réplication et répartir les réplicats sur plusieurs noeuds du cluster. Testons cette configuration sur un cluster multinoeud loué. lien vers le dépot scalelaab.
 -->
 
 - Paramétrer les labels comme dans le chart exemple. 
