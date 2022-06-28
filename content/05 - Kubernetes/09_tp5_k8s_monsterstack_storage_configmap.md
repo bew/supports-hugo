@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "09 - TP 5 - Ajouter une persistance et une configMap à notre application"
 weight: 2055
 ---
