@@ -35,10 +35,12 @@ En l'état les `PersistentVolumes` générés par la combinaison du `PersistentV
 
 Pour éviter cela il faut avec une `Reclaim Policy` à `retain` (conserver) et non `delete` comme suit https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/. Les volumes sont alors conservés et les données peuvent être récupérées manuellement. Mais les volumes ne peuvent pas être reconnectés à des PVCs automatiquement.
 
-- Pour récupérer les données on peut monter le PV manuellement dans un pod
-- Ou utiliser la nouvelle fonctionnalité de clone de volume
+Pour récupérer les données on peut:
 
-La correction de cette partie se trouve dans la branche `tp_monsterstack_correction_pvc` :
+- récupérer les données à la main sur le disque/volume réseau indépendamment de kubernetes
+- utiliser la nouvelle fonctionnalité de clone de volume
+
+Lah correction de cette partie se trouve dans la brance `tp_monsterstack_correction_pvc` :
 
 `git clone -b tp_monsterstack_correction_pvc https://github.com/Uptime-Formation/corrections_tp.git tp_monsterstack_correction_pvc`
 
