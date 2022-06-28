@@ -36,13 +36,18 @@ source ~/.bashrc
 
 - `kubectl get nodes` ou `kubectl cluster-info` permet de vérifier le résultat.
 
-## Facultatif : merger la configuration kubectl
+### Ajouter les connexions à Lens
+
+Lens permet de chercher les kubeconfigs via l'interface et d'enregistrer plusieurs cluster dans la hotbar a gauche.
+
+Le context de kubectl dans le terminal de Lens est automatiquement celui du cluster actuellement sélectionné. On peut s'en rendre compte en lançant `kubectl get nodes` dans deux terminaux dans chacun des deux cluster dans Lens.
+
+### Facultatif : merger la configuration kubectl
 
 - Pour dumper la configuration fusionnée des fichiers et l'exporter on peut utiliser: `kubectl config view --flatten >> ~/.kube/merged.yaml`.
 
-- Ajoutons ces nouvelles connexion à Lens
 
-## Facultation 3e installation : Mettre en place un cluster K8s managé chez le provider de cloud Scaleway
+## Facultation 3e installation : Un cluster K8s managé, exemple avec Scaleway
 
 Le formateur peut louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
 
@@ -54,7 +59,6 @@ La création prend environ 5 minutes.
 - Sur la page décrivant votre cluster, un gros bouton en bas de la page vous incite à télécharger ce même fichier `kubeconfig` (*Download Kubeconfig*).
 
 Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
-
 
 ## Facultatif 4e installation : un cluster avec `kubeadm` ou méthode `The Hard Way`
 
