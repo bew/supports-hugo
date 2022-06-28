@@ -38,37 +38,24 @@ NAME                 STATUS   ROLES                  AGE   VERSION
 vnc-stagiaire-...   Ready    control-plane,master   10m   v1.21.7+k3s1
 ```
 
+Pour combiner les différentes configurations on peut utiliser la variable d'environnement `KUBECONFIG` avec comme valeur une liste de fichiers et l'ajouter au fichier `.bashrc` comme suit:
 
-## Merger la configuration kubectl
+```bash
+echo 'export KUBECONFIG=~/.kube/config:~/.kube/k3s.yaml' >> ~/.bashrc
+source ~/.bashrc
+```
 
+- On peut ensuite visualiser les deux contextes de connexion avec `kubectl config get-contexts` et selectionner l'un d'eux avec `kubectl config use-context default`.
 
-La/Les configurations de kubectl sont à déclarer dans la variable d'environnement `KUBECONFIG`. Nous allons déclarer deux fichiers de config et les merger automatiquement. 
+- `kubectl get nodes` ou `kubectl cluster-info` permet de vérifier le résultat.
 
-- Téléchargeons le fichiers de configuration scaleway fourni par le formateur ou à récupérer sur votre espace Scaleway. Enregistrez le par exemple dans `~/.kube/scaleway.yaml`.
+## Facultatif : merger la configuration kubectl
 
-- Copiez le fichier de config k3s `/etc/rancher/k3s/k3s.yaml` dans `~/.kube`: `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/ && sudo chown stagiaire ~/.kube/k3s.yaml`
-
-- Changez la variable d'environnement pour déclarer la config par défaut avec en plus nos deux nouvelles configs: `export KUBECONFIG=~/.kube/config:~/.kube/scaleway.yaml:~/.kube/k3s.yaml`
-
-- Pour afficher la configuration fusionnée des fichiers et l'exporter lancez: `kubectl config view --flatten >> ~/.kube/merged.yaml`.
-
-- Pour sélectionner ensuite cette configuration mergée: `export KUBECONFIG=~/.kube/merged.yaml`.
-
-- Maintenant que nos trois configs sont fusionnées, observons l'organisation du fichier `~/.kube/config` en particulier les éléments des listes YAML de:
-  - `clusters`
-  - `contexts`
-  - `users`
-
-- Listez les contextes avec `kubectl config get-contexts` et affichez les contexte courant avec `kubectl config current-context`.
-
-- Changez de contexte avec `kubectl config use-context <nom_contexte>`.
-
-- Testons quelle connexion nous utilisons avec avec `kubectl get nodes`.
+- Pour dumper la configuration fusionnée des fichiers et l'exporter on peut utiliser: `kubectl config view --flatten >> ~/.kube/merged.yaml`.
 
 - Ajoutons ces nouvelles connexion à Lens
 
+## Facultatif : installation d'un cluster avec `kubeadm` ou méthode `The Hard Way`
 
-<!-- 
-## Facultatif : installation d'un cluster avec `kubeadm`
+Voir le TP facultatif.
 
-TODO lien tuto sympa ? -->

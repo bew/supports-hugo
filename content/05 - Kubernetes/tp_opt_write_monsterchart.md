@@ -90,9 +90,17 @@ Enfin nous allons ajouter la gestion dynamique du ingress en copiant celle du ch
 
 ### Idées d'amélioration
 
-- Paramétrer les labels comme dans le chart exemple.
+<!-- TODO 
+- utiliser dès le départ une application avec domaine depuis un variable d'env
+
+tester et ajouter la question:
+- De même trouvez dans l'exemple de wordpress comment ajouter un paramètre de réplication et répartir les réplicats sur plusieurs noeuds du cluster. Testons cette configuration sur un cluster multinoeud loué. lien vers le dépot scalelaab.-ty-
+
+-->
+
+- Paramétrer les labels comme dans le chart exemple. 
 - Fixer le bug de connexion à redis et imagebackend en ajoutant un parametrage par variable d'environnement du nom de domaine des services dans app.py.
-- paramétrer les réplicats.
+- Ensuite, s'inspirant du dump du chart wordpress, utilisez une configmap pour générer la variable d'environnement du domaine de chaque service.
 - Utiliser pour l'installation de redis une dépendance à un autre chart comme par exemple ce lui de Bitnami (voir sur https://artifacthub.io) et la documentation ici : https://helm.sh/docs/helm/helm_dependency/
 - Essayer de packager et héberger le chart comme expliqué ici : https://docs.bitnami.com/tutorials/create-your-first-helm-chart/
 
