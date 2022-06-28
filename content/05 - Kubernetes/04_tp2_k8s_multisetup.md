@@ -4,20 +4,7 @@ draft: false
 weight: 2025
 ---
 
-## Une 2e installation : Mettre en place un cluster K8s managé chez le provider de cloud Scaleway
-
-Le formateur peut louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
-
-- Créez un compte (ou récupérez un accès) sur [Scaleway](https://console.scaleway.com/).
-- Créez un cluster Kubernetes avec [l'interface Scaleway](https://console.scaleway.com/kapsule/clusters/create)
-
-La création prend environ 5 minutes.
-
-- Sur la page décrivant votre cluster, un gros bouton en bas de la page vous incite à télécharger ce même fichier `kubeconfig` (*Download Kubeconfig*).
-
-Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
-
-## Une 3e installation: `k3s` sur votre VPS
+## Une 2e installation: `k3s` sur votre VPS
 
 K3s est une distribution de Kubernetes orientée vers la création de petits clusters de production notamment pour l'informatique embarquée et l'Edge computing. Elle a la caractéristique de rassembler les différents composants d'un cluster kubernetes en un seul "binaire" pouvant s'exécuter en mode `master` (noeud du control plane) ou `agent` (noeud de calcul).
 
@@ -55,7 +42,21 @@ source ~/.bashrc
 
 - Ajoutons ces nouvelles connexion à Lens
 
-## Facultatif : installation d'un cluster avec `kubeadm` ou méthode `The Hard Way`
+## Facultation 3e installation : Mettre en place un cluster K8s managé chez le provider de cloud Scaleway
+
+Le formateur peut louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
+
+- Créez un compte (ou récupérez un accès) sur [Scaleway](https://console.scaleway.com/).
+- Créez un cluster Kubernetes avec [l'interface Scaleway](https://console.scaleway.com/kapsule/clusters/create)
+
+La création prend environ 5 minutes.
+
+- Sur la page décrivant votre cluster, un gros bouton en bas de la page vous incite à télécharger ce même fichier `kubeconfig` (*Download Kubeconfig*).
+
+Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
+
+
+## Facultatif 4e installation : un cluster avec `kubeadm` ou méthode `The Hard Way`
 
 Voir le TP facultatif.
 
