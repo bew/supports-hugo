@@ -219,6 +219,8 @@ env:
 ```
 - Généralement la valeur d'une variable est fournie au pod à l'aide d'une ressource de type `ConfigMap` ou `Secret` ce que nous verrons par la suite.
 
+- Configurez de même les variables `IMAGEBACKEND_DOMAIN` et `REDIS_DOMAIN` comme dans le docker-compose.
+
 #### Ajouter des indications de ressource nécessaires pour garantir la qualité de service
 
 - Ajoutons aussi des contraintes sur l'usage du CPU et de la RAM, en ajoutant à la même hauteur que `env:` :
