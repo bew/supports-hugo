@@ -9,10 +9,10 @@ weight: 2090
 - Ouvrez le dans VSCode
 
 - Pour démarrer le développement d'un chart on peut utiliser une commande helm d'initialisation qui va générer un chart d'exemple : `helm create monsterchart`
-
+git clone -b tp_monsterstack_final https://github.com/Uptime-Formation/corrections_tp.git tp_monsterchart
 Observons un peu le contenu de notre Chart d'exemple :
 
-- Un dossier `template` avec tous les fichiers resources à trou qui seront templatés par helm et quelques snippet utilitaires de templating dans _helpers.tpl
+- Un dossier `templates` avec tous les fichiers resources à trou qui seront templatés par helm et quelques snippet utilitaires de templating dans _helpers.tpl
 - Le fichier `values.yaml` avec les valeurs par défaut pour l'installation, qu'on va pouvoir surcharger pour installer le chart
 - Un fichier NOTES.txt contenant le texte d'aide qui s'affichera pour l'utilisateur à la fin de l'installation
 - Un fichier `Chart.yaml` contenant des informations/paramètres caractérisant le chart lui même comme son nom, sa version et la version nde l'application installée correspondante.
@@ -32,7 +32,7 @@ La seconde a l'avantage d'afficher des informations de debug comme les informati
 
 Nous allons dans un premier temps remplacer les templates (à trou) par les fichiers statiques de notre déploiement du TP précédent, puis nous ajouterons quelques paramètres.
 
-- Dupliquez le dossier `template` en  `template_backup` puis supprimez les fichiers template yaml et le dossiers test du dossier template
+- Dupliquez le dossier `templates` en  `templates_backup` puis supprimez les fichiers template yaml et le dossiers test du dossier templates
 - Ajoutez vos fichiers d'installation copiés depuis `k8s-deploy-dev`.
 - Testez le templating avec la commande utilisée précédemment.
 
@@ -40,7 +40,7 @@ Ce chart statique a plusieurs soucis mais notamment il ne permet par d'être ins
 
 ## Ajouter des paramètres simples
 
-Nous allons paramétrer à minima nos template pour pouvoir modifier: 
+Nous allons paramétrer à minima nos templates pour pouvoir modifier: 
 
 - les images utilisées pour l'installation des services
 - le nom des resources pour éviter les conflits
@@ -48,7 +48,7 @@ Nous allons paramétrer à minima nos template pour pouvoir modifier:
 
 Pour ce faire:
 
-- Déplacez le fichier `values.yaml` existant dans le dossier `template_backup`.
+- Déplacez le fichier `values.yaml` existant dans le dossier `templates_backup`.
 - Ajoutez à un nouveau fichier `values.yaml` avec le code suivant : 
 
 ```yaml
@@ -74,14 +74,14 @@ redis:
 Passons maintenant à la gestion dynamique du nom pour pouvoir installer notre chart plusieurs fois. Pour cela nous allons utiliser le helper `monsterchart.fullname` disponible dans le chart d'exemple.
 
 - Observez et commentons ce helper qui génère automatiquement un nom compatible pour notre release
-- Observez dans le chart d'exemple (`template_backup`) comment est utilisé ce helper par exemple dans le template du déploiement.
+- Observez dans le chart d'exemple (`templates_backup`) comment est utilisé ce helper par exemple dans le template du déploiement.
 - Remplacez pour les 3 services (redis, frontend et imagebackend) toutes les occurences de `<nomservice>` dans le nom des ressources et les labels `partie: ` en ajoutant `-{{ include "monsterchart.fullname" . }}` comme suffixe.
 - Testez avec la commande d'installation dry run précédente.
 
 Enfin nous allons ajouter la gestion dynamique du ingress en copiant celle du chart d'exemple.
 - Supprimez le template `monsterstack-ingress.yaml`
 - Copiez le template `ingress.yaml` du backup
-- Copiez la section `ingress` depuis le `values.yaml` déplacé dans `template_backup` vers le `values.yaml` principal et complétez la avec le nom de domaine de votre choix et activez le ingress avec `enabled: true`:
+- Copiez la section `ingress` depuis le `values.yaml` déplacé dans `templates_backup` vers le `values.yaml` principal et complétez la avec le nom de domaine de votre choix et activez le ingress avec `enabled: true`:
 - Modifiez le template ingress pour qu'il pointe vers la bonne ressource service à savoir `frontend-{{ include "monsterchart.fullname" . }}` (il y a deux valeurs à modifier service: name: et serviceName: plus bas.`)
 - Dans le même fichier, modifiez enfin la variable port pour l'adapter à notre cas `{{- $svcPort := .Values.service.port -}}` => `{{- $svcPort := .Values.frontend.service.port -}}`
 
