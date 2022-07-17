@@ -1,3 +1,3 @@
-# Supports de cours Docker
+# Supports
 
-https://cours.hadrienpelissier.fr
+https://supports.uptime-formation.fr
