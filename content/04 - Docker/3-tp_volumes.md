@@ -184,16 +184,16 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 ### Facultatif : utiliser `VOLUME` avec `microblog`
 
-- Rendez-vous dans votre répertoire racine en tapant `cd`.
-- Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez une version déjà dockerisée de l'app en chargeant le contenu de la branche Git `tp2-dockerfile` en faisant `git checkout tp2-dockerfile -- Dockerfile`.
+<!-- - Rendez-vous dans votre répertoire racine en tapant `cd`.
+- Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez une version déjà dockerisée de l'app en chargeant le contenu de la branche Git `tp2-dockerfile` en faisant `git checkout tp2-dockerfile -- Dockerfile`. -->
 
-- Si vous n'aviez pas encore le repo `microblog` :
+- Clonons le repo `microblog` ailleurs :
 
 ```bash
-git clone https://github.com/uptime-formation/microblog/
-cd microblog
-git checkout tp2-dockerfile
+git clone https://github.com/uptime-formation/microblog/ --branch tp2-dockerfile microblog-volume
 ```
+
+- Ouvrons ça avec VSCode : `code microblog-volume`
 
 - Lire le `Dockerfile` de l'application `microblog`.
 
