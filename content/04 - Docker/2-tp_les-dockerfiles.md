@@ -224,10 +224,11 @@ CMD ["./boot.sh"]
 FROM python:alpine
 
 RUN apk add curl
-RUN pip install flask==0.10.1
+RUN pip install flask
 
 ADD /app.py /app/app.py
 WORKDIR /app
+EXPOSE 5000
 
 HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit 1
 
