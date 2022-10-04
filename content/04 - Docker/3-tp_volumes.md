@@ -165,7 +165,7 @@ Beaucoup de conteneurs Docker sont des applications _stateful_, c'est-à-dire qu
 - Inspectez la liste des volumes (par exemple avec Portainer) pour retrouver l'identifiant du volume caché. Normalement il devrait y avoir un volume `portainer_data` (si vous utilisez Portainer) et un volume anonyme avec un hash.
 
 - Créez un nouveau conteneur redis en le rattachant au volume redis "caché" que vous avez retrouvé (en copiant l'id du volume anonyme) :
-  `docker container run --network moby-network -d --name redis -v <volume_id>:/data redis:alpine`
+  `docker container run -d --name redis -v <volume_id>/_data:/data --network moby-network redis:alpine`
 
 - Visitez la page de l'application. Normalement un motif de logos _moby_ d'une précédente session devrait s'afficher (après un délai pouvant aller jusqu'à plusieurs minutes)
 
