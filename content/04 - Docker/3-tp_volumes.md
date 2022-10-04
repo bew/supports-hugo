@@ -206,14 +206,10 @@ Nous allons faire apparaître le volume Docker comme un dossier à l'emplacement
 ENV DATABASE_URL=sqlite:////data/app.db
 ```
 
-- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application.
-
-{{% expand "Indice :" %}}
-
-Dans le conteneur, le chemin de la base de données est :
+Cela indique que l'on va utiliser sqlite pour stocker la base de données comme un unique fichier au format SQLite dans un dossier accessible par le conteneur, le chemin de la base de données est donc :
 `/data/app.db`
 
-{{% /expand %}}
+- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application.
 
 {{% expand "Solution :" %}}
 
