@@ -60,7 +60,8 @@ Présentation d'un workflow Docker, du développement à la production -->
 - des _cgroups_ correct : `ulimit -a`
 
 - par défaut les _user namespaces_ ne sont pas utilisés !
-  - exemple de durcissement conseillé : <https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b>
+  - exemple de faille : <https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b>
+  - exemple de durcissement conseillé : <https://docs.docker.com/engine/security/userns-remap/>
 
 <!-- Exemple de renforcement :
 ```bash

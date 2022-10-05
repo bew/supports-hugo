@@ -268,6 +268,8 @@ docker run --name wordpressavecmysql -d -e WORDPRESS_DB_HOST="mysqlpourwordpress
 
 ## Faire du ménage
 
+Il est temps de faire un petit `docker stats` pour découvrir l'utilisation du CPU et de la RAM de vos conteneurs !
+
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
 
 - Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : en Bash, une commande entre les parenthèses de "`$()`" est exécutée avant et utilisée comme chaîne de caractère dans la commande principale)
