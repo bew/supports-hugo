@@ -1,16 +1,16 @@
 ---
-title: TP opt. - CI/CD avec gitlab et ArgoCD 
+title: TP opt. - CI/CD avec Gitlab et ArgoCD 
 draft: false
 weight: 2100
 ---
 
-## Tester en local (TP3 k8S)
+<!-- ## Tester en local (TP3 k8s)
 
 Avant de pouvoir déployer notre application automatiquement (Continuous Delivery) il faut s'assurer de pouvoir bien déployer l'application dans K8S en version développement.
 
-- Assurez-vous d'avoir bien suivi le TP3 Kubernetes de cette formation. Nous allons réutiliser cette application pour la déployer automatiquement dans un kluster de production Kubernetes (K3S).
+- Assurez-vous d'avoir bien suivi le TP3 Kubernetes de cette formation. Nous allons réutiliser cette application pour la déployer automatiquement dans un cluster de production Kubernetes (K3S).
 
-- Une fois le TP3 terminé pensez à arrêter minikube (si vous installez k3s sur la même machine il n'y aura peut-être pas assez de RAM) avec `minikube stop`.
+- Une fois le TP3 terminé pensez à arrêter minikube (si vous installez k3s sur la même machine il n'y aura peut-être pas assez de RAM) avec `minikube stop`. -->
 
 <!-- ## Une vue d'ensemble (Schéma) -->
 
@@ -155,3 +155,21 @@ Les deux étapes de déploiement (dev et prod) du pipeline nécessitent de pouss
 
 - On peut ensuite déclencer le stage `deploy-prod` manuellement dans le pipeline, vérifier que l'application est healthy dans ArgoCD (debugger sinon) puis visiter `https://monster.<votre_sous_domaine>`.
 
+
+### Idées d'amélioration
+
+- Déplacer le code de déploiement dans un autre dépôt que le code d'infrastructure. Le pipeline de devra cloner le dépôt d'infrastructure, templater avec kustomize la bonne version de l'image dans le bon environnement. Pousser le code d'infrastructure sur le dépôt d'infrastructure. Corriger l'application ArgoCD pour monitorer le dépôt d'infrastructure.
+
+- Mutualiser le code de déploiement k8s avec des overlays kustomize
+
+- Utiliser une stragégie de blue/green ou A/B déploiement avec Argo Rollouts ou Istio avec vérification de réussite du déploiement et rollback en cas d'échec.
+
+- Ajouter plus d'étapes réalistes de CI/CD en se basant par exemple sur le livre GitOps suivant.
+
+- Gérer la création des ressources gitlab automatiquement avec Terraform et gérer les secrets (tokens gitlab) consciencieusement.
+
+### Bibliographie
+
+- 2021 - GitOps and Kubernetes Continuous Deployment with Argo CD, Jenkins X, and Flux
+
+- Billy Yuen, Alexander Matyushentsev, Todd Ekenstam, Jesse Suen (z-lib.org)

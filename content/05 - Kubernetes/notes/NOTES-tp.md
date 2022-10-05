@@ -172,3 +172,8 @@ kubectl expose deployment bandicoot-prod
 
 kubectl get services -o wide
 ```
+
+# TP3 Skaffold + k3s
+https://blog.stephane-robert.info/post/kubernetes-deploy-skaffold-gitlab-ci/
+
+# pb dependences dans microblog sur Collections en python3.10

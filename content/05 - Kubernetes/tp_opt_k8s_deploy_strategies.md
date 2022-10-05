@@ -9,6 +9,8 @@ https://blog.container-solutions.com/kubernetes-deployment-strategies
 
 https://github.com/ContainerSolutions/k8s-deployment-strategies -->
 
+<!-- FIXME: adapter pour k3s -->
+
 ## Installer Prometheus pour monitorer le cluster Minikube
 
 Pour comprendre les stratégies de déploiement et mise à jour d'application dans Kubernetes (deployment and rollout strategies) nous allons installer puis mettre à jour une application d'exemple et observer comment sont gérées les requêtes vers notre application en fonction de la stratégie de déploiement choisie.
@@ -65,18 +67,18 @@ docker system info | grep Name # devrait afficher minikube si le contexte docker
 
 {{% /expand %}}
 
-- Allez dans le dossier `goprom_app` et "construisez" l'image docker de l'application avec le tag `uptime-formation/goprom`.
+- Allez dans le dossier `goprom_app` et "construisez" l'image docker de l'application avec le tag `uptimeformation/goprom`.
 
 {{% expand "réponse:" %}}
 
 ```bash
 cd goprom_app
-docker build -t uptime-formation/goprom .
+docker build -t uptimeformation/goprom .
 ```
 
 {{% /expand %}}
 
-- Allez dans le dossier de la première stratégie `recreate` et ouvrez le fichier `app-v1.yml`. Notez que `image:` est à `uptime-formation/goprom` et qu'un paramètre `imagePullPolicy` est défini à `Never`. Ainsi l'image sera récupéré dans le registry local du docker de minikube ou sont stockées les images buildées localement plutôt que récupéré depuis un registry distant.
+- Allez dans le dossier de la première stratégie `recreate` et ouvrez le fichier `app-v1.yml`. Notez que `image:` est à `uptimeformation/goprom` et qu'un paramètre `imagePullPolicy` est défini à `Never`. Ainsi l'image sera récupéré dans le registry local du docker de minikube ou sont stockées les images buildées localement plutôt que récupéré depuis un registry distant.
 
 - Appliquez ce déploiement kubernetes:
 
@@ -111,7 +113,7 @@ minikube service goprom
 
 {{% /expand %}}
 
-- Faites un forwarding de port pour accéder au service `goprom-metrics` dans votre navigateur. Quelles informations récupère-t-on sur cette route ?
+- Faites un forwarding de port pour accéder au service `goprom-metrics` dans votre navigateur (c'est sur la route `/metrics`). Quelles informations récupère-t-on sur cette route ?
 
 {{% expand "réponse:" %}}
 

@@ -4,7 +4,7 @@ draft: false
 weight: 2050
 ---
 
-Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3_base https://github.com/Uptime-Formation/corrections_tp.git`
+Récupérez le projet de base en clonant la correction du TP2: `git clone -b exercice https://github.com/Uptime-Formation/tp3-k8s.git tp3`. On peut ouvrir une fenêtre VSCode directement dans le dossier qui nous intéresse avec : `code tp3`.
 
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
@@ -14,6 +14,7 @@ Elle est composée :
 - et d'un datastore `redis` servant de cache pour les images de monstericon
 
 Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `monstericon` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans `minikube`.
+
 
 # Etudions le code et testons avec `docker-compose`
 
@@ -33,13 +34,14 @@ D'abord, installons Kompose :
 
 ```bash
 # Linux
-curl -L https://github.com/kubernetes/kompose/releases/download/v1.16.0/kompose-linux-amd64 -o kompose
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.1/kompose-linux-amd64 -o kompose
 
 chmod +x kompose
 sudo mv ./kompose /usr/local/bin/kompose
 ```
 
-Puis, utilisons la commande `kompose convert` et observons les fichiers générés. On peut aussi faire `kompose up`, qui regroupe `kompose convert` et `kubectl apply` avec les ressources créées à partir du fichier Compose.
+Puis, utilisons la commande `kompose convert` et observons les fichiers générés. On peut ensuite faire `kubectl apply` avec les ressources créées à partir du fichier Compose.
+
 
 ## Déploiements pour le backend d'image `dnmonster` et le datastore `redis`
 
@@ -109,7 +111,7 @@ spec:
               name: redis
 ```
 
-- Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
+- Installez `skaffold` en suivant les indications ici: [https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
 - Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
 
@@ -145,10 +147,27 @@ spec:
             - containerPort: 5000
 ```
 
-L'image `monstericon` de ce déploiement n'existe pas sur le dockerhub. Elle doit être construite à partir du `Dockerfile` et nous allons utiliser `skaffold` pour cela.
+L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notre Kubernetes doit pouvoir accéder à la nouvelle version de l'image construite à partir du `Dockerfile`. Nous allons utiliser `skaffold` pour cela.
+Il y a plusieurs possibilités :
+- utiliser **minikube** : minikube a la capacité de se connecter au registry de notre installation Docker locale
+- **sur k3s ou sur un cluster cloud** : pousser à chaque itération notre image sur un registry distant (Docker Hub)
+  - pour ce faire, il faut éditer le fichier `skaffold.yaml` et le fichier de **Deployment** correspondant pour remplacer le nom de l'image `monstericon` pour faire référence à l'adresse à laquelle on souhaite pousser l'image sur le registry distant (ex: `docker.io/MON_COMPTE_DOCKER_HUB/monstericon`)
+  - il est possible qu'il faille ajouter au même niveau que `artifacts:` dans le fichier `skaffold.yaml` ceci :
+```yaml
+  local:
+    push: true
+```
+  - heureusement le mécanisme de layers des images Docker ne nous oblige à uploader que les layers modifiés de notre image à chaque build
+- (plus long) configurer un registry local (en Docker ou en Kubernetes) auquel Skaffold et Kubernetes peuvent accéder
+  - c'est plus long car il faut simplement configurer les certificats HTTPS ou expliciter que l'on peut utiliser un registry non sécurisé (HTTP)
+  - ensuite il suffit de déployer un registry tout simple (l'image officielle `registry:2`) ou plus avancé ([Harbour](https://goharbor.io/) par exemple)
+- (plus avancé) utiliser Kaniko, un programme de Google qui permet de builder directement dans le cluster Kubernetes : https://skaffold.dev/docs/pipeline-stages/builders/docker/#dockerfile-in-cluster-with-kaniko
+
 
 - Observons le fichier `skaffold.yaml`
 - Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici le registry docker local et `kubectl`)
+
+
 
 #### Santé du service avec les `Probes`
 
@@ -237,8 +256,10 @@ spec:
 
 Ajoutez le code précédent au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
 
-<!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) --> - le nom du service et le nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`) - le port par le port du service
-<!-- - pourquoi pas selector = celui du deployment? --> - les selectors `app` et `partie` par ceux du pod correspondant.
+- le nom du service (`name:` dans `metadata:`) par le nom de notre programme. En particulier, il faudra forcément appeler les services `redis` et `dnmonster` comme ça car cela permet à Kubernetes de créer les entrées DNS correspondantes. Le pod `monstericon` pourra ainsi les joindre en demandant à Kubernetes l'IP derrière `dnmonster` et `redis`.
+- nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`)
+- le port par le port du service
+- les selectors `app` et `partie` par ceux du pod correspondant.
 
 Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
 
@@ -249,40 +270,29 @@ Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
 
-- Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
+
+- Pour **Minikube** : Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
+- Pour les autres types de cluster (**cloud** ou **k3s**), lire la documentation sur les prérequis pour les objets Ingress et installez l'ingress controller appelé `ingress-nginx` : <https://kubernetes.io/docs/concepts/services-networking/ingress/#prerequisites>. Si besoin, aidez-vous du TP suivant sur l'utilisation de Helm.
+
+- Avant de continuer, vérifiez l'installation du contrôleur Ingress Nginx avec `kubectl get svc -n ingress-nginx ingress-nginx-controller` : le service `ingress-nginx-controller` devrait avoir une IP externe.
 
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
-- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utilisez l'ingress à la place pour afficher la page.
+- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utiliser l'ingress à la place pour afficher la page.
 
-- Ajoutez également l'objet `Ingress` de configuration du loadbalancer suivant dans le fichier `monster-ingress.yaml` :
+- Ajoutez également l'objet `Ingress` suivant dans le fichier `monster-ingress.yaml` :
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: monster-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-    - host: monsterstack.local
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: monstericon
-              servicePort: 5000
-```
-
-- Ajoutez ce fichier avec `skaffold run`. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
-
-- Pour corriger ce warning remplacez l'`apiVersion` par `networking.k8s.io/v1`. La syntaxe de la `spec` a légèrement changée depuis la v1beta1, modifiez comme suit:
-
-```yaml
-spec:
-  rules:
-    - host: monsterstack.local
+    - host: monsterstack.local # à changer si envie/besoin
       http:
         paths:
           - path: /
@@ -294,7 +304,7 @@ spec:
                   number: 5000
 ```
 
-<!-- TODO changer la correction pour intégrer la bonne syntaxe et renommer l'ancienne en old-->
+- Ajoutez ce fichier avec `skaffold run`.
 
 - Récupérez l'ip de minikube avec `minikube ip`, (ou alors allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`).
 

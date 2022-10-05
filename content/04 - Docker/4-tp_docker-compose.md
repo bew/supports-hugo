@@ -12,6 +12,15 @@ weight: 1045
 <!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
 
 - Installez docker-compose avec `sudo apt install docker-compose`.
+
+- Pour vous faciliter la vie et si ce n'est pas déjà le cas, ajoutez le plugin _autocomplete_ pour Docker et Docker Compose à `bash` en copiant les commandes suivantes :
+
+```bash
+sudo apt update
+sudo apt install bash-completion curl
+sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+```
+
   <!-- - S'il y a un bug  -->
   <!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
 
@@ -153,7 +162,6 @@ Une fois dans le conteneur lancez:
 - A la racine de notre projet `identidock` (à côté du Dockerfile), créez un fichier de déclaration de notre application appelé `docker-compose.yml` avec à l'intérieur :
 
 ```yml
-version: "3.7"
 services:
   identidock:
     build: .
@@ -181,7 +189,6 @@ dnmonster:
 Le `docker-compose.yml` doit pour l'instant ressembler à ça :
 
 ```yml
-version: "3.7"
 services:
   identidock:
     build: .
@@ -221,7 +228,6 @@ redis:
 `docker-compose.yml` final :
 
 ```yaml
-version: "3.7"
 services:
   identidock:
     build: .
@@ -246,9 +252,41 @@ networks:
     driver: bridge
 ```
 
-- Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
+- Lancez l'application et vérifiez que le cache fonctionne en cherchant les messages dans les logs de l'application.
 
-- N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). Cette documentation indique aussi les différences entre la version 2 et la version 3 des fichiers Docker Compose.
+- N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). 
+
+
+
+### Le Hot Code Reloading (rechargement du code à chaud)
+
+En s'inspirant des exercices sur les volumes (TP3) et du fichier `boot.sh` de l'app microblog (TP2), modifions le `docker compose.yml` pour y inclure des instructions pour lancer le serveur python en mode debug : la modification du code source devrait immédiatement être répercutée dans les logs d'`identidock`, et recharger la page devrait nous montrer la nouvelle version du code de l'application.
+
+{{% expand "Solution :" %}}
+
+```yml
+services:
+  identidock:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - identinet
+    # ---
+    # Config dev à commenter si prod
+    volumes:
+    # le dossier app sur l'hôte contient le code source à la dernière version
+      - "./app:/app"
+    # les variables d'environnement nécessaires
+    environment:
+      - FLASK_APP=/app/identidock.py
+      - FLASK_ENV=development
+    # on surcharge la commande de lancement du conteneur
+    command: flask run -h 0.0.0.0
+    # ---
+```
+
+{{% /expand %}}
 
 <!-- ## Le Docker Compose de `microblog` -->
 
@@ -262,7 +300,7 @@ networks:
 
 ## D'autres services
 
-### Exerciced de _google-fu_
+### Exercices de _google-fu_
 
 #### ex: un pad HedgeDoc
 
@@ -272,7 +310,7 @@ On se propose ici d'essayer de déployer plusieurs services pré-configurés com
 
 - Vérifiez que le service est bien accessible sur le port donné.
 
-- Le cas échéant, lisez les logs s'il y a un bug et adaptez les variables d'environnement.
+- Si besoin, lisez les logs en quête bug et adaptez les variables d'environnement.
 
 <!-- Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet). -->
 
@@ -298,8 +336,6 @@ sudo chmod go-w filebeat.yml
 Enfin, créons un fichier `docker-compose.yml` pour lancer une stack Elasticsearch :
 
 ```yaml
-version: "3"
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
@@ -317,7 +353,7 @@ services:
     volumes:
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - logging-network
     environment:
@@ -485,6 +521,7 @@ Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_
 --- -->
 
 <!-- Galera automagic docker-compose : https://gist.github.com/lucidfrontier45/497341c4b848dfbd6dfb -->
+
 
 ### _Facultatif :_ Utiliser Traefik
 

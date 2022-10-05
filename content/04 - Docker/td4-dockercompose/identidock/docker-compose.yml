@@ -1,10 +1,24 @@
-version: '2'
 services:
   identidock:
     build: .
     ports:
       - "5000:5000"
-    environment:
-      ENV: DEV
+      - "9191:9191" # port pour les stats
+    networks:
+      - identinet
     volumes:
-      - ./app:/app
+      - ./app/:/app/
+
+  dnmonster:
+    image: amouat/dnmonster:1.0
+    networks:
+      - identinet
+
+  redis:
+    image: redis
+    networks:
+      - identinet
+
+networks:
+  identinet:
+    driver: bridge

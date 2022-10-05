@@ -17,7 +17,7 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 ### Installer Helm
 
 - Pour installer Helm sur Ubuntu, utilisez : `sudo snap install helm --classic`
-
+<!-- https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 -->
 - Suivez le Quickstart : <https://helm.sh/docs/intro/quickstart/>
 
 #### Autocomplete
@@ -90,7 +90,9 @@ On peut maintenant lire dans ce fichier les objets kubernetes déployés par le 
 
 ### Installer ArgoCD
 
-Cette partie requiert d'avoir installé k3s sur votre machine de formation (ou sur un autre VPS ubuntu 20.04 min 8Go de RAM) comme indiqué dans le TP1 section 3e méthode d'installation.
+Voir le [TP Gitlab et ArgoCD](../tp_opt_k8s_gitlab_argocd_cicd).
+
+<!-- Cette partie requiert d'avoir installé k3s sur votre machine de formation (ou sur un autre VPS ubuntu 20.04 min 8Go de RAM) comme indiqué dans le TP1 section 3e méthode d'installation.
 
 - Pour bien effectuer l'installation sur notre cluster k3s (et pas dans minikube ou sur un cluster loué) lancez:
 
@@ -126,7 +128,7 @@ Vos serveurs VNC qui sont aussi désormais des clusters k3s ont déjà deux sous
 
 ### ArgoCD pour installer et visualiser en live les ressources de notre chart
 
-Argocd permet de d'installer des applications qui peuvent être soit des dossiers de manifestes kubernetes simple, soit des dossiers contenant une `kustomization.yaml` soit des charts Helm. Une application Argocd peut être créée dans l'interface web ou être déclarée elle-même grâce à un fichier manifeste de type:
+Argocd permet d'installer des applications qui peuvent être soit des dossiers de manifestes kubernetes simple, soit des dossiers contenant une `kustomization.yaml` soit des charts Helm. Une application Argocd peut être créée dans l'interface web ou être déclarée elle-même grâce à un fichier manifeste de type:
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1

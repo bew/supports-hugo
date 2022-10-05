@@ -85,22 +85,22 @@ Docker est basé sur le noyau Linux :
 
 Quatre possibilités :
 
-- Solution WSL2 :
+- Solution **Docker Desktop WSL2** :
 
   - Fonctionne avec Windows Subsystem for Linux : c'est une VM Linux très bien intégrée à Windows
   - Le meilleur des deux mondes ?
   - Workflow similaire à celui d'un serveur Linux
 
-    - Solution WSL2 numéro 1 : on installe _Ubuntu et le paquet officiel Docker_ depuis le terminal WSL2 (recommandé)
-    - Solution WSL2 numéro 2 : on utilise **Docker Desktop WSL2**
+    <!-- - Solution WSL2 numéro 1 : on installe _Ubuntu et le paquet officiel Docker_ depuis le terminal WSL2 (recommandé) -->
+    <!-- - Solution WSL2 numéro 2 : on utilise  -->
 
-  - Les deux ont leurs avantages et leurs inconvénients en terme d'intégration Windows et Linux (réseau, volumes, système de fichiers...)
+  <!-- - Les deux ont leurs avantages et leurs inconvénients en terme d'intégration Windows et Linux (réseau, volumes, système de fichiers...) -->
 
-- Solution Windows : on utilise **Docker Desktop for Windows**:
+<!-- - Solution Windows : on utilise **Docker Desktop for Windows**:
 
   - Fonctionne avec Hyper-V (l'hyperviseur optimisé de Windows)
   - Casse VirtualBox/VMWare (incompatible avec la virtualisation logicielle)
-  - Proche du monde Windows et de PowerShell
+  - Proche du monde Windows et de PowerShell -->
 
 - Solution VirtualBox : on utilise **Docker Engine** dans une VM Linux
 
@@ -108,10 +108,10 @@ Quatre possibilités :
   - Workflow identique à celui d'un serveur Linux
   - Proche de la réalité de l'administration système actuelle
 
-- Solution _legacy_ : on utilise **Docker Toolbox** pour configurer Docker avec le **driver VirtualBox** :
+<!-- - Solution _legacy_ : on utilise **Docker Toolbox** pour configurer Docker avec le **driver VirtualBox** :
   - Change légèrement le workflow par rapport à la version Linux native
   - Marche sur les "vieux" Windows (sans hyperviseur)
-  - Utilise une VM Linux avec bash
+  - Utilise une VM Linux avec bash -->
 
 ---
 

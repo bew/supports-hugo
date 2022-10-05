@@ -15,8 +15,6 @@ Nous allons nous baser sur le guide d'introduction [Traefik - Getting started](h
  <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
-version: "3"
-
 services:
   reverse-proxy:
     # The official v2 Traefik docker image
@@ -36,6 +34,10 @@ services:
 {{% /expand %}}
 
 - Explorez le dashboard Traefik accessible sur le port indiqué dans le fichier Docker Compose.
+
+Pour que Traefik fonctionne, 2 étapes :
+- faire en sorte que Traefik reçoive la requête quand on s'adresse à l'URL voulue (DNS + routage)
+- faire en sorte que Traefik sache vers quel conteneur rediriger le trafic reçu (et qu'il puisse le faire) 
 
 - Ajouter des labels à l'app web que vous souhaitez desservir grâce à Traefik à partir de l'exemple de la doc Traefik, grâce aux labels ajoutés dans le `docker-compose.yml` (attention à l'indentation).
   {{% expand "Solution :" %}}
@@ -68,14 +70,13 @@ reverse-proxy:
     #- "--log.level=DEBUG"
     - "--api.insecure=true"
     - "--providers.docker=true"
-    - "--providers.docker.exposedbydefault=false"
     - "--entrypoints.web.address=:80"
-    - "--entrypoints.websecure.address=:443"
-    - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-    - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+    - "--entrypoints.web-securise.address=:443"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.httpchallenge=true"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.httpchallenge.entrypoint=web"
     #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
-    - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.email=postmaster@example.com"
+    - "--certificatesresolvers.letsencrypt-certifgratuit.acme.storage=/letsencrypt/acme.json"
   ports:
     - "80:80"
     - "443:443"
@@ -93,10 +94,9 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
     image: "traefik/whoami"
     container_name: "simple-service"
     labels:
-      - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`example.com`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.whoami.entrypoints=web-securise"
+      - "traefik.http.routers.whoami.tls.certresolver=letsencrypt-certifgratuit"
 ```
 
 {{% /expand %}}
@@ -109,7 +109,6 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
  <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
-version: "3.8"
 services:
       reverse-proxy:
             image: "traefik:v2.3"

@@ -12,6 +12,7 @@ weight: 1040
 
 - Pour bien comprendre qu'il ne s'agit que de convertir des options de commande Docker en YAML, un site vous permet de convertir une commande `docker run` en fichier Docker Compose : <https://www.composerize.com/>
 
+- Le "langage" de Docker Compose : [la documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/compose-file-v3/) est essentielle.
 ---
 
 # A quoi ça ressemble, YAML ?
@@ -60,8 +61,6 @@ weight: 1040
 ## Ok, lançons Wordpress puis faisons un cluster ELK avec filebeats et les labels pour y envoyer les logs nginx + wordpress. -->
 
 ```yml
-version: 3
-
 services:
   postgres:
     image: postgres:10
@@ -107,24 +106,10 @@ networks:
 
 Un deuxième exemple :
 ```yaml
-version: "3.3"
 services:
-
-  mysql:
-    container_name: mysqlpourwordpress
-    environment:
-      - MYSQL_ROOT_PASSWORD=motdepasseroot
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=monwordpress
-    networks:
-    - wordpress
-    image: "mysql:5.7"
-
   wordpress:
     depends_on:
-      - mysql
-    container_name: wordpressavecmysql
+      - mysqlpourwordpress
     environment:
       - "WORDPRESS_DB_HOST=mysqlpourwordpress:3306"
       - WORDPRESS_DB_PASSWORD=monwordpress
@@ -137,11 +122,25 @@ services:
     volumes:
       - wordpress_config:/var/www/html/
 
+  mysqlpourwordpress:
+    image: "mysql:5.7"
+    environment:
+      - MYSQL_ROOT_PASSWORD=motdepasseroot
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=monwordpress
+    networks:
+    - wordpress
+    volumes:
+      - wordpress_data:/var/lib/mysql/
+
 networks:
   wordpress:
 
 volumes:
   wordpress_config:
+  wordpress_data:
+
 ```
 
 ---
@@ -169,8 +168,8 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 ## Le "langage" de Docker Compose
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`.
-- [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/) est essentielle.
-- Cette documentation indique aussi les différences entre les mots-clés supportés dans la version 2 et la version 3 des fichiers Docker Compose.
+- [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/compose-file-v3/) est essentielle.
+
 - il est aussi possible d'utiliser des variables d'environnement dans Docker Compose : se référer au [mode d'emploi](https://docs.docker.com/compose/compose-file/#variable-substitution) pour les subtilités de fonctionnement
 
 ---
