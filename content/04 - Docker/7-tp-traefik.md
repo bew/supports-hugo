@@ -52,8 +52,8 @@ whoami:
 {{% /expand %}}
 
 - Avec l'aide de la [documentation Traefik sur Let's Encrypt et Docker Compose](https://doc.traefik.io/traefik/user-guides/docker-compose/acme-http/), configurez Traefik pour qu'il crée un certificat Let's Encrypt pour votre container.
-- Si vous avez une IP publique mais pas de domaine, vous pouvez utiliser le service gratuit [netlib.re] qui vous fournira un domaine en `*.netlib.re`.
-- Vous aurez aussi besoin de configurer des DNS via `netlib.re` si vous voulez vérifier des sous-domaines (et non votre domaine principal) auprès de Let's Encrypt (de plus, si vous voulez un certificat avec *wildcard* pour tous vos sous-domaines, il faudra [résoudre le `dnsChallenge` de Let's Encrypt de manière manuelle](https://doc.traefik.io/traefik/https/acme/#dnschallenge)).
+<!-- - Si vous avez une IP publique mais pas de domaine, vous pouvez utiliser le service gratuit [netlib.re] qui vous fournira un domaine en `*.netlib.re`. -->
+<!-- - Vous aurez aussi besoin de configurer des DNS via `netlib.re` si vous voulez vérifier des sous-domaines (et non votre domaine principal) auprès de Let's Encrypt (de plus, si vous voulez un certificat avec *wildcard* pour tous vos sous-domaines, il faudra [résoudre le `dnsChallenge` de Let's Encrypt de manière manuelle](https://doc.traefik.io/traefik/https/acme/#dnschallenge)). -->
 
 {{% expand "Solution :" %}}
 
