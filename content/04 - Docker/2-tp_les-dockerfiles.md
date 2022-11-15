@@ -47,16 +47,19 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
 
 - Normalement, VSCode vous propose d'ajouter l'extension Docker. Il va nous faciliter la vie, installez-le. Une nouvelle icône apparaît dans la barre latérale de gauche, vous pouvez y voir les images téléchargées et les conteneurs existants. L'extension ajoute aussi des informations utiles aux instructions Dockerfile quand vous survolez un mot-clé avec la souris.
 
-- Ajoutez en haut du fichier : `FROM ubuntu:latest` Cette commande indique que notre image de base est la dernière version de la distribution Ubuntu.
+- Ajoutez en haut du fichier : `FROM python:3.9` Cette commande indique que notre image de base est la version 3.9 de Python. Quel OS est utilisé ? Vérifier en examinant l'image ou via le Docker Hub.
 <!-- prendre une autre image ? alpine ? -->
 
 - Nous pouvons déjà contruire un conteneur à partir de ce modèle Ubuntu vide :
   `docker build -t microblog .`
 
 - Une fois la construction terminée lancez le conteneur.
-- Le conteneur s’arrête immédiatement. En effet il ne contient aucune commande bloquante et nous n'avons précisé aucune commande au lancement. Pour pouvoir observer le conteneur convenablement il fautdrait faire tourner quelque chose à l’intérieur. Ajoutez à la fin du fichier la ligne :
-  `CMD ["/bin/sleep", "3600"]`
-  Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent.
+- Le conteneur s’arrête immédiatement. En effet il ne contient aucune commande bloquante et nous n'avons précisé aucune commande au lancement.
+
+<!-- Pour pouvoir observer le conteneur convenablement il fautdrait faire tourner quelque chose à l’intérieur. Ajoutez à la fin du fichier la ligne :
+  `CMD ["/bin/sleep", "3600"]` -->
+
+Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent.
 
 - Reconstruisez l'image et relancez un conteneur
 
@@ -66,12 +69,14 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
 
 - Vous êtes maintenant dans le conteneur avec une invite de commande. Utilisez quelques commandes Linux pour le visiter rapidement (`ls`, `cd`...).
 
-- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
+- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur.
+
+<!-- Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
 ```Dockerfile
 RUN apt-get update -y
 RUN apt-get install -y python3-pip
-```
+``` -->
 
   <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
 
