@@ -288,7 +288,7 @@ services:
 
 {{% /expand %}}
 
-## (facultatif) Le Docker Compose de `microblog`
+### (facultatif) Le Docker Compose de `microblog`
 
 Créons un fichier Docker Compose pour faire fonctionner l'application Microblog du TP précédent avec Postgres.
 
