@@ -157,6 +157,21 @@ USER microblog
 
 {{% /expand %}}
 
+Construire l'application avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur.
+
+{{% expand "Réponse  :" %}}
+
+- `docker build -t microblog .`
+- `docker run --detach --name microblog -p 5000:5000 microblog`
+- `docker exec -it microblog /bin/bash`
+
+Une fois dans le conteneur lancez:
+
+- `whoami` et `id`
+- vérifiez aussi avec `ps aux` que le serveur est bien lancé.
+
+{{% /expand %}}
+
 <!-- Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
 
 {{% expand "Réponse :" %}}

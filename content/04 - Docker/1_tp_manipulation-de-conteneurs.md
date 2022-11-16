@@ -69,14 +69,12 @@ Il faut aussi prendre l'habitude de bien lire ce que la console indique après a
 
 Avec l'aide du support et de `--help`, et en notant sur une feuille ou dans un fichier texte les commandes utilisées :
 
-- Lancez simplement un conteneur Debian en mode _attach_. Que se passe-t-il ?
+- Lancez simplement un conteneur Debian. Que se passe-t-il ?
 
 {{% expand "Résultat :" %}}
 
 ```bash
 docker run debian
-# ou
-docker run --attach debian
 # Il ne se passe rien car comme debian ne contient pas de processus qui continue de tourner le conteneur s'arrête
 ```
 
