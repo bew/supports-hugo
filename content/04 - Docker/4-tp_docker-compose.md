@@ -176,7 +176,7 @@ services:
   - `build: .` indique que l'image d'origine de notre conteneur est le résultat de la construction d'une image à partir du répertoire courant (équivaut à `docker build -t identidock .`)
   - la ligne suivante décrit le mapping de ports entre l'extérieur du conteneur et l'intérieur.
 
-- Lancez le service (pour le moment mono-conteneur) avec `docker-compose up` (cette commande sous-entend `docker-compose build`)
+- Lancez le service (pour le moment mono-conteneur) avec `docker compose up` (cette commande sous-entend `docker compose build`)
 - Visitez la page web de l'app.
 
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** :
