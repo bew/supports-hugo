@@ -143,6 +143,31 @@ docker push <your-docker-registry-account>/microblog:latest
 
 - A l'aide de l'image `python:3.9-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` car ce programme est désormais inclus dans l'image de base), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
 
+### Ne pas faire tourner l'app en root
+- Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
+
+{{% expand "Solution :" %}}
+
+```Dockerfile
+# Ajoute un user et groupe appelés microblog
+RUN addgroup -S microblog && adduser -S microblog -G microblog
+RUN chown -R microblog:microblog ./
+USER microblog
+```
+
+{{% /expand %}}
+
+<!-- Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
+
+{{% expand "Réponse :" %}}
+La construction reprend depuis la dernière étape modifiée. Sinon, la construction utilise les layers précédents, qui avaient été mis en cache par le Docker Engine.
+{{% /expand %}} -->
+
+### Exposer le port
+
+- Ajoutons l'instruction `EXPOSE 5000` pour indiquer à Docker que cette app est censée être accédée via son port `5000`.
+- NB : Publier le port grâce à l'option `-p port_de_l-hote:port_du_container` reste nécessaire, l'instruction `EXPOSE` n'est là qu'à titre de documentation de l'image.
+
 ### Faire varier la configuration en fonction de l'environnement
 
 Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
@@ -170,31 +195,6 @@ fi
 - Construisez l'image avec `build`.
 - Puis, grâce aux bons arguments allant avec `docker run`, lancez une instance de l'app en configuration `PROD` et une instance en environnement `DEV` (joignables sur deux ports différents).
 - Avec `docker ps` ou en lisant les logs, vérifiez qu'il existe bien une différence dans le programme lancé.
-
-### Ne pas faire tourner l'app en root
-- Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
-
-{{% expand "Solution :" %}}
-
-```Dockerfile
-# Ajoute un user et groupe appelés microblog
-RUN addgroup -S microblog && adduser -S microblog -G microblog
-RUN chown -R microblog:microblog ./
-USER microblog
-```
-
-{{% /expand %}}
-
-<!-- Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
-
-{{% expand "Réponse :" %}}
-La construction reprend depuis la dernière étape modifiée. Sinon, la construction utilise les layers précédents, qui avaient été mis en cache par le Docker Engine.
-{{% /expand %}} -->
-
-### Exposer le port
-
-- Ajoutons l'instruction `EXPOSE 5000` pour indiquer à Docker que cette app est censée être accédée via son port `5000`.
-- NB : Publier le port grâce à l'option `-p port_de_l-hote:port_du_container` reste nécessaire, l'instruction `EXPOSE` n'est là qu'à titre de documentation de l'image.
 
 ### Dockerfile amélioré
 
