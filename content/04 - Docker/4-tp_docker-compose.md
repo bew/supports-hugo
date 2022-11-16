@@ -4,23 +4,23 @@ draft: false
 weight: 1045
 ---
 
-## Articuler deux images avec Docker compose
+## Articuler trois images avec Docker compose
 
 <!-- ### Dans une VM -->
 
 <!-- - Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ? -->
 <!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
 
-- Installez docker-compose avec `sudo apt install docker-compose`.
+<!-- - Installez docker-compose avec `sudo apt install docker-compose`.
 
 - Pour vous faciliter la vie et si ce n'est pas déjà le cas, ajoutez le plugin _autocomplete_ pour Docker et Docker Compose à `bash` en copiant les commandes suivantes :
 
 ```bash
 sudo apt update
 sudo apt install bash-completion curl
-sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose 
 ```
-
+-->
   <!-- - S'il y a un bug  -->
   <!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
 
@@ -133,7 +133,7 @@ CMD ["uwsgi", "--http", "0.0.0.0:5000", "--wsgi-file", "/app/identidock.py", \
 
 - Observons le code du Dockerfile ensemble s'il n'est pas clair pour vous. Juste avant de lancer l'application, nous avons changé d'utilisateur avec l'instruction `USER`, pourquoi ?.
 
-- Construire l'application, pour l'instant avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur.
+<!-- - Construire l'application, pour l'instant avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur.
 
 {{% expand "Réponse  :" %}}
 
@@ -146,7 +146,7 @@ Une fois dans le conteneur lancez:
 - `whoami` et `id`
 - vérifiez aussi avec `ps aux` que le serveur est bien lancé.
 
-{{% /expand %}}
+{{% /expand %}} -->
 
 <!-- - Validez la version actuelle du code avec Git en faisant : `git init && git add -A && git commit -m "Code initial pour le TP Docker Compose"` -->
 
