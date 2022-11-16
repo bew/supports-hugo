@@ -171,7 +171,7 @@ fi
 - Puis, grâce aux bons arguments allant avec `docker run`, lancez une instance de l'app en configuration `PROD` et une instance en environnement `DEV` (joignables sur deux ports différents).
 - Avec `docker ps` ou en lisant les logs, vérifiez qu'il existe bien une différence dans le programme lancé.
 
-
+### Ne pas faire tourner l'app en root
 - Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
 
 {{% expand "Solution :" %}}
