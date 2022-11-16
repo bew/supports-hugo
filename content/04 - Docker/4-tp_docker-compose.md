@@ -260,7 +260,7 @@ networks:
 
 ### Le Hot Code Reloading (rechargement du code à chaud)
 
-En s'inspirant des exercices sur les volumes (TP3) et du fichier `boot.sh` de l'app microblog (TP2), modifions le `docker compose.yml` pour y inclure des instructions pour lancer le serveur python en mode debug : la modification du code source devrait immédiatement être répercutée dans les logs d'`identidock`, et recharger la page devrait nous montrer la nouvelle version du code de l'application.
+En s'inspirant des exercices sur les volumes (TP3) et du fichier `boot.sh` de l'app microblog (TP2), modifions le `docker-compose.yml` pour y inclure des instructions pour lancer le serveur python en mode debug : la modification du code source devrait immédiatement être répercutée dans les logs d'`identidock`, et recharger la page devrait nous montrer la nouvelle version du code de l'application.
 
 {{% expand "Solution :" %}}
 
@@ -288,9 +288,12 @@ services:
 
 {{% /expand %}}
 
-<!-- ## Le Docker Compose de `microblog` -->
+## (facultatif) Le Docker Compose de `microblog`
 
-<!-- Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git clone https://github.com/uptime-formation/microblog`) avec MySQL. -->
+Créons un fichier Docker Compose pour faire fonctionner l'application Microblog du TP précédent avec Postgres.
+
+- Quelles étapes faut-il ?
+- Trouver comment configurer une base de données Postgres pour une app Flask (c'est une option de SQLAlchemy)
 
 <!-- Refaire plutôt avec un wordpress, un ELK, un nextcloud, et le microblog, et traefik, recentraliser les logs -->
 
