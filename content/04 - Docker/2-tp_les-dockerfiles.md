@@ -205,28 +205,27 @@ FROM python:3.9-slim
 
 # Permet à flask de savoir quel fichier exécuter
 ENV FLASK_APP microblog.py
-
 # Par défaut, l'image ci-dessus a comme utilisateur courant `root` : c'est une bonne pratique de sécurité de créer un user adéquat pour notre application (la justification détaillée se trouve dans les articles de la bibliographie)
-COPY requirements.txt /requirements.txt
+WORKDIR /
+COPY requirements.txt requirements.txt
 # On fait une étape d'installation des requirements avant pour tirer partie du système de cache de Docker lors de la construction des images
-RUN pip3 install -r /requirements.txt
+RUN pip3 install -r requirements.txt
 RUN useradd --system flask
-USER flask
 # On copie des fichiers qui changent moins souvent avant pour le cache
-COPY --chown=flask microblog.py config.py boot.sh /microblog/
-COPY app/ /microblog/
+COPY microblog.py config.py boot.sh /microblog/
 WORKDIR /microblog
+COPY migrations/ migrations
+COPY app/ app
 
+RUN chown -R flask /microblog
 ENV CONTEXT PROD
 
 # A titre de documentation entre le maintainer de l'image et les gens l'utilisant :
 EXPOSE 5000
-# Comment a-t-on trouvé l'info ? Ici c'est une connaissance du fonctionnement de l'app python : par défaut, les serveurs web python choisissent le port 5000
-# Au niveau Docker ou Kubernetes on choisira ensuite le port sur lequel on préfère exposer ce conteneur au reste du monde
-# Et dans le cas de Kubernetes, si on couple cette app avec un objet Ingress (reverse proxy)
 
-# Pratique très courante, pour avoir un Dockerfile synthétique tout en ajoutant des éléments de logique (ici, faire varier le contexte en fonction de l'environnement)
+USER flask
 CMD ["./boot.sh"]
+
 ```
 
 {{% /expand %}}
