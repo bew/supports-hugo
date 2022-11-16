@@ -34,7 +34,7 @@ docker run --detach --name portainer \
 
 # Partie 1 : Docker networking
 
-Pour expérimenter avec le réseau, nous allons lancer une petite application nodejs d'exemple (moby-counter) qui fonctionne avec une file (_queue_) redis (comme une base de données mais pour stocker des paires clé/valeur simples).
+<!-- Pour expérimenter avec le réseau, nous allons lancer une petite application nodejs d'exemple (moby-counter) qui fonctionne avec une file (_queue_) redis (comme une base de données mais pour stocker des paires clé/valeur simples). -->
 
 Récupérons les images depuis Docker Hub:
 
@@ -47,7 +47,7 @@ Pour connecter les deux applications créons un réseau manuellement:
 
 - `docker network create moby-network`
 
-Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip -br a` de nouveau et comparez. Qu'est-ce qui a changé ?
+<!-- Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip -br a` de nouveau et comparez. Qu'est-ce qui a changé ? -->
 
 Maintenant, lançons les deux applications en utilisant notre réseau :
 
@@ -73,7 +73,7 @@ Explorons un peu notre réseau Docker.
 docker exec moby-counter ping -c3 redis
 ```
 
-- De même, affichez le contenu des fichiers `/etc/hosts` du conteneur (c'est la commande `cat` couplée avec `docker exec`). Nous constatons que Docker a automatiquement configuré l'IP externe **du conteneur dans lequel on est** avec l'identifiant du conteneur.
+<!-- - De même, affichez le contenu des fichiers `/etc/hosts` du conteneur (c'est la commande `cat` couplée avec `docker exec`). Nous constatons que Docker a automatiquement configuré l'IP externe **du conteneur dans lequel on est** avec l'identifiant du conteneur. -->
 <!-- - De même, affichez `/etc/resolv.conf` : le résolveur DNS a été configuré par Docker. C'est comme ça que le conteneur connaît l'adresse IP de `redis`. -->
 - Qu'est-ce que Docker fournit qui permet que ce ping fonctionne ?
 - Pour s'en assurer, interrogeons le serveur DNS de notre réseau `moby-network` en lançant la commande `nslookup redis` grâce à `docker exec` :
@@ -100,8 +100,8 @@ Par contre, notre deuxième réseau fonctionne complètement isolé de notre pre
 
 - Arrêtons nos conteneurs : `docker stop moby-counter2 redis2`.
 
-- Pour faire rapidement le ménage des conteneurs arrêtés lancez `docker container prune`.
+<!-- - Pour faire rapidement le ménage des conteneurs arrêtés lancez `docker container prune`. -->
 
-- De même `docker network prune` permet de faire le ménage des réseaux qui ne sont plus utilisés par aucun conteneur.
+<!-- - De même `docker network prune` permet de faire le ménage des réseaux qui ne sont plus utilisés par aucun conteneur. -->
 
 ---
