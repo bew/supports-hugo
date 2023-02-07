@@ -3,3 +3,4 @@ docker-humancoders
 .DS_Store
 livres/
 .idea/
+*.swp
