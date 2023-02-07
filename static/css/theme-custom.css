@@ -1,0 +1,8 @@
+blockquote {
+  background: #eee;
+}
+blockquote p {
+  color: #666;
+  font-style: italic;
+	font-family: Big Caslon,Book Antiqua,Palatino Linotype,Georgia,serif;
+}
