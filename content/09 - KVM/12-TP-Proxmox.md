@@ -1,4 +1,7 @@
-# TP: IHM Proxmox 
+---
+title: "TP: IHM Proxmox " 
+weight: 12 
+---
 
 ---
 
@@ -106,7 +109,7 @@ Masque      255.255.255.0
 
 **Pour Alpine**
 
-![](../../static/img/qwerty-keyboard.jpg)
+![](../../img/qwerty-keyboard.jpg)
 - Installer un clavier en français (clavier QWERTY par défaut)
 ```shell
 $ apk add --update kbd-bkeymaps
@@ -177,7 +180,6 @@ $ apt install cockpit
 ```shell
 $ setup-apkrepos
 $ apk add nginx 
-# Changer le numéro de port 80 en 9090
 $ vi /etc/nginx/http.d/default.conf
 $ echo "auto lo" > /etc/network/interfaces
 $ service nginx start

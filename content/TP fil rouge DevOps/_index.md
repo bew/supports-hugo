@@ -1,6 +1,6 @@
 ---
 title: "TP fil rouge DevOps"
-weight: 350
+weight: 10000
 # pre: "<i class='fab fa-git'></i> - "
 pre: "<i class='fas fa-infinity'></i> - "
 # chapter: true

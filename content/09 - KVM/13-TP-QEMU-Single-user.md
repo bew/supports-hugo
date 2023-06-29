@@ -1,4 +1,7 @@
-# TP: QEMU Single user 
+---
+title: "TP: QEMU Single user " 
+weight: 13 
+---
 
 
 
@@ -92,7 +95,6 @@ $ sudo apt install hello:armhf
 $ sudo apt install file
 $ file /usr/bin/hello 
 $ hello
-# Il devrait afficher "Bonjour, le monde !".
 
 ``` 
 
@@ -126,7 +128,6 @@ $ sudo mkdir /tmp/chroot
 $ cd /tmp/chroot
 $ sudo debootstrap stable .
 $ sudo chroot .
-# Suivre les opérations
 
 ```
 ---

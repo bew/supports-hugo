@@ -1,4 +1,7 @@
-# TP: Cluster Proxmox
+---
+title: "TP: Cluster Proxmox" 
+weight: 25 
+---
 
 ## Objectifs pédagogiques
 
@@ -44,15 +47,6 @@ cat << EOF > /root/proxmox.yml
       pve_users:
         - name: root@pam
           email: alban@rackflow.io
-#        - name: user1@pam
-#          email: blabla0@atomit.fr
-#          groups: [ "Admins" ]
-#        - name: user2@pve
-#          email: blabla1@gmail.com
-#          firstname: user2
-#          lastname: user2
-#          password: "user2"
-#          groups: [ "Clients" ]
       pve_acls: # This should generate different ACLs
         - path: /
           roles: [ "Administrator" ]
@@ -129,9 +123,6 @@ for f in {100..110}; do iptables -t nat -A PREROUTING -p tcp -m tcp --dport 9${f
 EOF
 
 chmod +x /etc/network/if-*.d/SNAT
-# qemu-agent
-# add comma between 'TAG+="systemd"' and 'ENV{SYSTEMD_WANTS}="qemu-guest-agent.service"' in
-# /lib/udev/rules.d/60-qemu-guest-agent.rules.
 
 exit
 

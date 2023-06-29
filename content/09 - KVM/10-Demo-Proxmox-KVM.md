@@ -1,4 +1,7 @@
-# Demo: Proxmox  
+---
+title: "Demo: Proxmox  " 
+weight: 10 
+---
 
 ## Objectifs pédagogiques
 
@@ -10,7 +13,7 @@
 
 ## Proxmox 
 
-![](../../static/img/kvm/kvm-proxmox-logo.png)
+![](../../img/kvm/kvm-proxmox-logo.png)
 
 **Proxmox Virtual Environnement est une solution de virtualisation libre (licence AGPLv3) basée sur l'hyperviseur Linux KVM, et offre aussi une solution de conteneurs avec LXC.**
 
@@ -50,8 +53,6 @@ Documentation :
 
 $ egrep --color 'svm|vmx'  /proc/cpuinfo
 
-# SVM => AMD machines
-# VMX => Intel
 
 ```  
 

@@ -1,3 +1,7 @@
+---
+title: "TP Nested Virtualization" 
+weight: 25 
+---
 
 ## Objectifs pédagogiques
 
@@ -14,7 +18,6 @@
 
 - Savoir choisir KVM comme outil d'architecture en fonction de critères rationnels.
 
-# TP Nested Virtualization
 
 Dans une machine virtuelle Proxmox ou autre, on va lancer une autre machine virtuelle.
 

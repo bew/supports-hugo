@@ -1,4 +1,7 @@
-# TP: Migration Offline 
+---
+title: "TP: Migration Offline " 
+weight: 22 
+---
 
 ## Objectifs pédagogiques
 

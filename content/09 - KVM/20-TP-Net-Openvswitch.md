@@ -1,4 +1,7 @@
-# TP: Réseau Open vSwitch 
+---
+title: "TP: Réseau Open vSwitch " 
+weight: 20 
+---
 
 
 ## Objectifs pédagogiques
@@ -16,7 +19,6 @@
 
 
 ```shell
-# Si besoin des dépendances 
 $ apt update
 $ apt install -y qemu-kvm virtinst libvirt-clients guestfs-tools libvirt-daemon-system
 $ apt install -y  openvswitch-switch 

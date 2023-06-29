@@ -1,4 +1,7 @@
-# Théorie : Virt vs. Cont
+---
+title: "Théorie : Virt vs. Cont" 
+weight: 33 
+---
 
 ## Objectifs pédagogiques
 
@@ -17,14 +20,13 @@
 ---
 
 
-# Retour sur les technologies de virtualisation
 
 On compare souvent les conteneurs aux machines virtuelles. 
 
 Mais ce sont de grosses simplifications parce qu'on en a un usage similaire : isoler des process.
 
 
-![](../../static../../static/img/vm_vs_containers.png)
+![](../..../../static/img/vm_vs_containers.png)
 
 - **VM** : une abstraction complète pour simuler des machines
 
@@ -75,15 +77,12 @@ Quel est la différence de visibilité entre le processus d'un conteneur et celu
 
 - Créer un fichier Dockerfile avec le contenu suivant
 ```Dockerfile
-# Filename : Dockerfile 
-# our base image
 FROM ubuntu
 
 WORKDIR /srv
 
 RUN apt update && apt install -y python3  
 
-# run the application
 CMD ["sh", "-c", "echo Hello World"]
 ```
 - Lancer la commande depuis le dossier contenant le fichier

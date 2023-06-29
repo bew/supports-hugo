@@ -1,4 +1,7 @@
-# TP : IHM Virsh
+---
+title: "TP : IHM Virsh" 
+weight: 14 
+---
 
 ## Objectifs pédagogiques
 
@@ -21,10 +24,8 @@
 ### Aide 
 
 ```shell
-# Plus de 260 commandes disponibles dans virsh
 $ virsh help
 
-# Dont plus de 100 rien que pour le "domain"
 $ virsh help domain  
 ```
 

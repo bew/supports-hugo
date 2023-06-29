@@ -1,4 +1,7 @@
-# Théorie : QEMU et les montages 
+---
+title: "Théorie : QEMU et les montages " 
+weight: 35 
+---
 
 ## Objectifs pédagogiques
 
@@ -103,10 +106,8 @@ Il existe en plus des formats read-only
 **QEMU peut créer automatiquement une image de disque FAT virtuel à partir d'une arborescence de répertoires. Pour l'utiliser, il suffit de taper :**
 
 ```
-# Read Only
 $ qemu-system-x86_64 linux.img -hdb fat:/my_directory
 
-# Experimental RW
 $ qemu-system-x86_64 linux.img -fda fat:floppy:rw:/my_directory
 
 ```

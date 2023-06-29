@@ -1,4 +1,7 @@
-# Theorie : KVM en production
+---
+title: "Theorie : KVM en production" 
+weight: 40 
+---
 
 ## Objectifs pédagogiques
 

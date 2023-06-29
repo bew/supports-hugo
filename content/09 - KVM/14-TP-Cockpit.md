@@ -1,4 +1,7 @@
-# TP: IHM Cockpit
+---
+title: "TP: IHM Cockpit" 
+weight: 14 
+---
 
 ---
 
@@ -9,7 +12,7 @@
 
 ## Cockpit
 
-![](../../static/img/kvm/kvm-cockpit.png)
+![](../../img/kvm/kvm-cockpit.png)
 
 **Cockpit est un outil d'administration de serveur parrainé par Red Hat, axé sur la fourniture d'une interface moderne et conviviale pour gérer et administrer des serveurs.** 
 
@@ -52,7 +55,6 @@ Quels sont vos droits ?
 $ PASS=$( pwgen -s 31 1 )
 $ echo "Votre mot de passe root sécurisé : ${PASS}"
 
-# Saisir le mot de passe sécurisé
 $ passwd root
 
 ```

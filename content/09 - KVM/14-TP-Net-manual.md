@@ -1,4 +1,7 @@
-# TP : Net "à la main" 
+---
+title: "TP : Net à la main" 
+weight: 14 
+---
 
 ## Objectifs pédagogiques
 

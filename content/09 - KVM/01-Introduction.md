@@ -1,5 +1,6 @@
 ---
-title: "Formation KVM"
+title: "Introduction" 
+weight: 01 
 author: [Uptime Formation]
 date: "%DATE%"
 keywords: [KVM, Devops]
@@ -9,11 +10,10 @@ titlepage-text-color: "3366ff"
 titlepage-rule-color: "3366ff"
 titlepage-rule-height: 4
 book: true
-...
+---
 
-# Introduction
 
-![](../../static/img/kvm/kvm-logo.png)
+![](../../img/kvm/kvm-logo.png)
 
 ## Objectifs pédagogiques
 

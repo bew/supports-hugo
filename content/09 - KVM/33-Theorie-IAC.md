@@ -1,5 +1,8 @@
+---
+title: "Theorie : IAC " 
+weight: 33 
+---
 
-# Theorie : IAC 
 
 
 ## Objectifs pédagogiques

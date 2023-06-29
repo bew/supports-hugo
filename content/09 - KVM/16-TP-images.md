@@ -1,4 +1,7 @@
-# TP: KVM Images 
+---
+title: "TP: KVM Images " 
+weight: 16 
+---
 
 
 ## Objectifs pédagogiques
@@ -125,7 +128,6 @@ $ virt-builder debian-12 \
 ## Démarrage de l'image 
 
 ```shell
-# On utilise screen en cas de souci de console 
 $ screen 
 $ virt-install \
     --name debian12  \
@@ -136,8 +138,6 @@ $ virt-install \
     --import \
     --graphics none 
     
-# Pour quitter, utiliser la combinaison de touches CTRL + ALT + )
-# Ou kill le PID ex: killall -9 virsh
 $ virsh console debian12
 
 

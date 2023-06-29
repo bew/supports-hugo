@@ -1,4 +1,7 @@
-# Théorie: Réseau
+---
+title: "Théorie: Réseau" 
+weight: 34 
+---
 
 ## Objectifs Pédagogiques 
 
@@ -64,7 +67,6 @@ Vous souhaitez mettre en place un réseau privé entre 2 ou plusieurs machines v
 $ ip tuntap add tun0 mode tap 
 $ ip link set tun0 up
 $ ip link set tun0 master {BRIDGE}
-# connection des VMs sur l'interface tun
 
 
 ```
@@ -88,7 +90,6 @@ Par défaut, QEMU lance une VM en mode NAT.
 ```shell
 
 $ qemu-system-x86_64 -hda /path/to/hda.img
-# équivaut à 
 $ qemu-system-x86_64 -hda /path/to/hda.img -netdev user,id=user.0 -device e1000,netdev=user.0
 
 

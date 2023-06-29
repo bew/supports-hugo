@@ -1,4 +1,7 @@
-# TP: LVM 
+---
+title: "TP: LVM " 
+weight: 17 
+---
 
 ## Objectifs pédagogiques
 
@@ -12,7 +15,7 @@
 
 - Savoir choisir KVM comme outil d'architecture en fonction de critères rationnels.
 
-![](../../static/img/kvm/kvm-lvm.png)
+![](../../img/kvm/kvm-lvm.png)
 
 ## LVM : Logical Volume Manager
 

@@ -1,4 +1,7 @@
-# TP : IHM virt-manager 
+---
+title: "TP : IHM virt-manager " 
+weight: 13 
+---
 
 ## Objectifs pédagogiques
 

@@ -18,6 +18,8 @@
 
 ## Inspirations TD
 
+- Awesome docker : https://github.com/veggiemonk/awesome-docker
+- Awesome containers (liste de runtimes): https://github.com/Friz-zy/awesome-linux-containers
 - basic webapp : https://github.com/docker/labs/blob/master/beginner/chapters/webapps.md
 - tuto docker desktop officiel
 - https://github.com/dockersamples/global-2018-hol/blob/master/beginner-linux/part-three.md https://github.com/docker-training/docker-paas

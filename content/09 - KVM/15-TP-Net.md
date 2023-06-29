@@ -1,4 +1,7 @@
-# TP : Réseau routé
+---
+title: "TP : Réseau routé" 
+weight: 15 
+---
 
 
 ## Objectifs pédagogiques
@@ -119,11 +122,9 @@ $ virt-install \
 
 ```shell
 
-# S'assurer que les règles de NAT MASQUERADE sont OK
 $ iptables-save
 $ iptables -t nat -s 192.168.225.0/24 -A POSTROUTING -j MASQUERADE
 
-# Utiliser tcpdump 
 $ apt install tcpdump
 $ tcpdump -i any host 1.1.1.1
 root@guest: ping 1.1.1.1
