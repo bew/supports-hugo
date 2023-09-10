@@ -517,3 +517,15 @@ On va devoir écrire une requête complexe.
 ## Repasser à Kibana
 
 On pourrait tout faire avec l'API mais ce serait pas très fun et on s'arracherait vite les cheveux.
+
+---
+
+## Bonus : Principaux changements entre Elasticsearch 7 et 8
+
+Elasticsearch 8 introduit surtout 2 modifications clés :
+1. Suppression des ***mapping types**
+Les types de mappage ont été retirés, simplifiant la modélisation des données.
+Cela permettait de mettre au sein d'un même index plusieurs "types de document", maintenant on n'utilise plus qu'un seul type de document par index, appelé `_doc` (les mappings, automatiques et manuels (aussi appelés mappings explicites) existent toujours).
+
+2. Suppression de références à "xpack"
+Le retrait de références à "xpack" simplifie l'API, éliminant une source de confusion, mais Elastic est de toute façon très soumis à des changements de politique sur son modèle gratuit ou open source et ce n'est probablement pas pour autant la fin des actualités sur le sujet.
