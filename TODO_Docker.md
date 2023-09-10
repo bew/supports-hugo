@@ -1,3 +1,5 @@
+Add watchtower et buildx bake
+
 # TODO:
 
 ## Suggestions
@@ -35,12 +37,9 @@
 
 ### Ajouts cours
 
-<<<<<<< HEAD
-=======
 - https://github.com/google/gvisor
 
 
->>>>>>> f3ff4ce (wtf)
 - Prometheus
 
 * Swarm TLS
