@@ -127,11 +127,16 @@ https://www.elastic.co/fr/subscriptions
 
 ---
 
-## Ce qu'on ne va pas faire
+## Ce qu'on ne va que mentionner rapidement
 
 - Voir en détail l'installation d'une stack ELK à la main
 - Configurer Logstash ou Elastic APM pour pomper des logs d'une vraie infrastructure
-- Aborder la sécurité de ELK parce que c'est compliqué (mais c'est important pour faire de vraies installations)
+- Aborder la sécurité de ELK dans sa totalité parce que c'est compliqué (mais c'est important pour faire de vraies installations)
+
+## Rapidement, la sécurité dans Elasticsearch
+L'écrasante majorité des piratages de Elasticsearch vient simplement **de l'exposition sans mot de passe d'instances Elasticsearch sur des adresses IP publiques**. Pour s'en rendre compte, on peut demander au moteur de recherche Shodan la liste des serveurs qui ont le port 9200 ouvert sur Internet et qui ne demandent pas d'authentification.
+
+Il y a un modèle RBAC (qui a droit de faire quoi sur le cluster) qui est assez complet et permet aux admins Elasticsearch de mettre en place une gestion des droits assez fine.
 
 ---
 
