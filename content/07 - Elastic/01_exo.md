@@ -53,105 +53,9 @@ signifiant que les deux elastic se « connaissent »
 
 ## Installer Elasticsearch avec Docker Compose
 
-{{% expand "`docker-compose.yml` :" %}}
 
-```yaml
-version: "3.8"
-services:
-  es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
-    container_name: es01
-    environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es02,es03
-      - cluster.initial_master_nodes=es01,es02
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - xpack.security.enabled=false
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data01:/usr/share/elasticsearch/data
-    ports:
-      # - 9200:9200
-      - 9201:9200
-    networks:
-      - elastic
-
-  es02:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
-    container_name: es02
-    ports:
-      - 9202:9200
-    environment:
-      - node.name=es02
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es01,es03
-      - cluster.initial_master_nodes=es01,es02
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - xpack.security.enabled=false
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data02:/usr/share/elasticsearch/data
-    networks:
-      - elastic
-
-  es03:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
-    container_name: es03
-    ports:
-      - 9203:9200
-    environment:
-      - node.name=es03
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es01,es02
-      - cluster.initial_master_nodes=es01,es02
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - xpack.security.enabled=false
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data03:/usr/share/elasticsearch/data
-    networks:
-      - elastic
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.14.0
-    ports:
-      - 5601:5601
-    networks:
-      - elastic
-    environment:
-      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-
-volumes:
-  data01:
-    driver: local
-  data02:
-    driver: local
-  data03:
-    driver: local
-
-networks:
-  elastic:
-    driver: bridge
-```
-
-{{% /expand %}}
-
-## Une stack complète Elastic et Filebeat avec Docker Compose
-
-Récupérer la config Filebeat :
+L'utilité d'Elasticsearch est que, grâce à une configuration très simple de son module Filebeat, nous allons pouvoir centraliser les logs de tous nos conteneurs Docker.
+Pour ce faire, il suffit d'abord de télécharger une configuration de Filebeat prévue à cet effet :
 
 ```bash
 curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
@@ -165,13 +69,9 @@ sudo chown root filebeat.yml
 sudo chmod go-w filebeat.yml
 ```
 
-<!-- FIXME: aplatir réseau ou exposer ports logstash / elasticsearch pour pouvoir envoyer logs type ceux d'un nginx local (mais en même temps un nginx local c'est une histoire de filebeat) -->
-
-{{% expand "`docker-compose.yml` :" %}}
+Enfin, créons un fichier `docker-compose.yml` pour lancer une stack Elasticsearch :
 
 ```yaml
-version: "3"
-
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
@@ -189,7 +89,7 @@ services:
     volumes:
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - logging-network
     environment:
@@ -209,19 +109,27 @@ networks:
     driver: bridge
 ```
 
-{{% /expand %}}
+Il suffit ensuite de :
+- se rendre sur Kibana (port `5601`)
+- de configurer l'index en tapant `*` dans le champ indiqué, de valider
+- et de sélectionner le champ `@timestamp`, puis de valider.
 
-<!--
+L'index nécessaire à Kibana est créé, vous pouvez vous rendre dans la partie Discover à gauche (l'icône boussole 🧭) pour lire vos logs.
+
+Il est temps de faire un petit `docker stats` pour découvrir l'utilisation du CPU et de la RAM de vos conteneurs !
+
+
+### _Facultatif :_ Ajouter un nœud Elasticsearch
+
+{{% expand "`docker-compose.yml` :" %}}
+
 ```yaml
+
 version: "3.8"
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
     container_name: es01
-    labels:
-      co.elastic.logs/json.keys_under_root: "false"
-      co.elastic.logs/json.add_error_key: "true"
-      co.elastic.logs/json.message_key: "message"
     environment:
       - node.name=es01
       - cluster.name=es-docker-cluster
@@ -243,10 +151,6 @@ services:
       - elastic
 
   es02:
-    labels:
-      co.elastic.logs/json.keys_under_root: "false"
-      co.elastic.logs/json.add_error_key: "true"
-      co.elastic.logs/json.message_key: "message"
     image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
     container_name: es02
     ports:
@@ -289,34 +193,6 @@ services:
       - data03:/usr/share/elasticsearch/data
     networks:
       - elastic
-    labels:
-      co.elastic.logs/json.keys_under_root: "false"
-      co.elastic.logs/json.add_error_key: "true"
-      co.elastic.logs/json.message_key: "message"
-
-  # logstash:
-  #   image: docker.elastic.co/logstash/logstash:7.14.0
-  #   depends_on:
-  #     - elasticsearch
-  #   ports:
-  #     - 12201:12201/udp
-  #   volumes:
-  #     - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-  #   networks:
-  #     - logging-network
-
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:7.14.0
-    user: root
-    volumes:
-      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - elastic
-    environment:
-      - -strict.perms=false
-      - ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.14.0
@@ -326,9 +202,6 @@ services:
       - elastic
     environment:
       ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-    labels:
-      co.elastic.logs/json.keys_under_root: "true"
-      co.elastic.logs/json.message_key: "message"
 
 volumes:
   data01:
@@ -341,7 +214,9 @@ volumes:
 networks:
   elastic:
     driver: bridge
-``` -->
+```
+
+{{% /expand %}}
 
 <!--
 https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
