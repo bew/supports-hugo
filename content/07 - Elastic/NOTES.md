@@ -98,3 +98,4 @@ Retours 11/09 :
 - formations précédentes demander si y a eu et OBLIGER GENS A ETRE HOMOGENES DATA OU SYSADMIN pour pouvoir aller plus loin (mais du coup faut des super TP avancés)
 - si "mise en oeuvre" en 1J faut que ce soit thémmatique : soit enrolement d'agents et wzuh/ossec, soit archi cluster et ILM et backups, soit débitage grok logstash, soit API ES avancé dev tools, soit dashboards kibana super complexes
 - rajouter partie "droit d'en connaitre" : RBAC Kibana + ES, "Espaces Kibana", vrai TP ES RBAC
+- GROS TP sur painless et sur le raffinage / retraitement de documents dans les index, à mettre aussi dans cours
