@@ -11,4 +11,4 @@ chapter: true
 
 Créer et manipuler des conteneurs
 
-{{% children  %}}
+{{% children /%}}

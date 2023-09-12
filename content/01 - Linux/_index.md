@@ -28,8 +28,7 @@ Découvrir le système d'exploitation open source - pour les particuliers et les
 ## Corrections des exercices et bilan compétences
 
 
-{{% children  %}}
-
+{{% children /%}}
 
 #### Pour quelques autres éléments et supports voir
 

@@ -12,4 +12,4 @@ chapter: true
 
 Administrer des applications multiconteneurs complexes
 
-{{% children  %}}
+{{% children /%}}

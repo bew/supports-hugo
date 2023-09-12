@@ -12,4 +12,4 @@ chapter: true
 # Ansible
 
 Découvrir le couteau suisse de l'automatisation et de l'infrastructure as code.
-{{% children  %}}
+{{% children /%}}

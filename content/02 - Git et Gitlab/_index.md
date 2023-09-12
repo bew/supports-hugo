@@ -11,4 +11,4 @@ draft: false
 
 Collaborer dans des dépôts de code efficacement.
 
-{{% children  %}}
+{{% children /%}}
