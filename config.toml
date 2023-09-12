@@ -9,7 +9,7 @@ home = [ "HTML", "RSS", "JSON" ]
 
 [params]
 editURL = "https://github.com/Uptime-Formation/hugo_supports"
-globalTitle = "Cursus DevOps - 2021"
+globalTitle = "Cursus DevOps - 2023"
 
 [params.reveal_hugo]
 custom_theme = "reveal-hugo/themes/robot-lung.css"
