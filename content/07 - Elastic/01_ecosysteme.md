@@ -296,6 +296,7 @@ Aug 19 22:12:48 ubuntu-bionic sshd[5691]: Disconnected from user bob 10.0.2.2 po
 Aug 19 22:12:48 ubuntu-bionic sshd[5610]: pam_unix(sshd:session): session closed for user bob
 Aug 19 22:12:48 ubuntu-bionic systemd-logind[847]: Removed session 7.
 ```
+{{% /expand %}}
 
 <!--
 root@kibana-node:/home/vagrant# cat /var/log/nginx/access.log

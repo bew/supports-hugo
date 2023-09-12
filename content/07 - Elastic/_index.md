@@ -10,7 +10,7 @@ chapter: true
 
 Base de données et centralisation de logs avancée
 
-{{% children  %}}
+{{% children /%}}
 
 <!--
 
