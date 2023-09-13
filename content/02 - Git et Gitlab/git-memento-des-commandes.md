@@ -4,7 +4,7 @@ draft: false
 weight: 1000
 ---
 
-### Creation d'un dépôt et ajout d'un commit
+### Création d'un dépôt et ajout d'un commit
 
 | Commande                                       | Effet                                                                                                          |
 | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -39,9 +39,12 @@ weight: 1000
 
 | Commande                           | Effet                                                          |
 | ---------------------------------- | -------------------------------------------------------------- |
-| `git branch`                       | Affiche la liste des branches                                  |
+| `git branch`                       | Afficher la liste des branches                                  |
+| `git branch <nom_branche>`                       | Créer une branche <nom_branche>             |
 | `git checkout <nom_branche>`       | Basculer sur la branche `<nom_branche>`                        |
+| `git switch <nom_branche>`       | Basculer sur la branche `<nom_branche>`                        |
 | `git checkout -b <nom_branche>`    | Créer une nouvelle branche et basculer dessus                  |
+| `git switch -c <nom_branche>`    | Créer une nouvelle branche et basculer dessus                  |
 | `git diff <branche_1> <branche_2>` | Comparer deux branches pour voir les différences               |
 | `git merge <nom_branche> `         | Fusionner la branche `<nom_branche>` avec la branche courante. |
 
