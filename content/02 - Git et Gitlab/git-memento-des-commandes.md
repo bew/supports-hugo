@@ -47,6 +47,8 @@ weight: 1000
 | `git switch -c <nom_branche>`    | Créer une nouvelle branche et basculer dessus                  |
 | `git diff <branche_1> <branche_2>` | Comparer deux branches pour voir les différences               |
 | `git merge <nom_branche> `         | Fusionner la branche `<nom_branche>` avec la branche courante. |
+| `git stash `         | Sauvegarder ses modifications actuelles temporairement pour nettoyer son espace de travail. |
+| `git stash pop`         | Réappliquer les modifications sauvegardées pour restaurer son espace de travail. |
 
 ### Corriger ses erreurs
 
