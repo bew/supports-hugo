@@ -21,13 +21,14 @@ weight: 320
 
 Les fusions de branche peuvent s'effectuer en local sur la machine ou sur la forge logicielle.
 
-Prendre le TP microblog et localiser la branche qui ajoute une page "A propos". Faire un `merge` de cette branche avec `master` en local.
+
+Prendre le TP microblog (à cloner si nécessaire depuis `https://github.com/uptime-formation/microblog`) et localiser la branche qui ajoute une page "A propos". Faire un `merge` de cette branche avec `master` en local.
 
 ### Rebase
 
 <!-- FIXME: précisions + tester -->
 
-Prendre le TP microblog et localiser la branche qui ajoute une page "A propos".
+Prendre le TP microblog et localiser la branche qui ajoute une page "A propos" (à cloner si nécessaire depuis `https://github.com/uptime-formation/microblog`).
 
 - Faire un `rebase` de cette branche sur `master` ou sur la branche de votre choix.
 - Faire un `rebase` de cette branche (ou d'une autre) sur `master` en mode interactif.
