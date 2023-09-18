@@ -9,3 +9,7 @@ draft: true
 - ajout laïus git stash
 - ajout laïus amend
 - ajout laïus git restore one file / folder
+- ajout memes :
+static/images/git/gitxkcd.png
+static/images/git/gitiseasier.png
+static/images/git/codecomment.jpeg
