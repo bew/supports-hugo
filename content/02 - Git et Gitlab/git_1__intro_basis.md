@@ -124,11 +124,11 @@ Un commit est composé :
 
 ![](../../images/git_file_statuses.jpg)
 
-### **arbres** :
+### Les différents espaces de Git :
 
 - _l'espace de travail_ : ce sont les fichiers qu'il y a réellement dans votre dossier
 - l'_index_ ou _staging_ : un espace où l'on prépare son futur commit
-- et enfin l'arbre des commits définitif, avec _HEAD_ qui fait référence au tout dernier commit
+- et enfin l'arbre des commits définitif, avec _HEAD_ qui fait référence au commit sur lequel on travaille
   <!-- - -  _Tracked_ : suivi par Git -->
   <!-- - _Staged_ = inclus (dans le prochain commit) -->
   <!-- - `git rm fichier` pour désindexer. -->
