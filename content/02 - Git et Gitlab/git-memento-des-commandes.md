@@ -59,6 +59,8 @@ weight: 1000
 | `git reset --hard <commit>` | Réinitialiser le `HEAD` au commit indiqué en **perdant** les modifications.                                                            |
 | `git rebase <branche>`      | (plus complexe) Reconstruire l'historique de la branche courant à partir d'une autre branche en résolvant les conflits à chaque commit |
 | `git branch -f <nom_branche> <commit>`                | Réinitialiser la branche `<nom_branche>` (sur laquelle on n'est pas) au commit indiqué sans toucher à notre `HEAD`.                     |
+| `git restore <chemin_fichier> -s <commit>`                | Récupère le contenu des fichiers indiqués par `chemin_fichier` extraits depuis le contenu du commit `<commit>`.                     |
+
 
 
 ### Lexique git

@@ -8,3 +8,4 @@ draft: true
 - laïus sur sémantique des commits (feat: fix: misc: chore: etc.)
 - ajout laïus git stash
 - ajout laïus amend
+- ajout laïus git restore one file / folder
