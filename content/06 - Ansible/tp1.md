@@ -95,19 +95,19 @@ Pour initialiser LXD et générer les images de base nous allons utiliser un scr
 
 - Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1` -->
 
-
+<!-- 
 ## Configurer des images prêtes pour Ansible
 
-Nous avons besoin d'images Linux configurées avec SSH, Python et un utilisateur de connexion (disposant idéalement d'une clé ssh configurée pour éviter d'avoir à utiliser un mot de passe de connection)
+Nous avons besoin d'images Linux configurées avec SSH, Python et un utilisateur de connexion (disposant idéalement d'une clé ssh configurée pour éviter d'avoir à utiliser un mot de passe de connection) -->
 
-{{% expand "Facultatif :" %}}
+<!-- {{% expand "Facultatif :" %}} -->
 
-### Facultatif : Configurer un conteneur pour Ansible manuellement
+<!-- ### Facultatif : Configurer un conteneur pour Ansible manuellement
 
 Si vous devez refaire les travaux pratiques from scratch (sans la VM de TP actuelle et le script de génération lxd.sh), vous pouvez générer les images LXD pour la suite avec les instructions suivantes:
 
 
-- Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur  lancez les commandes suivantes:
+- Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur  lancez les commandes suivantes: -->
 <!-- 
 ##### Pour centos
 
@@ -133,7 +133,7 @@ passwd stagiaire
 exit
 ``` -->
 
-##### Pour ubuntu
+<!-- ##### Pour ubuntu
 
 ```bash
 # installer SSH
@@ -165,7 +165,7 @@ Maintenant nous devons configurer une identité (ou clé) ssh pour pouvoir nous 
 lxc list # permet de trouver l'ip du conteneur
 ssh-copy-id -i ~/.ssh/id_ed25519 stagiaire@<ip_conteneur>
 ssh stagiaire@<ip_conteneur>
-```
+``` -->
 
 <!-- ### Exporter nos conteneurs en image pour pouvoir les multiplier
 
@@ -192,10 +192,10 @@ lxc delete centos1 centos2 centos3 --force
 ```
  -->
 
-{{% /expand %}}
+<!-- {{% /expand %}} -->
 
 
-### Lancer et tester les conteneurs
+<!-- ### Lancer et tester les conteneurs
 
 Créons à partir des images du remotes un conteneur ubuntu et un autre centos:
 
@@ -208,7 +208,7 @@ lxc launch centos_ansible centos1
 
 - Déverrouillez cette clé ssh avec `ssh-add ~/.ssh/id_stagiaire` et le mot de passe `devops101` (le ssh-agent doit être démarré dans le shell pour que cette commande fonctionne si ce n'est pas le cas `eval $(ssh-agent)`).
 
-- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`. -->
 
 
 ## Créer un projet de code Ansible
