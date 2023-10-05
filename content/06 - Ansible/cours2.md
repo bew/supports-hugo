@@ -232,7 +232,7 @@ On peut définir et modifier la valeur des variables à différents endroits du 
 - La section `vars:` du playbook.
 - Un fichier de variables appelé avec `var_files:`
 - L'inventaire : variables pour chaque machine ou pour le groupe.
-- Dans des dossier extension de l'inventaire `group_vars`, `host_bars`
+- Dans des dossier extension de l'inventaire `group_vars`, `host_vars`
 - Dans le dossier `defaults` des roles (cf partie sur les roles)
 - Dans une tache avec le module `set_facts`.
 - A runtime au moment d'appeler la CLI ansible avec `--extra-vars "version=1.23.45 other_variable=foo"`
