@@ -251,11 +251,15 @@ stdout_callback = yaml
 bin_ansible_callbacks = True
 ```
 
-- Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`. Il faut pour cela lister les conteneurs lxc lancés.
+- Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`.
+<!-- Il faut pour cela lister les conteneurs lxc lancés. -->
 
-```
+<!-- ```
 lxc list # récupérer l'ip de la machine
-```
+``` -->
+Générez une clé si elle n'existe pas avec `ssh-keygen`.
+
+On va copier cette clé à distance avec `ssh-copy-id`.
 
 Créez et complétez le fichier `inventory.cfg` d'après ce modèle:
 
