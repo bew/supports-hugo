@@ -281,6 +281,8 @@ Alternativement on peut configurer ansible par projet avec un fichier `ansible.c
 - version plus complète :
 `ansible-playbook <fichier_playbook> --limit <groupe_machine> --inventory <fichier_inventaire> --become -vv --diff` 
 
+D'autres commandes sont utiles, une bonne commande est par exemple :
+`ansible-playbook --check -vv --diff`
 
 ### Les modules Ansible
 

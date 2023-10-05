@@ -329,8 +329,8 @@ centos_hosts
 
 Nous allons maintenant installer `nginx` sur nos machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
 
-- Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois, impossible d'utiliser `apt` car centos utilise `yum`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
-- 
+- Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois, impossible d'utiliser `apt` car centos utilise `dnf`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
+
 - N'hésitez pas consulter extensivement la documentation des modules avec leur exemple ou d'utiliser la commande de documentation `ansible-doc <module>`
   - utilisez `become` pour devenir root avant d'exécuter la commande (cf élévation de privilège dans le cours2)
 
@@ -401,6 +401,9 @@ ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
 - Enlevez le `--check` pour vous assurer que le service est démarré sur chacune des machines.
 
 - Visitez dans un navigateur l'ip d'un des hôtes pour voir la page d'accueil nginx.
+
+D'autres commandes sont utiles, une bonne commande est par exemple :
+`ansible-playbook --check -vv --diff`
 
 ## Ansible et les commandes unix
 
