@@ -155,11 +155,11 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 - Un playbook commence par un tiret car il s'agit d'une liste de plays.
 
-- Un play est un dictionnaire yaml qui décrit un ensemble de taches ordonnées en plusieurs sections. Un play commence par préciser sur quelles machines il s'applique puis précise quelques paramètres faculatifs d'exécution comme `become: yes` pour l'élévation de privilège (section `hosts`).
+- Un play est un dictionnaire yaml qui décrit un ensemble de tâches ordonnées en plusieurs sections. Un play commence par préciser sur quelles machines il s'applique puis précise quelques paramètres faculatifs d'exécution comme `become: yes` pour l'élévation de privilège (section `hosts`).
 
 - La section `hosts` est obligatoire. Toutes les autres sections sont **facultatives** !
 
-- La section `tasks` est généralement la section principale car elle décrit les taches de configuration à appliquer.
+- La section `tasks` est généralement la section principale car elle décrit les tâches de configuration à appliquer.
 
 - La section `tasks` peut être remplacée ou complétée par une section `roles` et des sections `pre_tasks` `post_tasks`
 
@@ -178,7 +178,7 @@ Les roles ne sont pas des tâches à proprement parler mais un ensemble de tâch
 ### Bonnes pratiques de syntaxe
 
 - Indentation de deux espaces.
-- Toujours mettre un `name:` qui décrit lors de l'execution la tache en court : un des principes de l'IaC est l'intelligibilité des opérations.
+- Toujours mettre un `name:` qui décrit lors de l'execution la tâche en court : un des principes de l'IaC est l'intelligibilité des opérations.
 - Utiliser les arguments au format yaml (sur plusieurs lignes) pour la lisibilité, sauf s'il y a peu d'arguments
 
 Pour valider la syntaxe il est possible d'installer et utiliser `ansible-linter` sur les fichiers YAML.
@@ -204,7 +204,7 @@ Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
 
 - Rendre la sortie verbeuse (mode debug) avec `-vvv`.
 
-- Utiliser une tache avec le module `debug` : `debug msg="{{ mavariable }}"`.
+- Utiliser une tâche avec le module `debug` : `debug msg="{{ mavariable }}"`.
 
 - Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
 
@@ -234,8 +234,8 @@ On peut définir et modifier la valeur des variables à différents endroits du 
 - L'inventaire : variables pour chaque machine ou pour le groupe.
 - Dans des dossier extension de l'inventaire `group_vars`, `host_vars`
 - Dans le dossier `defaults` des roles (cf partie sur les roles)
-- Dans une tache avec le module `set_facts`.
-- A runtime au moment d'appeler la CLI ansible avec `--extra-vars "version=1.23.45 other_variable=foo"`
+- Dans une tâche avec le module `set_facts`.
+- Au runtime au moment d'appeler la CLI ansible avec `--extra-vars "version=1.23.45 other_variable=foo"`
 
 Lorsque définies plusieurs fois, les variables ont des priorités en fonction de l'endroit de définition.
 L'ordre de priorité est plutôt complexe: `https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable`
@@ -244,9 +244,9 @@ En résumé la règle peut être exprimée comme suit: les variables de runtime 
 
 - Bonne pratique: limiter les redéfinitions de variables en cascade (au maximum une valeur par défaut, une valeur contextuelle et une valeur runtime) pour éviter que le playbook soit trop complexe et difficilement compréhensible et donc maintenable.
 
-### Remarques de syntaxe
+<!-- ### Remarques de syntaxe -->
 
-- `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire.
+<!-- - `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire. -->
 
 ### Variables spéciales
 
@@ -258,6 +258,7 @@ Les plus utiles:
 - `ansible_host`: information utilisée pour la connexion (ip ou domaine).
 - `inventory_hostname`: nom de la machine dans l'inventaire.
 - `groups`: dictionnaire de tous les groupes avec la liste des machines appartenant à chaque groupe.
+- `ansible_facts`: faits récoltés 
 
 Pour explorer chacune de ces variables vous pouvez utiliser le module `debug` en mode adhoc ou dans un playbook:
 
@@ -273,7 +274,7 @@ Les facts sont des valeurs de variables récupérées au début de l'exécution 
 
 - Par exemple, `ansible_os_family` est un fact/variable décrivant le type d'OS installé sur la machine. Elle n'existe qu'une fois les facts récupérés.
 
-! Lors d'une **commande adhoc** ansible les **facts** ne sont pas récupérés : la variable `ansible_os_family` ne sera pas disponible.
+Lors d'une **commande adhoc** ansible les **facts** ne sont pas récupérés : la variable `ansible_os_family` ne sera pas disponible.
 
 La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
 
@@ -292,11 +293,11 @@ Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
   when: ansible_os_family == 'RedHat'
 ```
 
-Sinon la tache est sautée (skipped) durant l'exécution.
+Sinon la tâche est sautée (skipped) durant l'exécution.
 
 ### La directive `loop:`
 
-Cette directive permet d'executer une tache plusieurs fois basée sur une liste de valeur:
+Cette directive permet d'executer une tâche plusieurs fois basée sur une liste de valeur:
 
 [https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
 
