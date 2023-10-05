@@ -1,5 +1,5 @@
 ---
-title: 'Cours 2 - Les playbooks Ansible, modules de base, variables et structures de contrôle'
+title: 'Cours 2 - Les playbooks Ansible'
 draft: false
 weight: 11
 ---
@@ -126,7 +126,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
   pre_tasks:
     - name: dynamic variable
       set_fact:
-        mavariable: "{{ inventory_hostname + 'prod' }}" #guillemets obligatoires
+        mavariable: "{{ inventory_hostname + '_prod' }}" #guillemets obligatoires
 
   roles:
     - flaskapp
@@ -175,40 +175,13 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 Les roles ne sont pas des tâches à proprement parler mais un ensemble de tâches et ressources regroupées dans un module un peu comme une librairie developpement. Cf. cours 3.
 
-### bonnes pratiques de syntaxe
+### Bonnes pratiques de syntaxe
 
 - Indentation de deux espaces.
 - Toujours mettre un `name:` qui décrit lors de l'execution la tache en court : un des principes de l'IaC est l'intelligibilité des opérations.
 - Utiliser les arguments au format yaml (sur plusieurs lignes) pour la lisibilité, sauf s'il y a peu d'arguments
 
 Pour valider la syntaxe il est possible d'installer et utiliser `ansible-linter` sur les fichiers YAML.
-
-### Imports et includes
-
-Il est possible d'importer le contenu d'autres fichiers dans un playbook:
-
-- `import_tasks`: importe une liste de tâches (atomiques)
-- `import_playbook`: importe une liste de play contenus dans un playbook.
-
-Les deux instructions précédentes désignent un import **statique** qui est résolu avant l'exécution.
-
-Au contraire, `include_tasks` permet d'intégrer une liste de tâche **dynamiquement** pendant l'exécution
-
-Par exemple:
-
-```yaml
-vars:
-  apps:
-    - app1
-    - app2
-    - app3
-
-tasks:
-  - include_tasks: install_app.yml
-    loop: "{{ apps }}"
-```
-
-Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas facilement être connu à l'avance on **doit** utiliser `include_tasks`.
 
 ### Élévation de privilège
 
@@ -224,7 +197,22 @@ L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` po
 <!--  - Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
 `su` est aussi possible ainsi que d'autre méthodes fournies par les "become plugins" exp `runas`). -->
 
-# Variables Ansible
+
+## Debugger un playbook.
+
+Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
+
+- Rendre la sortie verbeuse (mode debug) avec `-vvv`.
+
+- Utiliser une tache avec le module `debug` : `debug msg="{{ mavariable }}"`.
+
+- Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
+
+Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+
+<!-- TODO: laïus sur register a et a.stdout -->
+
+## Variables Ansible
 
 Ansible utilise en arrière plan un dictionnaire contenant de nombreuses variables.
 
@@ -237,27 +225,7 @@ Ce dictionnaire contient en particulier:
 - des facts c'est à dire des variables dynamiques caractérisant les systèmes cible (par exemple `ansible_os_family`) et récupéré au lancement d'un playbook.
 - des variables personnalisées (de l'utilisateur) que vous définissez avec vos propre nom généralement en **snake_case**.
 
-## Jinja2 et variables dans les playbooks et rôles (fichiers de code)
-
-La plupart des fichiers Ansible (sauf l'inventaire) sont traités avec le moteur de template python JinJa2.
-
-Ce moteur permet de créer des valeurs dynamiques dans le code des playbooks, des roles, et des fichiers de configuration.
-
-- Les variables écrites au format `{{ mavariable }}` sont remplacées par leur valeur provenant du dictionnaire d'exécution d'Ansible.
-
-- Des filtres (fonctions de transformation) permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}` (Voir plus bas)
-
-## Jinja2 et les variables dans les fichiers de templates
-
-Les fichiers de templates (.j2) utilisés avec le module template, généralement pour créer des fichiers de configuration peuvent **contenir des variables** et des **filtres** comme les fichier de code (voir au dessus) **mais également** d'autres constructions jinja2 comme:
-
-- Des `if` : `{% if nginx_state == 'present' %}...{% endif %}`.
-- Des boucles `for` : `{% for host in groups['appserver'] %}...{% endfor %}`.
-- Des inclusions de templates `{% include 'autre_fichier_template.j2' %}`
-
-
-
-## Définition des variables
+### Définition des variables
 
 On peut définir et modifier la valeur des variables à différents endroits du code ansible:
 
@@ -280,7 +248,7 @@ En résumé la règle peut être exprimée comme suit: les variables de runtime 
 
 - `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire.
 
-### variables spéciales
+### Variables spéciales
 
 https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
 
@@ -310,9 +278,9 @@ Les facts sont des valeurs de variables récupérées au début de l'exécution 
 La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
 
 
-## Structures de controle Ansible (et non JinJa2)
+## Structures de contrôle Ansible
 
-#### La directive `when`
+### La directive `when`
 
 Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
 
@@ -326,7 +294,7 @@ Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
 
 Sinon la tache est sautée (skipped) durant l'exécution.
 
-#### La directive `loop:`
+### La directive `loop:`
 
 Cette directive permet d'executer une tache plusieurs fois basée sur une liste de valeur:
 
@@ -369,6 +337,19 @@ On peut également controler cette boucle avec quelques paramètres:
 
 Cette fonctionnalité de boucle était anciennement accessible avec le mot clé `with_items:` qui est maintenant déprécié.
 
+
+
+## Jinja2 et variables dans les playbooks et rôles (fichiers de code)
+
+La plupart des fichiers Ansible (sauf l'inventaire) sont traités avec le moteur de template python JinJa2.
+
+Ce moteur permet de créer des valeurs dynamiques dans le code des playbooks, des roles, et des fichiers de configuration.
+
+- Les variables écrites au format `{{ mavariable }}` sont remplacées par leur valeur provenant du dictionnaire d'exécution d'Ansible.
+
+- Des filtres (fonctions de transformation) permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}` (Voir plus bas)
+
+
 ### Filtres Jinja
 
 Pour transformer la valeur des variables à la volée lors de leur appel on peut utiliser des filtres (jinja2) :
@@ -379,15 +360,41 @@ Pour transformer la valeur des variables à la volée lors de leur appel on peut
   - [https://www.tailored.cloud/devops/advanced-list-operations-ansible/](https://www.tailored.cloud/devops/advanced-list-operations-ansible/)
 
 La liste complète des filtres ansible se trouve ici : [https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html)
+<!-- TODO: ajout de liens vers jinja filter custom -->
 
-#### Debugger un playbook.
 
-Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
+### Jinja2 et les variables dans les fichiers de templates
 
-- Rendre la sortie verbeuse (mode debug) avec `-vvv`.
+Les fichiers de templates (.j2) utilisés avec le module template, généralement pour créer des fichiers de configuration peuvent **contenir des variables** et des **filtres** comme les fichier de code (voir au dessus) **mais également** d'autres constructions jinja2 comme:
 
-- Utiliser une tache avec le module `debug` : `debug msg="{{ mavariable }}"`.
+- Des `if` : `{% if nginx_state == 'present' %}...{% endif %}`.
+- Des boucles `for` : `{% for host in groups['appserver'] %}...{% endfor %}`.
+- Des inclusions de templates `{% include 'autre_fichier_template.j2' %}`
 
-- Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
 
-Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+## Imports et includes
+
+Il est possible d'importer le contenu d'autres fichiers dans un playbook:
+
+- `import_tasks`: importe une liste de tâches (atomiques)
+- `import_playbook`: importe une liste de play contenus dans un playbook.
+
+Les deux instructions précédentes désignent un import **statique** qui est résolu avant l'exécution.
+
+Au contraire, `include_tasks` permet d'intégrer une liste de tâche **dynamiquement** pendant l'exécution
+
+Par exemple:
+
+```yaml
+vars:
+  apps:
+    - app1
+    - app2
+    - app3
+
+tasks:
+  - include_tasks: install_app.yml
+    loop: "{{ apps }}"
+```
+
+Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas facilement être connu à l'avance on **doit** utiliser `include_tasks`.

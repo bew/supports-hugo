@@ -1,6 +1,6 @@
 ---
 title: "TP5 Bonus - Orchestration, Serveur de contrôle et Cloud" 
-draft: false
+draft: true
 weight: 24
 ---
 

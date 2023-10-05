@@ -1,13 +1,11 @@
 ---
-title: "TP2 - Créer un playbook de déploiement d'application web flask" 
+title: "TP2 - Créer un playbook de déploiement d'application flask" 
 draft: false
 weight: 22
 ---
-
+<!-- 
 ## Création du projet
 
-
-- Détruisez les machines du tp1 si ce n'est pas encore fait avec `vagrant destroy --force` dans le dossier `tp1`
 - Créez un nouveau dossier `tp2_flask_deployment`.
 - Créez le fichier `ansible.cfg` comme précédemment.
 
@@ -18,43 +16,27 @@ roles_path = ./roles
 host_key_checking = false
 ```
 
-- Créez deux machines ubuntu `app1` et `app2` avec le `Vagrantfile` suivant:
+- Créez deux machines ubuntu `app1` et `app2`.
 
-```ruby
-Vagrant.configure("2") do |config|
-    config.vm.synced_folder '.', '/vagrant', disabled: true
-    config.ssh.insert_key = false # to use the global unsecure key instead of one insecure key per VM
-    config.vm.provider :virtualbox do |v|
-      v.memory = 512
-      v.cpus = 1
-    end
-
-    config.vm.define :app1 do |app1|
-      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
-      app1.vm.box = "ubuntu/focal64"
-      app1.vm.hostname = "app1"
-      app1.vm.network :private_network, ip: "10.10.10.11"
-    end
-
-    config.vm.define :app2 do |app2|
-      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
-      app2.vm.box = "ubuntu/focal64"
-      app2.vm.hostname = "app2"
-      app2.vm.network :private_network, ip: "10.10.10.12"
-    end
-  end
+```
+lxc launch ubuntu_ansible app1
+lxc launch ubuntu_ansible app2
 ```
 
 - Créez l'inventaire statique `inventory.cfg`.
 
-```ini
-[appservers]
-app1 ansible_host=10.10.10.11
-app2 ansible_host=10.10.10.12
+```
+$ lxc list # pour récupérer l'adresse ip puis
+```
+
+```
 
 [all:vars]
-ansible_user=vagrant
-ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+ansible_user=<user>
+
+[appservers]
+app1 ansible_host=10.x.y.z
+app2 ansible_host=10.x.y.z
 ```
 
 - Ajoutez à l'intérieur les deux machines dans un groupe `appservers`.
@@ -69,23 +51,23 @@ ansible all -m ping
 
 ```
 git init   # à executer à la racine du projet
-```
+``` -->
 
-- Ajoutez un fichier `.gitignore` avec à l'intérieur:
+<!-- - Ajoutez un fichier `.gitignore` avec à l'intérieur:
 
 ```bash
 *.retry   # Fichiers retry produits lors des execution en echec de ansible-playbook
-```
+``` -->
 
-- Committez vos modifications avec git.
+<!-- - Committez vos modifications avec git.
 
 ```
 git add -A
 git commit -m "démarrage tp2"
 ```
-{{% /expand %}}
+{{% /expand %}} -->
 
-## Premier playbook : installer les dépendances
+## Créer le playbook : installer les dépendances
 
 Le but de ce projet est de déployer une application flask, c'est a dire une application web python.
 Le code (très minimal) de cette application se trouve sur github à l'adresse: [https://github.com/e-lie/flask_hello_ansible.git](https://github.com/e-lie/flask_hello_ansible.git).
@@ -106,7 +88,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Commençons par installer les dépendances de cette application. Tous nos serveurs d'application sont sur ubuntu. Nous pouvons donc utiliser le module `apt` pour installer les dépendances. Il fournit plus d'option que le module `package`.
 
-- Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. Ajoutez, pour devenir root, la directive `become: yes` au début du playbook.
+- Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. ajoutez pour cela la directive `become: yes` au début du playbook.
 
 ```yaml
     - name: Ensure apt dependencies are present
@@ -121,8 +103,21 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
         state: present
 ```
 
+ou bien en utilisant une `loop`, plus passe-partout :
 
-- Lancez ce playbook sans rien appliquer avec la commande `ansible-playbook <nom_playbook> --check --diff`. La partie `--check` indique à Ansible de ne faire aucune modification. La partie `--diff` nous permet d'afficher ce qui changerait à l'application du playbook.
+```yaml
+    - name: Ensure apt dependencies are present
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3-dev
+        - python3-pip
+        - python3-virtualenv
+        - virtualenv
+        - nginx
+        - git
+```
 
 - Relancez bien votre playbook à chaque tache : comme Ansible est idempotent il n'est pas grave en situation de développement d'interrompre l'exécution du playbook et de reprendre l'exécution après un échec.
 
@@ -146,6 +141,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
         groups:
           - "www-data"
 ```
+
 ## Récupérer le code de l'application
 
 - Pour déployer le code de l'application deux options sont possibles.
@@ -180,6 +176,8 @@ Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'i
 
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
 
+{{% expand "Cliquez pour voir la solution :" %}}
+
 ```yaml
     - name: Install python dependencies for the webapp in a virtualenv
       pip:
@@ -188,9 +186,11 @@ Avec ces informations et la documentation du module `pip` installez les dépenda
         virtualenv_python: python3
 ```
 
-## Changer les permission sur le dossier application
+{{% /expand %}}
 
-Notre application sera executée en tant qu'utilisateur flask pour des raisons de sécurité. Pour cela le dossier doit appartenir à cet utilisateur or il a été créé en tant que root (à cause du `become: yes` de notre playbook).
+## Changer les permissions sur le dossier application
+
+Notre application sera exécutée en tant qu'utilisateur flask pour des raisons de sécurité. Pour cela le dossier doit appartenir à cet utilisateur or il a été créé en tant que root (à cause du `become: yes` de notre playbook).
 
 - Créez une tache `file` qui change le propriétaire du dossier de façon récursive.
 
@@ -262,12 +262,12 @@ server {
 - Visitez l'application dans un navigateur et debugger le cas échéant.
 
 
-# Correction intermédiaire
+# Solution intermédiaire
 
 `flaskhello_deploy.yml`
 
 
-{{% expand "Code de correction :" %}}
+{{% expand "Code de solution :" %}}
 ```yaml
 - hosts: appservers
   become: yes
@@ -359,8 +359,8 @@ server {
 ```
 
 - Renommez votre fichier `flaskhello_deploy.yml` en `flaskhello_deploy_precorrection.yml`.
-- Copiez la correction dans un nouveau fichier `flaskhello_deploy.yml`.
-- Lancez le playbook de correction `ansible-playbook flaskhello_deploy.yml`.
+- Copiez la solution dans un nouveau fichier `flaskhello_deploy.yml`.
+- Lancez le playbook de solution `ansible-playbook flaskhello_deploy.yml`.
 - Après avoir ajouté `hello.test` à votre `/etc/hosts` testez votre application en visitant la page `hello.test`.
 {{% /expand %}}
 
@@ -370,11 +370,11 @@ server {
   
 ```
 git add -A
-git commit -m "tp2 correction intermediaire"
+git commit -m "tp2 solution intermediaire"
 ```
 
 - Installez l'extension `git graph` dans vscode.
-- Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 correction intermediaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
+- Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 solution intermediaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
 
 !!! Nous constatons que git a mémorisé les versions successives du code et permet de revenir à une version antérieure de votre déploiement.
 
@@ -420,14 +420,14 @@ app:
 ```
 {{% /expand %}}
 
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Pour la solution clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>
 - Renommez le clone en tp2_before_handlers.
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_before_handlers_correction` avec `git checkout tp2_before_handlers_correction`.
 
 Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
 
-Vous pouvez consultez la correction également directement sur le site de github.
+Vous pouvez consultez la solution également directement sur le site de github.
 
 ## Ajouter un handler pour nginx et le service
 
@@ -458,25 +458,47 @@ Ajoutez une section `handlers:` à la suite
         name: "nginx"
         state: reloaded
 
-# => penser aussi à supprimer la tâche de restart de nginx précédente
+# => penser aussi à supprimer la tâche maintenant inutile de restart de nginx précédente
 ```
 
-## Rendre le playbook dynamique avec une boucle.
+## Solution
+
+- Pour la solution clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>
+- Renommez le clone en tp2.
+- ouvrez le projet avec VSCode.
+- Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
+
+Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+
+Vous pouvez consultez la solution également directement sur le site de github.
+
+## Bonus 1 : faire varier le playbook selon les OS
+
+Pour ceux ou celles qui sont allés vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
+
+
+## Bonus 2 : Rendre le playbook dynamique avec une boucle
 
 Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d'application à installer (liste potentiellement définie durant l'exécution).
 
 - Identifiez dans le playbook précédent les tâches qui sont exactement communes aux deux installations.
+{{% expand "Réponse  :" %}}
 
-!!! il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+> Il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+
+{{% /expand %}}
 
 - Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres taches mais sans les handlers que vous laisserez à la fin du playbook.
+- 
+{{% expand "Réponse  :" %}}
 
-!!! Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
+> Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
+> 
+{{% /expand %}}
 
-- Ce nouveau fichier n'est pas à proprement parlé un `playbook` mais une liste de taches. utilisez `include_tasks:` pour importer cette liste de tâche à l'endroit ou vous les avez supprimées.
+- Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de taches. Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit ou vous les avez supprimées.
 - Vérifiez que le playbook fonctionne et est toujours idempotent.
 - Ajoutez une tâche `debug: msg={{ app }}` au début du playbook pour visualiser le contenu de la variable.
-
 
 - Ensuite remplacez la variable `app` par une liste `flask_apps` de deux dictionnaires (avec `name`, `domain`, `user` différents les deux dictionnaires et `repository` et `version` identiques).
 
@@ -501,22 +523,7 @@ flask_apps:
 
 - Testez en relançant le playbook que le déplacement des variables est pris en compte correctement.
 
-## Correction
-
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
-- Renommez le clone en tp2.
-- ouvrez le projet avec VSCode.
-- Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
-
-Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
-
-Vous pouvez consultez la correction également directement sur le site de github.
-
-## Bonus
-
-Pour ceux ou celles qui sont allé-es vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
-
-## Bonus 2 pour pratiquer
+## Bonus 3 : pour pratiquer
 
 Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
 

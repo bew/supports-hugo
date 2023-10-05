@@ -1,10 +1,10 @@
 ---
-title: 'Cours 3 - Organiser un projet modulariser son code avec les roles'
+title: 'Cours 3 - Organiser un projet'
 draft: false
 weight: 12
 ---
 
-## Organisation d'un dépot de code Ansible
+## Organisation d'un dépôt de code Ansible
 
 Voici, extrait de la documentation Ansible sur les "Best Practice", l'une des organisations de référence d'un projet ansible de configuration d'une infrastructure:
 
@@ -19,6 +19,9 @@ host_vars/
    hostname1.yml          # here we assign variables to particular systems
    hostname2.yml
 
+library/                  # if any custom modules, put them here (optional)
+module_utils/             # if any custom module_utils to support modules, put them here (optional)
+filter_plugins/           # if any custom filter plugins, put them here (optional)
 
 site.yml                  # master playbook
 webservers.yml            # playbook for webserver tier
@@ -120,7 +123,7 @@ C'est le store de roles officiel d'Ansible : [https://galaxy.ansible.com/](https
 
 C'est également le nom d'une commande `ansible-galaxy` qui permet d'installer des roles et leurs dépendances depuis internet. Un sorte de gestionnaire de paquet pour ansible.
 
-Elle est utilisée généralement sour la forme `ansible install -r roles/requirements.yml -p roles <nom_role>` ou plus simplement `ansible-galaxy install <role>` mais installe dans `/etc/ansible/roles`.
+Elle est utilisée généralement sour la forme `ansible-galaxy install -r roles/requirements.yml -p roles` ou plus simplement `ansible-galaxy install <role>` mais installe dans `/etc/ansible/roles`.
 
 Tous les rôles ansible sont communautaires (pas de roles officiels) et généralement stockés sur github.
 
@@ -147,7 +150,7 @@ Conventionnellement on utilise un fichier `requirements.yml` situé dans `roles`
 - Ensuite pour les installer on lance: `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
 
-<!-- #### Dépendance entre roles
+#### Dépendances entre rôles
 
  à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré
 Si un role dépend d'autres roles, les dépendances sont décrite dans le fichier `meta/main.yml` comme suit
@@ -167,10 +170,28 @@ dependencies:
       other_parameter: 12
 ``` 
 
-Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré. -->
+Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré.
 
 
-<!-- 
-### Tester un role en TDD avec Molécule
+## Tester les roles avec Molecule et le Test Driven Development
 
-TODO -->
+Pour des rôles fiables il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau rôle pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker.
+
+On crée différents types de scénarios, même si celui par défaut par Molecule permet déjà d'avoir un bon test du fonctionnement de notre rôle, en couvrant differents cas dès le début :
+
+- `check.yml`
+- `converge.yml`
+- `idempotent.yml`
+- `verify.yml`
+
+<!-- TODO: -  tu peux l'écrire avec ansible qui vérifie tout tâche par tâche écrite originalement
+- Ou alors avec testinfra la lib python spécialisée en collecte de facts os -->
+
+
+<!-- Et du coup ça fait du tdd des le début -->
+
+<!-- Y a un template
+Et il faut commencer par la -->
+
+<!-- Plein de drivers pas fonctionnels sauf docker -->
+<!-- Pour des cas compliqués genre wireguard ou ynh ça marche pas du coup driver hcloud est le meilleur driver vps -->

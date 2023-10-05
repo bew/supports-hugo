@@ -3,7 +3,7 @@ title: 'Cours 1 - Présentation'
 draft: false
 weight: 10
 ---
-
+<!-- 
 ## Plan
  
 ### Module 1 : Installer ansible, configurer la connexion et commandes ad hoc ansible
@@ -88,7 +88,7 @@ weight: 10
 - Intégration et déploiement avec Gitlab
 - Gérer une production Ansible découvrir TOWER/AWX
 - Tester ses roles et gérer de multiples versions
-#### TP4: Refactoring de notre code pour effectuer un rolling upgrade et déploiement dans le cloud + AWX
+#### TP4: Refactoring de notre code pour effectuer un rolling upgrade et déploiement dans le cloud + AWX -->
 
 
 ## Présentation d'Ansible
@@ -99,7 +99,7 @@ Ansible est un **gestionnaire de configuration** et un **outil de déploiement e
 
 Il fait donc également partie de façon centrale du mouvement **DevOps** car il s'apparente à un véritable **couteau suisse** de l'automatisation des infrastructures.
 
-### Histoire
+### histoire
 
 Ansible a été créé en **2012** (plus récent que ses concurrents Puppet et Chef) autour d'une recherche de **simplicité** et du principe de configuration **agentless**.
 
@@ -191,11 +191,12 @@ Ansible est très complémentaire à docker:
 - Il permet une orchestration simple des conteneur avec le module `docker_container`.
 
 {{% notice note %}}
-Plus récemment avec l'arrivé d'`Ansible container`  il est possible de construire et déployer des conteneurs docker avec du code ansible. Cette solution fait partie de la stack Red Hat Openshift. Concrètement le langage ansible remplace (avantageusement ?) le langage Dockerfile pour la construction des images Docker.
+Plus récemment avec l'arrivé d'`Ansible container`  il est possible de construire et déployer des conteneurs docker avec du code ansible. Cette solution fait partie de la stack Red Hat Openshift. Concrêtement le langage ansible remplace (avantageusement ?) le langage Dockerfile pour la construction des images Docker.
 {{% /notice %}}
 
 
-## Partie 1, Installation, configuration et commandes ad hoc.
+## Partie 1, Installation, configuration
+<!-- et commandes ad hoc. -->
 
 Pour l'installation plusieurs options sont possibles:
 
@@ -214,20 +215,20 @@ Pour voir l'ensemble des fichier installé par un paquet `pip3` :
 
 Pour tester la connexion aux serveurs on utilise la commande ad hoc suivante. `ansible all -m ping`
 
-<!-- 
+
 ### Faire des lab DevOps : Vagrant+virtualbox, LXD ou Terraform et le cloud.
 
 Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles, les créer et les détruires rapidement.
 
 La solution classique pour cela est vagrant qui permet de décrire dans un Vagrantfile des machines et de piloter par exemple virtualbox pour créer ces machines virtuelles.
 
-Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
+<!-- Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
 
 - plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
-- seulement sur linux
+- seulement sur linux -->
 
 Il est également très indiqué de faire des labs dans le cloud en louant des machines à la volée.
-Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean. -->
+Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
 
 ### Les inventaires statiques
 
@@ -237,15 +238,11 @@ Il s'agit d'une liste de machines sur lesquelles vont s'exécuter les modules An
 - La méthode connexion est précisée soit globalement soit pour chaque machine.
 - Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
 
-- Classées par groupe et sous groupes pour être désignables collectivement (exp executer telle opération sur)
-- La méthode connexion est précisée soit globalement soit pour chaque machine.
-- Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
-
-Exemple :
-<!-- # ansible_connection=lxd -->
+exemple:
 
 ```ini
 [all:vars]
+# ansible_connection=lxd
 ansible_ssh_user=elie
 ansible_python_interpreter=/usr/bin/python3
 
@@ -274,15 +271,15 @@ Liste des paramètre de configuration:
 Alternativement on peut configurer ansible par projet avec un fichier `ansible.cfg` présent à la racine. Toute commande ansible lancée à la racine du projet récupère automatiquement cette configuration.
 
 
-### La commande `ansible`
+### La commande `ansible-playbook`
 
 - version minimale : 
-`ansible <groupe_machine> -m <module> -a <arguments_module>`
+`ansible-playbook mon-playbook.yml`
 
-- `ansible all -m ping`: Permet de tester si les hotes sont joignables et ansible utilisable (SSH et python sont présents et configurés).
+<!-- - `ansible all -m ping`: Permet de tester si les hotes sont joignables et ansible utilisable (SSH et python sont présents et configurés). -->
 
 - version plus complète :
-`ansible <groupe_machine> --inventory <fichier_inventaire> --become -m <module> -a <arguments_module>`
+`ansible-playbook <fichier_playbook> --limit <groupe_machine> --inventory <fichier_inventaire> --become -vv --diff` 
 
 
 ### Les modules Ansible
@@ -296,11 +293,11 @@ Il en existe pour un peu toute les tâches raisonnablement courantes : un slogan
 
 - `yum/apt`: pour gérer les paquets sur les distributions basées respectivement sur Red Hat ou Debian.
 
-`... -m yum -a "name=openssh-server state=present"` 
+<!-- `... -m yum -a "name=openssh-server state=present"`  -->
   
 - `systemd` (ou plus générique `service`): gérer les services/daemons d'un système.
 
-`... -m systemd -a "name=openssh-server state=started"` 
+<!-- `... -m systemd -a "name=openssh-server state=started"`  -->
 
 - `user`: créer des utilisateurs et gérer leurs options/permission/groupes
 
@@ -323,8 +320,21 @@ Il est également à noter que la plupart des arguments sont facultatifs.
 
 Exemple et bonne pratique: toujours préciser `state: present` même si cette valeur est presque toujours le défaut implicite.
 
+<!-- FIXME: ajout de liens vers module ynh créé et "quand doit-on créer un module ? -->
 
-<!-- ### La console `ansible-console`
+<!-- 
+### La commande `ansible`
+
+- version minimale : 
+`ansible <groupe_machine> -m <module> -a <arguments_module>`
+
+- `ansible all -m ping`: Permet de tester si les hotes sont joignables et ansible utilisable (SSH et python sont présents et configurés).
+
+- version plus complète :
+`ansible <groupe_machine> --inventory <fichier_inventaire> --become -m <module> -a <arguments_module>` -->
+
+<!-- 
+### La console `ansible-console`
 
 Pour exécuter des commandes ad-hoc ansible propose aussi un interpréteur spécifique avec la commande `ansible-console`:
 

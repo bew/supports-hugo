@@ -4,8 +4,87 @@ draft: false
 weight: 23
 ---
 
+<!-- ## Ajouter un provisionneur d'infra maison pour créer les machines automatiquement
 
-## Ajouter une machine mysql simple avec un role externe
+- Clonez la correction du TP2 (lien à la fin du TP2) et renommez là en `tp3_provisionner_roles`.
+- Chargez ce dossier dans VSCode (vous pouvez fermer le tp2).
+
+Dans notre infra virtuelle, nous avons trois machines dans deux groupes. Quand notre lab d'infra grossit il devient laborieux de créer les machines et affecter les ip à la main. En particulier détruire le lab et le reconstruire est pénible. Nous allons pour cela introduire un playbook de provisionning qui va créer les conteneurs lxd en définissant leur ip à partir de l'inventaire.
+
+- modifiez l'inventaire comme suit:
+
+```ini
+[all:vars]
+ansible_user=<votre_user>
+
+[appservers]
+app1 ansible_host=10.x.y.121 container_image=ubuntu_ansible node_state=started
+app2 ansible_host=10.x.y.122 container_image=ubuntu_ansible node_state=started
+
+[dbservers]
+db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
+```
+
+- Remplacez `x` et `y` dans l'adresse IP par celle fournies par votre réseau virtuel lxd (faites `lxc list` et copier simple les deux chiffre du milieu des adresses IP)
+
+- Ajoutez un playbook `provision_lxd_infra.yml` dans un dossier `provisioners` contenant:
+
+```yaml
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Setup linux containers for the infrastructure simulation
+      lxd_container:
+        name: "{{ item }}"
+        state: "{{ hostvars[item]['node_state'] }}"
+        source:
+          type: image
+          alias: "{{ hostvars[item]['container_image'] }}"
+        profiles: ["default"]
+        config:
+          security.nesting: 'true' 
+          security.privileged: 'false' 
+        devices:
+          # configure network interface
+          eth0:
+            type: nic
+            nictype: bridged
+            parent: lxdbr0
+            # get ip address from inventory
+            ipv4.address: "{{ hostvars[item].ansible_host }}"
+
+        # Comment following line if you installed lxd using apt
+        url: unix:/var/snap/lxd/common/lxd/unix.socket
+        wait_for_ipv4_addresses: true
+        timeout: 600
+
+      register: containers
+      loop: "{{ groups['all'] }}"
+    
+
+    # Uncomment following if you want to populate hosts file pour container local hostnames
+    # AND launch playbook with --ask-become-pass option
+
+    # - name: Config /etc/hosts file accordingly
+    #   become: yes
+    #   lineinfile:
+    #     path: /etc/hosts
+    #     regexp: ".*{{ item }}$"
+    #     line: "{{ hostvars[item].ansible_host }}    {{ item }}"
+    #     state: "present"
+    #   loop: "{{ groups['all'] }}"
+```
+
+- Etudions le playbook (explication démo).
+
+- Lancez le playbook avec `sudo` car `lxd` se contrôle en root sur localhost: `sudo ansible-playbook provision_lxd_infra` (c'est le seul cas exceptionnel ou ansible-playbook doit être lancé avec sudo, pour les autre playbooks ce n'est pas le cas)
+
+- Lancez `lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé. -->
+
+## Facultatif: Ajouter une machine mysql simple avec un role externe
+
+{{% expand "Facultatif  :" %}}
 
 - Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les roles (c'est une convention ansible à respecter).
 - Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du role `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux roles de références.
@@ -33,6 +112,8 @@ weight: 23
 
 - Lancer la configuration de toute l'infra avec ce playbook.
 
+{{% /expand %}}
+
 ## Transformer notre playbook en role
 
 - Si ce n'est pas fait, créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les roles (c'est une convention ansible à respecter).
@@ -54,7 +135,10 @@ flaskapp
 ```
 
 - Les templates et les listes de handlers/tasks sont a mettre dans les fichiers correspondants (voir plus bas)
-- Le fichier `defaults/main.yml` permet de définir des valeurs par défaut pour les variables du role. Mettez à l'intérieur une application par défaut:
+- Le fichier `defaults/main.yml` permet de définir des valeurs par défaut pour les variables du role.
+
+- **Si vous avez fait le Bonus 2 du TP2** *"Rendre le playbook dynamique avec une boucle"*
+  - Mettez à l'intérieur une application par défaut dans la variable `flask_apps`
 
 ```yaml
 flask_apps:
@@ -63,6 +147,17 @@ flask_apps:
     repository: https://github.com/e-lie/flask_hello_ansible.git
     version: master
     user: defaultflask
+```
+- **Sinon :**
+  - Mettez à l'intérieur des valeurs par défaut pour la variable `app` :
+
+```yaml
+app:
+  name: defaultflask
+  domain: defaultflask.test
+  repository: https://github.com/e-lie/flask_hello_ansible.git
+  version: master
+  user: defaultflask
 ```
 
 Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (la liste de deux applications du TP2). Elle est présente pour éviter que le role plante en l'absence de variable (valeurs de fallback).
@@ -106,12 +201,42 @@ Nous aimerions maintenant créer un playbook `upgrade_apps.yml` qui contrairemen
 
 ## Correction
 
-- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Pour la correction clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>.
 - Renommez le clone en tp3.
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp3_correction` avec `git checkout tp3_correction`.
 
 Il contient également les corrigés du TP2 et TP4 dans d'autre branches.
+
 ## Bonus 
 
 Essayez différents exemples de projets de Geerlingguy accessibles sur github à l'adresse [https://github.com/geerlingguy/ansible-for-devops](https://github.com/geerlingguy/ansible-for-devops).
+
+
+## Bonus 2 - Unit testing de role avec Molecule
+
+Pour des rôles fiables il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau rôle pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker.
+
+<!-- On peut créer des scénarios. -->
+
+<!-- Et du coup ça fait du tdd des le début -->
+
+<!-- Y a un template
+Et il faut commencer par la -->
+
+<!-- Plein de drivers pas fonctionnels sauf docker -->
+<!-- Pour des cas compliqués genre wireguard ou ynh ça marche pas du coup driver hcloud est le meilleur driver vps -->
+
+<!-- - `check.yml`
+- `converge.yml`
+- `idempotent.yml`
+- `verify.yml` -->
+
+<!-- -  tu peux l'écrire avec ansible qui vérifie tout tâche par tâche écrite originalement
+- Ou alors avec testinfra la lib python spécialisée en collecte de facts os -->
+
+
+- Documentation : <https://molecule.readthedocs.io/en/latest/>
+
+- Suivre le tutoriel *Getting started* : <https://molecule.readthedocs.io/en/latest/getting-started.html>
+<!-- - Tutoriel : https://www.adictosaltrabajo.com/2020/05/08/ansible-testing-using-molecule-with-ansible-as-verifier/ -->
