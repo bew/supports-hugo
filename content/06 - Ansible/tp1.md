@@ -62,16 +62,7 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 {{% /expand %}}
 
 
-- Ajoutez la ligne `hotelocal ansible_host=127.0.0.1` dans l'inventaire par défaut (le chemin est indiqué dans). Et pinguer hotelocal.
-
-{{% expand "Réponse  :" %}}
-
-- Éditez le fichier `/etc/ansible/hosts` avec par exemple `sudo gedit /etc/ansible/hosts`
-
-- Testez cette configuration avec `ansible hotelocal -m ping`
-- => idem echec de login
-
-{{% /expand %}}
+- Ajoutez la ligne `hotelocal ansible_host=127.0.0.1 ansible_connection=local` dans l'inventaire par défaut (le chemin est indiqué dans). Et pinguer hotelocal.
 
 
 <!-- ## Explorer LXD 
