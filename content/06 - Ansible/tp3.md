@@ -82,9 +82,7 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Lancez `lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé. -->
 
-## Facultatif: Ajouter une machine mysql simple avec un rôle trouvé sur Internet
-
-{{% expand "Facultatif  :" %}}
+## Ajouter une installation mysql simple à une de vos machines avec un rôle trouvé sur Internet
 
 - Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les rôles (c'est une convention ansible à respecter).
 - Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du rôle `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux rôles de références.
@@ -114,7 +112,6 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Dans votre playbook `dbservers.yml` et en lisant le mode d'emploi du rôle, écrasez certaines variables par défaut du rôle par des variables personnalisés. Relancez votre playbook avec `--diff` (et éventuellement `--check`) pour observer les différences.
 
-{{% /expand %}}
 
 ## Transformer notre playbook en role
 
