@@ -110,7 +110,7 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Lancer la configuration de toute l'infra avec ce playbook.
 
-- Dans votre playbook `dbservers.yml` et en lisant le mode d'emploi du rôle, écrasez certaines variables par défaut du rôle par des variables personnalisés. Relancez votre playbook avec `--diff` (et éventuellement `--check`) pour observer les différences.
+- Dans votre playbook `dbservers.yml` et en lisant le mode d'emploi du rôle (ou bien le fichier `defaults/main.yml`), écrasez certaines variables par défaut du rôle par des variables personnalisés. Relancez votre playbook avec `--diff` (et éventuellement `--check`) pour observer les différences.
 
 
 ## Transformer notre playbook en role
