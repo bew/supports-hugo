@@ -210,7 +210,20 @@ Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
 
 Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
 
+
 <!-- TODO: laïus sur register a et a.stdout -->
+### Les 7 commandes de debug dans Ansible
+
+| Command                | Shortcut | Action                                    |
+|------------------------|----------|-------------------------------------------|
+| print                  | p        | Print information about the task          |
+| task.args[key] = value |          | Update module arguments                   |
+| task_vars[key] = value |          | Update task variables (you must update_task next) |
+| update_task            | u        | Recreate a task with updated task variables |
+| redo                   | r        | Run the task again                        |
+| continue               | c        | Continue executing, starting with the next task |
+| quit                   | q        | Quit the debugger                         |
+
 
 ## Variables Ansible
 
