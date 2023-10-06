@@ -253,13 +253,15 @@ server {
 }
 ```
 
-- Utilisez `file` pour créer un lien symbolique de ce fichier dans `/etc/nginx/sites-enabled` (avec l'option `force:yes` pour écraser le cas échéant).
+- Remplacez `hello.test` par `hello.test.votrenom.formation.doxx.fr` le cas échéant si vous avez accès à un nom de domaine public
+
+- Utilisez `file` pour créer un lien symbolique de ce fichier dans `/etc/nginx/sites-enabled` (avec l'option `force: yes` pour écraser le cas échéant).
 
 - Ajoutez une tache pour supprimer le site `/etc/nginx/sites-enabled/default`.
 
-- Ajouter une tache de redémarrage de nginx.
+- Ajouter une tâche de redémarrage de nginx.
 
-- Ajoutez `hello.test` dans votre fichier `/etc/hosts` pointant sur l'ip d'un des serveur d'application.
+- Si vous n'avez pas remplacé `hello.test` par un nom de domaine public (comme `hello.test.votrenom.formation.doxx.fr`), ajoutez `hello.test` dans votre fichier `/etc/hosts` pointant sur l'ip d'un des serveur d'application.
 
 - Visitez l'application dans un navigateur et debugger le cas échéant.
 
@@ -363,7 +365,8 @@ server {
 - Renommez votre fichier `flaskhello_deploy.yml` en `flaskhello_deploy_precorrection.yml`.
 - Copiez la solution dans un nouveau fichier `flaskhello_deploy.yml`.
 - Lancez le playbook de solution `ansible-playbook flaskhello_deploy.yml`.
-- Après avoir ajouté `hello.test` à votre `/etc/hosts` testez votre application en visitant la page `hello.test`.
+- Si vous n'avez pas remplacé `hello.test` par un nom de domaine public (comme `hello.test.votrenom.formation.doxx.fr`), ajoutez `hello.test` dans votre fichier `/etc/hosts`
+- enfin, testez votre application en visitant la page `hello.test`. 
 {{% /expand %}}
 
 
@@ -376,7 +379,7 @@ git commit -m "tp2 solution intermediaire"
 ```
 
 - Installez l'extension `git graph` dans vscode.
-- Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 solution intermediaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
+- Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 solution intermédiaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
 
 !!! Nous constatons que git a mémorisé les versions successives du code et permet de revenir à une version antérieure de votre déploiement.
 
@@ -398,7 +401,7 @@ Ajoutons des variables pour gérer dynamiquement les paramètres de notre déplo
     user: flask
     domain: hello.test
 ```
-
+(remplacez `hello.test` par `hello.test.votrenom.formation.doxx.fr` le cas échéant si vous avez accès à un nom de domaine public)
 - Remplacez dans le playbook précédent et les deux fichiers de template:
   - toutes les occurence de la chaine `hello` par `{{ app.name }}`
   - toutes les occurence de la chaine `flask` par `{{ app.user }}`
@@ -420,6 +423,9 @@ app:
   repository: https://github.com/e-lie/flask_hello_ansible.git
   version: master
 ```
+
+(remplacez `hello.test` par `hello.test.votrenom.formation.doxx.fr` le cas échéant si vous avez accès à un nom de domaine public)
+
 {{% /expand %}}
 
 - Pour la solution clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>
@@ -427,7 +433,7 @@ app:
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_before_handlers_correction` avec `git checkout tp2_before_handlers_correction`.
 
-Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+Le dépôt contient également les corrigés du TP3 et TP4 dans d'autre branches.
 
 Vous pouvez consultez la solution également directement sur le site de github.
 
@@ -470,7 +476,7 @@ Ajoutez une section `handlers:` à la suite
 - ouvrez le projet avec VSCode.
 - Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
 
-Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+Le dépôt contient également les corrigés du TP3 et TP4 dans d'autres branches.
 
 Vous pouvez consultez la solution également directement sur le site de github.
 
@@ -527,6 +533,6 @@ flask_apps:
 
 ## Bonus 3 : pour pratiquer
 
-Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
+Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql : [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
 
 Il s'agit de l'application construite au fur et à mesure dans un [magnifique tutoriel python](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux). Ce chapitre indique comment déployer l'application sur linux.
