@@ -1,5 +1,5 @@
 ---
-title: "TP5 Bonus - Orchestration, Serveur de contrôle et Cloud" 
+title: "TP5 Bonus - Automatisation du déploiement avec Gitlab CI" 
 draft: false
 weight: 25
 ---

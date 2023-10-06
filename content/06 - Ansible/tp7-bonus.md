@@ -1,7 +1,7 @@
 ---
 title: "TP7 Bonus - Cloud Terraform" 
 draft: false
-weight: 24
+weight: 27
 ---
 
 <!-- 
