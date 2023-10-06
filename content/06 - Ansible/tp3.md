@@ -1,5 +1,5 @@
 ---
-title: "TP3 - Structurer le projet avec des roles" 
+title: "TP3 - Structurer le projet avec des rôles" 
 draft: false
 weight: 23
 ---
@@ -86,9 +86,9 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 {{% expand "Facultatif  :" %}}
 
-- Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les roles (c'est une convention ansible à respecter).
-- Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du role `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux roles de références.
-- Pour décrire les roles nécessaires pour notre projet il faut créer un fichier `requirements.yml` contenant la liste de ces roles. Ce fichier peut être n'importe où mais il faut généralement le mettre directement dans le dossier `roles` (autre convention).
+- Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les rôles (c'est une convention ansible à respecter).
+- Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du rôle `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux rôles de références.
+- Pour décrire les rôles nécessaires pour notre projet il faut créer un fichier `requirements.yml` contenant la liste de ces rôles. Ce fichier peut être n'importe où mais il faut généralement le mettre directement dans le dossier `roles` (autre convention).
 
 - Ajoutez à l'intérieur du fichier:
 

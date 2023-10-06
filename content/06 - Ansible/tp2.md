@@ -207,7 +207,7 @@ Notre application sera exécutée en tant qu'utilisateur flask pour des raisons 
 
 ## Module Template : configurer le service qui fera tourner l'application
 
-Notre application doit tourner comme c'est souvent le cas en tant que service (systemd). Pour cela nous devons créer un fichier service adapté `hello.service` dans le le dossier `/etc/systemd/system/`.
+Notre application doit tourner comme c'est souvent le cas en tant que service (systemd). Pour cela nous devons créer un fichier service adapté `hello.service` **et le copier dans le dossier `/etc/systemd/system/`**.
 
 Ce fichier est un fichier de configuration qui doit contenir le texte suivant:
 
@@ -232,7 +232,7 @@ Pour gérer les fichier de configuration on utilise généralement le module `te
 - Créez un dossier `templates`, avec à l'intérieur le fichier `app.service.j2` contenant le texte précédent.
 - Utilisez le module `template` pour le copier au bon endroit avec le nom `hello.service`.
 
-- Utilisez ensuite `systemd` pour démarrer ce service (`state: restarted` ici pour le cas ou le fichier à changé).
+- Utilisez ensuite `systemd` pour démarrer ce service (avec `state: restarted` dans le cas où le fichier a changé).
 
 ## Configurer nginx
 
@@ -266,7 +266,7 @@ server {
 - Visitez l'application dans un navigateur et debugger le cas échéant.
 
 
-# Solution intermédiaire
+## Solution intermédiaire
 
 `flaskhello_deploy.yml`
 
@@ -385,9 +385,8 @@ git commit -m "tp2 solution intermediaire"
 
 {{% /expand %}}
 
-# Améliorer notre playbook avec des variables.
+## Améliorer notre playbook avec des variables
 
-## Variables
 
 Ajoutons des variables pour gérer dynamiquement les paramètres de notre déploiement:
 

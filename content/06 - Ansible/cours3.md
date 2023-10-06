@@ -79,11 +79,29 @@ Plusieurs remarques:
 
 ### Structure d'un rôle
 
-Un role est un dossier avec des sous dossiers conventionnels:
+Un rôle est un dossier avec des sous dossiers qui répondent à une convention de nommage précise (contrairement à l'organisation d'un projet Ansible, qui peut être plus chaotique), généralement quelque chose comme :
 
 ```
 roles/
-    common/               # this hierarchy represents a "role"
+    mediawiki/            # le nom du rôle
+        tasks/            #
+            main.yml      #  <-- fichier de tasks principal
+            autre.yml     #  <-- fichier(s) de tasks en plus
+        handlers/         #
+            main.yml      #  <-- handlers file
+        templates/        #  <-- files for use with the template resource
+            ntp.conf.j2   #  <------- templates end in .j2
+        files/            #
+            foo.sh        #  <-- script files for use with the script resource
+        defaults/         #
+            main.yml      #  <-- default lower priority variables for this role
+```
+
+Voici la version exhaustive :
+```
+roles/
+    requirements.yml      # la liste des rôles nécessaires et comment les récupérer
+    mediawiki/            # le nom du rôle
         tasks/            #
             main.yml      #  <-- tasks file can include smaller files if warranted
         handlers/         #
@@ -98,6 +116,12 @@ roles/
             main.yml      #  <-- default lower priority variables for this role
         meta/             #
             main.yml      #  <-- role dependencies
+        molecule/         # pour le test du rôle
+            check.yml
+            converge.yml
+            idempotent.yml
+            verify.yml
+        # Plus rare :
         library/          # roles can also include custom modules
         module_utils/     # roles can also include custom module_utils
         lookup_plugins/

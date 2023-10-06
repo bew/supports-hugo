@@ -110,6 +110,39 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 ## Structure d'un playbook
 
+### Version simplifiée
+
+```yaml
+--- 
+- hosts: serveur_web # une machine ou groupe de machines
+  # (chaque play commence par un tiret)
+  become: yes # lancer le playbook avec "sudo"
+
+  vars:
+    logfile_name: "auth.log"
+
+  var_files:
+    - mesvariables.yml
+
+  roles:
+    - flaskapp
+    
+  tasks:
+
+    - name: créer un fichier de log
+      file: # syntaxe yaml extensive : conseillée
+        path: /var/log/{{ logfile_name }} #guillemets facultatifs
+        mode: 755
+
+    - import_tasks: mestaches.yml
+
+  handlers:
+    - systemd:
+        name: nginx
+        state: "reloaded"
+```
+
+### Version plus exhaustive
 ```yaml
 --- 
 - name: premier play # une liste de play (chaque play commence par un tiret)
