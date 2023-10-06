@@ -179,9 +179,12 @@ ansible-inventory --inventory <inventory> --graph
 
 [https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 
-- Ansible modules
-- Inventory plugins
-- Connection plugins
+- modules
+- inventory plugins
+- connection plugins
+- callback plugins : https://docs.ansible.com/ansible/latest/collections/index_callback.html
+- lookup plugins : https://docs.ansible.com/ansible/latest/collections/index_lookup.html et https://docs.ansible.com/ansible/latest/plugins/lookup.html
+- filter plugins
 
 <!-- ### Intégration Ansible et AWS
 
@@ -206,12 +209,12 @@ Voir TP4.
 https://docs.ansible.com/ansible/latest/scenario_guides/guide_kubernetes.html
 
 
-## Exécuter Ansible en Production: les stratégies d'exécution:
+## Exécuter Ansible en production : les stratégies d'exécution:
 
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
 
 
-## Serveur pour exécuter ansible dans Une équipe
+## Serveur pour exécuter Ansible dans une équipe
 
 - AWX/Tower
   - Serveur officiel RedHat et sa version open source
@@ -226,11 +229,11 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
   - gestion de ansible-vault et des credentials
 
 - Rundeck
-  - un plugin ansible assez populaire
+  - une alternative à AWX/Ansible Tower assez populaire
 
 - Gitlab
   - faisable mais pas très bien intégré
 
-- Un simple serveur d'exécution
+- Un simple serveur avec Ansible d'installé
 
-- Depuis la machine de chaque Ops avec un wrapper maison bash ou python pour cloner les bonnes versions et pousser les logs de façon centralisée
+- Depuis la machine de chaque adminsys avec un wrapper maison bash ou python pour cloner les bonnes versions et pousser les logs de façon centralisée
