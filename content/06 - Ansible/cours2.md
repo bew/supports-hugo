@@ -289,8 +289,7 @@ Les facts sont des valeurs de variables récupérées au début de l'exécution 
 
 Lors d'une **commande adhoc** ansible les **facts** ne sont pas récupérés : la variable `ansible_os_family` ne sera pas disponible.
 
-La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
-
+La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html
 
 ## Structures de contrôle Ansible
 
@@ -310,7 +309,7 @@ Sinon la tâche est sautée (skipped) durant l'exécution.
 
 ### La directive `loop:`
 
-Cette directive permet d'executer une tâche plusieurs fois basée sur une liste de valeur:
+Cette directive permet d'exécuter une tâche plusieurs fois basée sur une liste de valeurs :
 
 [https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
 
@@ -328,7 +327,9 @@ exemple:
         - message3
 ```
 
-On peut également controler cette boucle avec quelques paramètres:
+On accéde aux différentes valeurs qu'elle prend avec `{{ item }}`.
+
+On peut également contrôler cette boucle avec quelques paramètres:
 
 ```yaml
 - hosts: localhost

@@ -103,7 +103,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
         state: present
 ```
 
-ou bien en utilisant une `loop`, plus passe-partout :
+En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend avec `{{ item }}`), on va pouvoir exécuter plusieurs fois cette tâche :
 
 ```yaml
     - name: Ensure basic dependencies are present
@@ -130,7 +130,7 @@ ou bien en utilisant une `loop`, plus passe-partout :
         state: started
 ```
 
-- Ajoutez une tache pour créer un utilisateur `flask` et l'ajouter au groupe `www-data`. Utilisez bien le paramètre `append: yes` pour éviter de supprimer des groupes à l'utilisateur.
+- Ajoutez une tâche pour créer un utilisateur `flask` et l'ajouter au groupe `www-data`. Utilisez bien le paramètre `append: yes` pour éviter de supprimer des groupes à l'utilisateur.
 
 ```yaml
     - name: Add the user running webapp
@@ -168,11 +168,13 @@ ou bien en utilisant une `loop`, plus passe-partout :
 
 Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'installer facilement les librairies d'un projet. Il propose également un méchanisme d'isolation des paquets installés appelé `virtualenv`. Normalement installer les dépendances python nécessite 4 ou 5 commandes shell.
 
-- La liste de nos dépendances est listée dans le fichier `requirements.txt` à la racine du dossier d'application.
+- nos dépendances sont indiquées dans le fichier `requirements.txt` à la racine du dossier d'application. _Pip a une option spéciale pour gérer ces fichiers._
 
 - Nous voulons installer ces dépendances dans un dossier `venv` également à la racine de l'application.
 
-- Nous voulons installer ces dépendance en version python3 avec l'argument `virtualenv_python: python3`.
+- Nous voulons installer ces dépendances en version python3 avec l'argument `virtualenv_python: python3`.
+
+- même si nous pourrions demander à Ansible de lire ce fichier, créer une variable qui liste ces dépendances et les installer une par une, **nous n'allons pas utiliser `loop`**
 
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
 
