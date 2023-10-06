@@ -91,7 +91,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 - Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. ajoutez pour cela la directive `become: yes` au début du playbook.
 
 ```yaml
-    - name: Ensure apt dependencies are present
+    - name: Ensure basic dependencies are present
       apt:
         name:
           - python3-dev
@@ -106,7 +106,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 ou bien en utilisant une `loop`, plus passe-partout :
 
 ```yaml
-    - name: Ensure apt dependencies are present
+    - name: Ensure basic dependencies are present
       apt:
         name: "{{ item }}"
         state: present
@@ -277,7 +277,7 @@ server {
       apt:
         update_cache: yes
 
-    - name: Ensure apt dependencies are present
+    - name: Ensure basic dependencies are present
       apt:
         name:
           - python3-dev
