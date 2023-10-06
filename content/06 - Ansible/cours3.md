@@ -70,7 +70,7 @@ Plusieurs remarques:
 
 - Présentation d'un exemple de role : [https://github.com/geerlingguy/ansible-role-docker](https://github.com/geerlingguy/ansible-role-docker)
     - Dans la philosophie Ansible on recherche la généricité des roles. On cherche à ajouter des paramètres pour que le rôle s'adapte à différents cas (comme notre playbook flask app).
-    - Une bonne pratique: préfixer le nom des paramètres par le nom du role exemple `docker_edition`.
+    - Une bonne pratique: préfixer le nom des paramètres par le nom du rôle exemple `docker_edition`.
     - Cependant la généricité est nécessaire quand on veut distribuer le role ou construire des outils spécifiques qui serve à plus endroit de l'infrastructure mais elle augmente la complexité.
     - Donc pour les roles internes on privilégie la simplicité.
     - Les roles contiennent idéalement un fichier `README` en décrire l'usage et un fichier `meta/main.yml` qui décrit la compatibilité et les dépendanice en plus de la licence et l'auteur.

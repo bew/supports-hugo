@@ -82,7 +82,7 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Lancez `lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé. -->
 
-## Facultatif: Ajouter une machine mysql simple avec un role externe
+## Facultatif: Ajouter une machine mysql simple avec un rôle trouvé sur Internet
 
 {{% expand "Facultatif  :" %}}
 

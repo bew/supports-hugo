@@ -137,7 +137,7 @@ rules:
 
 - Classiquement on crée des `Roles` comme `admin` ou `monitoring` qui désignent un ensemble de permission consistante pour une tâche donnée.
 
-- Notre role exemple est limité au `namespace default`. Pour créer des permissions valable pour tout le cluster on utilise à la place un objet appelé un `ClusterRole` qui fonctionne de la même façon mais indépendamment des namespace.
+- Notre rôle exemple est limité au `namespace default`. Pour créer des permissions valable pour tout le cluster on utilise à la place un objet appelé un `ClusterRole` qui fonctionne de la même façon mais indépendamment des namespace.
 
 - Les `Roles` et `ClusterRoles` sont ensuite appliqués aux `ServicesAccounts` à l'aide respectivement de `RoleBinding` et `ClusterRoleBinding` comme l'exemple suivant:
 
