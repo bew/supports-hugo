@@ -6,14 +6,15 @@ weight: 21
 
 ## Installation de Ansible
 
-- Installez Ansible au niveau du système avec `apt` en lançant:
+- Installez Ansible au niveau du système avec `pip` en lançant:
 
-```
+`pip install ansible`
+<!-- ```
 $ sudo apt update
 $ sudo apt install software-properties-common
 $ sudo apt-add-repository --yes --update ppa:ansible/ansible
 $ sudo apt install ansible
-```
+``` -->
   
 - Affichez la version pour vérifier que c'est bien la dernière stable.
 
@@ -332,7 +333,7 @@ Nous allons maintenant installer `nginx` sur nos machines. Il y a plusieurs faç
 - Créons un playbook : ajoutez un fichier `tp1.yml` avec à l'intérieur:
 
 ```yaml
-- hosts: <hotes_cible>
+- hosts: hotes_cible
   
   tasks:
     - name: ping

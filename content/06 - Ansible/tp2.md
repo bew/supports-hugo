@@ -77,7 +77,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 - Créons un playbook : ajoutez un fichier `flaskhello_deploy.yml` avec à l'intérieur:
 
 ```yaml
-- hosts: <hotes_cible>
+- hosts: hotes_cible
   
   tasks:
     - name: ping
