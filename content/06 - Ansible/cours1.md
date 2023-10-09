@@ -99,7 +99,7 @@ Ansible est un **gestionnaire de configuration** et un **outil de déploiement e
 
 Il fait donc également partie de façon centrale du mouvement **DevOps** car il s'apparente à un véritable **couteau suisse** de l'automatisation des infrastructures.
 
-### histoire
+### Histoire
 
 Ansible a été créé en **2012** (plus récent que ses concurrents Puppet et Chef) autour d'une recherche de **simplicité** et du principe de configuration **agentless**.
 
@@ -216,18 +216,18 @@ Pour voir l'ensemble des fichier installé par un paquet `pip3` :
 Pour tester la connexion aux serveurs on utilise la commande ad hoc suivante. `ansible all -m ping`
 
 
-### Faire des lab DevOps : Vagrant+virtualbox, LXD ou Terraform et le cloud.
+<!-- ### Faire des lab DevOps : Vagrant+virtualbox, LXD ou Terraform et le cloud. -->
 
-Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles, les créer et les détruires rapidement.
-
-La solution classique pour cela est vagrant qui permet de décrire dans un Vagrantfile des machines et de piloter par exemple virtualbox pour créer ces machines virtuelles.
+<!-- Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles, les créer et les détruires rapidement. -->
+<!-- 
+La solution classique pour cela est vagrant qui permet de décrire dans un Vagrantfile des machines et de piloter par exemple virtualbox pour créer ces machines virtuelles. -->
 
 <!-- Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
 
 - plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
 - seulement sur linux -->
 
-Il est également très indiqué de faire des labs dans le cloud en louant des machines à la volée.
+Il est très indiqué de faire des labs dans le cloud en louant des machines à la volée.
 Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
 
 ### Les inventaires statiques
@@ -242,20 +242,19 @@ exemple:
 
 ```ini
 [all:vars]
-# ansible_connection=lxd
 ansible_ssh_user=elie
 ansible_python_interpreter=/usr/bin/python3
 
-[awx_nodes]
-awxnode1 node_state=started ansible_host=10.164.210.101 container_image=centos_ansible_20190901
+[worker_nodes]
+workernode1 ansible_host=10.164.210.101 utilise=centos_ansible_20190901
 
 [dbservers]
-pgnode1 node_state=started ansible_host=10.164.210.111 container_image=centos_ansible_20190901
-pgnode2 node_state=started ansible_host=10.164.210.112 container_image=centos_ansible_20190901
+pgnode1 ansible_host=10.164.210.111 container_image=centos_ansible_20190901
+pgnode2 ansible_host=10.164.210.112 container_image=centos_ansible_20190901
 
 [appservers]
-appnode1 node_state=started ansible_host=10.164.210.121 container_image=centos_ansible_20190901
-appnode2 node_state=started ansible_host=10.164.210.122 container_image=centos_ansible_20190901
+appnode1 ansible_host=10.164.210.121 container_image=centos_ansible_20190901
+appnode2 ansible_host=10.164.210.122 container_image=centos_ansible_20190901
 ```
 
 Les inventaires peuvent également être au format YAML (plus lisible mais pas toujours intuitif) ou JSON (pour les machines).
