@@ -346,7 +346,20 @@ Nous allons maintenant installer `nginx` sur nos machines. Il y a plusieurs faç
 
 - Créons un playbook rudimentaire pour installer `nginx`.
 
-- Relancez le playbook après avoir sauvegardé les modifications.
+- Relancez le playbook après avoir sauvegardé les modifications. Si cela ne marche pas, pourquoi ?
+
+{{% expand "Réponse  :" %}}
+
+L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` pour exécuter une commande ou plus généralement qu'on a besoin d'exécuter une commande avec un utilisateur différent de celui utilisé pour la connexion on peut utiliser:
+
+- Au moment de l'exécution l'argument `--become` en ligne de commande avec `ansible`, `ansible-console` ou `ansible-playbook`.
+- La section `become: yes`
+  - au début du play (après `hosts`) : toutes les tâches seront executée avec cette élévation par défaut.
+  - après n'importe quelle tâche : l'élévation concerne uniquement la tâche cible.
+{{% /expand %}}
+
+- Re-relancez le playbook après avoir sauvegardé les modifications. Si cela ne marche pas, pourquoi ?
+
 - Re-relancez le même playbook une seconde fois. Que se passe-t-il ?
 
 {{% expand "Réponse  :" %}}

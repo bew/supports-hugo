@@ -295,7 +295,20 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 - Les `handlers` sont des tâches conditionnelles qui s'exécutent à la fin (post traitements conditionnels comme le redémarrage d'un service)
 
-### Ordre d'execution
+### Élévation de privilège
+
+L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` pour exécuter une commande ou plus généralement qu'on a besoin d'exécuter une commande avec un utilisateur différent de celui utilisé pour la connexion on peut utiliser:
+
+- Au moment de l'exécution l'argument `--become` en ligne de commande avec `ansible`, `ansible-console` ou `ansible-playbook`.
+- La section `become: yes`
+  - au début du play (après `hosts`) : toutes les tâches seront executée avec cette élévation par défaut.
+  - après n'importe quelle tâche : l'élévation concerne uniquement la tâche cible.
+
+- Pour executer une tâche avec un autre utilisateur que root (become simple) ou celui de connexion (sans become) on le précise en ajoutant à `become: yes`, `become_user: username`
+
+<!--  - Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
+`su` est aussi possible ainsi que d'autre méthodes fournies par les "become plugins" exp `runas`). -->
+### Ordre d'exécution
 
 1. `pre_tasks`
 2. `roles`
@@ -313,19 +326,6 @@ Les roles ne sont pas des tâches à proprement parler mais un ensemble de tâch
 
 Pour valider la syntaxe il est possible d'installer et utiliser `ansible-linter` sur les fichiers YAML.
 
-### Élévation de privilège
-
-L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` pour exécuter une commande ou plus généralement qu'on a besoin d'exécuter une commande avec un utilisateur différent de celui utilisé pour la connexion on peut utiliser:
-
-- Au moment de l'exécution l'argument `--become` en ligne de commande avec `ansible`, `ansible-console` ou `ansible-playbook`.
-- La section `become: yes`
-  - au début du play (après `hosts`) : toutes les tâches seront executée avec cette élévation par défaut.
-  - après n'importe quelle tâche : l'élévation concerne uniquement la tâche cible.
-
-- Pour executer une tâche avec un autre utilisateur que root (become simple) ou celui de connexion (sans become) on le précise en ajoutant à `become: yes`, `become_user: username`
-
-<!--  - Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
-`su` est aussi possible ainsi que d'autre méthodes fournies par les "become plugins" exp `runas`). -->
 
 
 ## Debugger un playbook.
