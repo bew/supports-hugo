@@ -74,7 +74,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - N'hésitez pas consulter extensivement la documentation des modules avec leur exemple ou d'utiliser la commande de doc `ansible-doc <module>`
 
-- Créons un playbook : ajoutez un fichier `flaskhello_deploy.yml` avec à l'intérieur:
+- Créons un playbook : ajoutez un fichier `flask_deploy.yml` avec à l'intérieur:
 
 ```yaml
 - hosts: hotes_cible
@@ -268,7 +268,7 @@ server {
 
 ## Solution intermédiaire
 
-`flaskhello_deploy.yml`
+`flask_deploy.yml`
 
 
 {{% expand "Code de solution :" %}}
@@ -362,9 +362,9 @@ server {
         enabled: yes
 ```
 
-- Renommez votre fichier `flaskhello_deploy.yml` en `flaskhello_deploy_precorrection.yml`.
-- Copiez la solution dans un nouveau fichier `flaskhello_deploy.yml`.
-- Lancez le playbook de solution `ansible-playbook flaskhello_deploy.yml`.
+- Renommez votre fichier `flask_deploy.yml` en `flask_deploy_precorrection.yml`.
+- Copiez la solution dans un nouveau fichier `flask_deploy.yml`.
+- Lancez le playbook de solution `ansible-playbook flask_deploy.yml`.
 - Si vous n'avez pas remplacé `hello.test` par un nom de domaine public (comme `hello.test.votrenom.formation.doxx.fr`), ajoutez `hello.test` dans votre fichier `/etc/hosts`
 - enfin, testez votre application en visitant la page `hello.test`. 
 {{% /expand %}}
