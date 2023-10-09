@@ -27,8 +27,16 @@ Le nom provient du football américain : il s'agit d'un ensemble de stratégies 
 - version plus complète :
 `ansible-playbook <fichier_playbook> --limit <groupe_machine> --inventory <fichier_inventaire> --become -vv --diff` 
 
-D'autres commandes sont utiles, une bonne commande est par exemple :
+#### Le mode `--check` et l'option `--diff`
+
+- Très utile, le mode `--check` sert à vérifier l'état des ressources sur les machines (*dry-run*) mais sans modifier la configuration.
+
+- L'option `--diff` permet d'afficher les différences entre la configuration actuelle et la configuration après les changements effectués par les différentes tasks. 
+
+Une bonne commande est par exemple :
 `ansible-playbook --check -vv --diff`
+
+Cette commande permet de lancer une simulation d'exécution de playbook, et d'afficher les différences entre la configuration actuelle et la configuration désirée (qui aurait été atteinte sans le `--check`).
 
 ### Les modules Ansible
 

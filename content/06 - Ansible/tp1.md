@@ -407,9 +407,6 @@ ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
 
 - Visitez dans un navigateur l'ip d'un des hôtes pour voir la page d'accueil nginx.
 
-D'autres commandes sont utiles, une bonne commande est par exemple :
-`ansible-playbook --check -vv --diff`
-
 ## Ansible et les commandes unix
 
 Il existe trois façon de lancer des commandes unix avec ansible:
