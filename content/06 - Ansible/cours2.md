@@ -39,7 +39,7 @@ Il en existe pour un peu toute les tâches raisonnablement courantes : un slogan
 
 - `ping`: un module de test Ansible (pas seulement réseau comme la commande ping)
 
-- `yum/apt`: pour gérer les paquets sur les distributions basées respectivement sur Red Hat ou Debian.
+- `dnf/apt`: pour gérer les paquets sur les distributions basées respectivement sur Red Hat ou Debian.
 
 <!-- `... -m yum -a "name=openssh-server state=present"`  -->
   
@@ -51,7 +51,7 @@ Il en existe pour un peu toute les tâches raisonnablement courantes : un slogan
 
 - `file`: pour créer, supprimer, modifier, changer les permission de fichiers, dossier et liens.
 
-- `shell`: pour exécuter des commandes unix grace à un shell
+<!-- - `shell`: pour exécuter des commandes unix grace à un shell -->
 
 ### Option et documentation des modules
 
