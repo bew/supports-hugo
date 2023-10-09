@@ -1,8 +1,7 @@
 ---
-draft: true
-title: Introduction au DevOps
+draft: false
+title: Introduction DevOps
 # title: DSI classique vs. DevOps
-
 weight: 1
 ---
 
