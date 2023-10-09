@@ -227,15 +227,17 @@ La solution classique pour cela est vagrant qui permet de décrire dans un Vagra
 - plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
 - seulement sur linux -->
 
-Il est très indiqué de faire des labs dans le cloud en louant des machines à la volée.
-Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
+<!-- Il est très indiqué de faire des labs dans le cloud en louant des machines à la volée.
+Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean. -->
 
 ### Les inventaires statiques
 
 Il s'agit d'une liste de machines sur lesquelles vont s'exécuter les modules Ansible. Les machines de cette liste sont:
 
-- Classées par groupe et sous groupes pour être désignables collectivement (exp executer telle opération sur)
-- La méthode connexion est précisée soit globalement soit pour chaque machine.
+
+- la syntaxe par défaut est celle des fichiers de configuration INI
+- Classées par groupe et sous groupes pour être désignables collectivement (ex: exécuter telle opération sur les machines de tel groupe)
+- La méthode de connexion est précisée soit globalement soit pour chaque machine.
 - Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
 
 exemple:
@@ -246,15 +248,15 @@ ansible_ssh_user=elie
 ansible_python_interpreter=/usr/bin/python3
 
 [worker_nodes]
-workernode1 ansible_host=10.164.210.101 utilise=centos_ansible_20190901
+workernode1 ansible_host=10.164.210.101 pays=France
 
 [dbservers]
-pgnode1 ansible_host=10.164.210.111 container_image=centos_ansible_20190901
-pgnode2 ansible_host=10.164.210.112 container_image=centos_ansible_20190901
+pgnode1 ansible_host=10.164.210.111 pays=France
+pgnode2 ansible_host=10.164.210.112 pays=Allemagne
 
 [appservers]
-appnode1 ansible_host=10.164.210.121 container_image=centos_ansible_20190901
-appnode2 ansible_host=10.164.210.122 container_image=centos_ansible_20190901
+appnode1 ansible_host=10.164.210.121
+appnode2 ansible_host=10.164.210.122 pays=Allemagne
 ```
 
 Les inventaires peuvent également être au format YAML (plus lisible mais pas toujours intuitif) ou JSON (pour les machines).
