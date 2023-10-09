@@ -1,7 +1,7 @@
 ---
 title: "TP1 - Mise en place d'Ansible et premier playbook"
 draft: false
-weight: 21
+weight: 11
 ---
 
 ## Installation de Ansible
@@ -436,3 +436,62 @@ Il existe trois façon de lancer des commandes unix avec ansible:
 ```
 ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
 ``` -->
+
+## Les variables en Ansible, les Ansible Facts et les templates Jinja2
+
+Nous allons faire que la page d'accueil Nginx affiche des données extraites d'Ansible.
+
+Pour cela nous allons partir à la découverte des variables fournies par Ansible.
+
+### Les Ansible Facts
+
+Dans Ansible, on peut accéder à la variable `ansible_facts` : ce sont les faits récoltés par Ansible sur l'hôte en cours.
+
+Pour explorer chacune de ces variables vous pouvez utiliser le module `debug` dans un playbook:
+
+```yaml
+- name: show vars
+  debug:
+    msg: "{{ ansible_facts }}"
+```
+
+Vous pouvez aussi exporter les "facts" d'un hôte en JSON pour plus de lisibilité :
+`ansible all -m setup --tree ./ansible_facts_export`
+
+Puis les lire avec `cat ./ansible_facts_export/votremachine.json | jq` (il faut que jq soit installé, sinon tout ouvrir dans VSCode avec `code ./ansible_facts_export`).
+
+- utilisez `jq` pour extraire et visualiser des informations spécifiques à partir du fichier JSON. Par exemple, pour voir l'état du service Nginx :
+
+```bash
+cat /tmp/ansible_facts/<nom_hôte_ou_IP>.json | jq '.ansible_facts.ansible_services.nginx'
+```
+
+### Créer un template Jinja2
+
+Nous allons faire que la page d'accueil Nginx affiche des données extraites d'Ansible.
+- créons un fichier nommé `nginx_index.j2` avec le contenu suivant :
+
+```jinja2
+Nom de l'hôte Ansible : {{ ansible_facts['ansible_hostname'] }}
+Système d'exploitation : {{ ansible_facts['ansible_distribution'] }} {{ ansible_facts['ansible_distribution_version'] }}
+Architecture CPU : {{ ansible_facts['ansible_architecture'] }}
+```
+
+- Ajoutez à ce modèle Jinja l'affichage d'une nouvelle variable à partir de l'exercice précédent.
+
+<!-- 
+{% if 'nginx' in ansible_facts['ansible_services'] %}
+Service Nginx : En cours d'exécution
+Version de Nginx : {{ ansible_facts['ansible_services']['nginx']['version'] }}
+Fichier de configuration Nginx : {{ ansible_facts['ansible_services']['nginx']['config_file'] }}
+{% else %}
+Service Nginx : Non en cours d'exécution
+{% endif %}
+```
+Dans ce modèle, nous avons ajouté une condition pour vérifier si le service Nginx est en cours d'exécution sur l'hôte. -->
+
+
+
+### Afficher le template comme page d'accueil Nginx
+
+- Avec la documentation du module `template:`, copiez le fichier `nginx_index.j2` à l'emplacement de la configuration Nginx par défaut (probablement `/var/www/html/index.html`). Assurez-vous que ce fichier ait bien les bons droits de lecture par l'user `www-data`.
