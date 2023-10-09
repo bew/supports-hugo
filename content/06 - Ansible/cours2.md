@@ -327,34 +327,6 @@ Les roles ne sont pas des tâches à proprement parler mais un ensemble de tâch
 Pour valider la syntaxe il est possible d'installer et utiliser `ansible-linter` sur les fichiers YAML.
 
 
-
-## Debugger un playbook.
-
-Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
-
-- Rendre la sortie verbeuse (mode debug) avec `-vvv`.
-
-- Utiliser une tâche avec le module `debug` : `debug msg="{{ mavariable }}"`.
-
-- Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
-
-Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
-
-
-<!-- TODO: laïus sur register a et a.stdout -->
-### Les 7 commandes de debug dans Ansible
-
-| Command                | Shortcut | Action                                    |
-|------------------------|----------|-------------------------------------------|
-| print                  | p        | Print information about the task          |
-| task.args[key] = value |          | Update module arguments                   |
-| task_vars[key] = value |          | Update task variables (you must update_task next) |
-| update_task            | u        | Recreate a task with updated task variables |
-| redo                   | r        | Run the task again                        |
-| continue               | c        | Continue executing, starting with the next task |
-| quit                   | q        | Quit the debugger                         |
-
-
 ## Variables Ansible
 
 Ansible utilise en arrière plan un dictionnaire contenant de nombreuses variables.
@@ -423,7 +395,7 @@ La liste des facts peut être trouvée dans la documentation et dépend des plug
 
 ## Structures de contrôle Ansible
 
-### La directive `when`
+### La directive `when:`
 
 Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
 
@@ -543,3 +515,32 @@ tasks:
 ```
 
 Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas facilement être connu à l'avance on **doit** utiliser `include_tasks`.
+
+
+
+## Debugger un playbook
+
+Avec Ansible on dispose d'au moins trois manières de debugger un playbook :
+
+- Rendre la sortie verbeuse (mode debug) avec `-vvv`.
+
+- Utiliser une tâche avec le module `debug` : `debug msg="{{ mavariable }}"`.
+
+- Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
+
+Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+
+
+<!-- TODO: laïus sur register a et a.stdout -->
+### Les 7 commandes de debug dans Ansible
+
+| Command                | Shortcut | Action                                    |
+|------------------------|----------|-------------------------------------------|
+| print                  | p        | Print information about the task          |
+| task.args[key] = value |          | Update module arguments                   |
+| task_vars[key] = value |          | Update task variables (you must update_task next) |
+| update_task            | u        | Recreate a task with updated task variables |
+| redo                   | r        | Run the task again                        |
+| continue               | c        | Continue executing, starting with the next task |
+| quit                   | q        | Quit the debugger                         |
+
