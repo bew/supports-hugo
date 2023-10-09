@@ -261,6 +261,13 @@ appnode2 ansible_host=10.164.210.122 pays=Allemagne
 
 Les inventaires peuvent également être au format YAML (plus lisible mais pas toujours intuitif) ou JSON (pour les machines).
 
+#### Options de connexion
+On a souvent besoin dans l'inventaire de précisier plusieurs options pour se connecter. Voici les principales :
+- `ansible_host` : essentiel, pour dire à Ansible comment accéder à l'host
+- `ansible_user` : quel est l'user à utiliser par Ansible pour la connexion SSH
+- `ansible_ssh_private_key_file` : où se trouve la clé privée pour la connexion SSH
+- `ansible_connection` : demander à Ansible d'utiliser autre chose que du SSH pour la connexion
+- `ansible_python_interpreter=/usr/bin/python3` : option parfois nécessaire pour spécifier à Ansible où trouver Python sur la machine installée
 
 ### Configuration
 
