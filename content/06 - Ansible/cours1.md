@@ -191,7 +191,7 @@ Ansible est très complémentaire à docker:
 - Il permet une orchestration simple des conteneur avec le module `docker_container`.
 
 {{% notice note %}}
-Plus récemment avec l'arrivé d'`Ansible container`  il est possible de construire et déployer des conteneurs docker avec du code ansible. Cette solution fait partie de la stack Red Hat Openshift. Concrêtement le langage ansible remplace (avantageusement ?) le langage Dockerfile pour la construction des images Docker.
+Maintenant un peu abandonné, `Ansible Container` rend possible de construire et déployer des conteneurs docker avec du code ansible. Concrètement le langage Ansible remplace le langage Dockerfile pour la construction des images Docker.
 {{% /notice %}}
 
 

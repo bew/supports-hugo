@@ -39,7 +39,7 @@ roles/
 
 Plusieurs remarques:
 
-- Chaque environnement (staging, production) dispose d'un inventaire ce qui permet de préciser à runtime quel environnement cibler avec l'option `--inventaire production`.
+- Chaque environnement (staging, production) dispose d'un inventaire ce qui permet de préciser à runtime quel environnement cibler avec l'option `--inventory production`.
 - Chaque groupe de serveurs (tier) dispose de son playbook
   - qui s'applique sur le groupe en question.
   - éventuellement définit quelques variables spécifiques (mais il vaut mieux les mettre dans l'inventaire ou les dossiers cf suite).
