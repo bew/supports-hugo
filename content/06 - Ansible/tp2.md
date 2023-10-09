@@ -168,13 +168,13 @@ En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend 
 
 Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'installer facilement les librairies d'un projet. Il propose également un méchanisme d'isolation des paquets installés appelé `virtualenv`. Normalement installer les dépendances python nécessite 4 ou 5 commandes shell.
 
-- nos dépendances sont indiquées dans le fichier `requirements.txt` à la racine du dossier d'application. _Pip a une option spéciale pour gérer ces fichiers._
+- nos dépendances sont indiquées dans le fichier `requirements.txt` à la racine du dossier d'application. **Pip a une option spéciale pour gérer ces fichiers.**
 
 - Nous voulons installer ces dépendances dans un dossier `venv` également à la racine de l'application.
 
 - Nous voulons installer ces dépendances en version python3 avec l'argument `virtualenv_python: python3`.
 
-- même si nous pourrions demander à Ansible de lire ce fichier, créer une variable qui liste ces dépendances et les installer une par une, **nous n'allons pas utiliser `loop`**
+- même si nous pourrions demander à Ansible de lire ce fichier, créer une variable qui liste ces dépendances et les installer une par une, **nous n'allons pas utiliser `loop`**. Le but est de toujours trouver le meilleur module pour une tâche.
 
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
 
