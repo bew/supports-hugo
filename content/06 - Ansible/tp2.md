@@ -142,6 +142,8 @@ En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend 
           - "www-data"
 ```
 
+N'hésitez pas à tester l'option `--diff -v` avec vos commandes pour voir l'avant-après.
+
 ## Récupérer le code de l'application
 
 - Pour déployer le code de l'application deux options sont possibles.
@@ -150,7 +152,7 @@ En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend 
 
 - Nous allons utiliser la deuxième option (`git`) qui est plus cohérente pour le déploiement et la gestion des versions logicielles. Allez voir la documentation comment utiliser ce module.
   
-- Utilisez le pour télécharger le code source de l'application (branche `master`) dans le dossier `/home/flask/hello` mais en désactivant la mise à jour (au cas ou le code change).
+- Utilisez-le pour télécharger le code source de l'application (branche `master`) dans le dossier `/home/flask/hello` mais en désactivant la mise à jour (au cas ou le code change).
 
 ```yaml
     - name: Git clone/update python hello webapp in user home
@@ -168,7 +170,7 @@ En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend 
 
 Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'installer facilement les librairies d'un projet. Il propose également un méchanisme d'isolation des paquets installés appelé `virtualenv`. Normalement installer les dépendances python nécessite 4 ou 5 commandes shell.
 
-- nos dépendances sont indiquées dans le fichier `requirements.txt` à la racine du dossier d'application. **Pip a une option spéciale pour gérer ces fichiers.**
+- nos dépendances sont indiquées dans le fichier `requirements.txt` à la racine du dossier d'application. **`pip` a une option spéciale pour gérer ces fichiers.**
 
 - Nous voulons installer ces dépendances dans un dossier `venv` également à la racine de l'application.
 
@@ -194,7 +196,8 @@ Avec ces informations et la documentation du module `pip` installez les dépenda
 
 Notre application sera exécutée en tant qu'utilisateur flask pour des raisons de sécurité. Pour cela le dossier doit appartenir à cet utilisateur or il a été créé en tant que root (à cause du `become: yes` de notre playbook).
 
-- Créez une tache `file` qui change le propriétaire du dossier de façon récursive.
+- Créez une tache `file` qui change le propriétaire du dossier de façon récursive. N'hésitez pas à tester l'option `--diff -v` avec vos commandes pour voir l'avant-après.
+
 
 ```yaml
     - name: Change permissions of app directory
