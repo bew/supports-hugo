@@ -1,239 +1,221 @@
 ---
-title: 'Cours 4 - Sécurité et Cloud'
+title: 'Cours 4 - Organiser un projet'
 draft: false
-weight: 13
+weight: 40
 ---
 
-# Sécurité
+## Organisation d'un dépôt de code Ansible
 
-Les problématiques de sécurité linux ne sont pas résolue magiquement par Ansible. Tous le travail de réflexion et de sécurisation reste identique mais peut comme le reste être mieux controllé grace à l'approche déclarative de l'infrastructure as code.
-
-Si cette problématique des liens entre Ansible et sécurité vous intéresse : `Security automation with Ansible`
-
-Il est à noter tout de même qu'Ansible est généralement apprécié d'un point de vue sécurité car il n'augmente pas (vraiment) la surface d'attaque de vos infrastructure : il est basé sur ssh qui est éprouvé et ne nécessite généralement pas de réorganisation des infrastructures.
-
-Pour les cas plus spécifiques et si vous voulez éviter ssh, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
-
-## Authentification et SSH
-
-Un bonne pratique importante : changez le port de connexion ssh pour un port atypique. Ajoutez la variable `ansible_ssh_port=17728` dans l'inventaire.
-
-Il faut idéalement éviter de créer un seul compte ansible de connexion pour toutes les machines:
-- difficile à bouger
-- responsabilité des connexions pas auditable (auth.log + syslog)
-
-Il faut utiliser comme nous avons fait dans les TP des logins ssh avec les utilisateurs humain réels des machines et des clés ssh. C'est à dire le même modèle d'authentification que l'administration traditionnelle.
-
-## Les autres modes de connexion
-
-Le mode de connexion par défaut de Ansible est SSH cependant il est possible d'utiliser de nombreux autres modes de connexion spécifiques :
-
-- Pour afficher la liste des plugins  disponible lancez `ansible-doc -t connection -l`.
-
-- Une autre connexion courante est `ansible_connection=local` qui permet de configurer la machine locale sans avoir besoin d'installer un serveur ssh.
-
-- Citons également les connexions `ansible_connexion=docker` et `ansible_connexion=lxd` pour configurer des conteneurs linux ainsi que `ansible_connexion=` pour les serveurs windows
-
-- Les questions de sécurités de la connexion se posent bien sur différemment selon le mode de connexion utilisés (port, authentification, etc.)
-
-- Pour débugger les connexions et diagnotiquer leur sécurité on peut afficher les détails de chaque connection ansible avec le mode de verbosité maximal (network) en utilisant le paramètre `-vvvv`.
-
-## Variables et secrets
-
-Le principal risque de sécurité lié à Ansible comme avec Docker et l'IaC en général consiste à laisser trainer des secrets (mot de passe, identités de clients, api token, secret de chiffrement / migration etc.) dans le code ou sur les serveurs (moins problématique).
-
-Attention : les dépôt git peuvent cacher des secrets dans leur historique. Pour chercher et nettoyer un secret dans un dépôt l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/
-
-## Désactiver le logging des informations sensibles
-
-Ansible propose une directive `no_log: yes` qui permet de désactiver l'affichage des valeurs d'entrée et de sortie d'une tâche.
-
-Il est ainsi possible de limiter la prolifération de données sensibles.
-
-## Ansible vault
-
-Pour éviter de divulguer des secrets par inadvertance, il est possible de gérer les secrets avec des variables d'environnement ou avec un fichier variable externe au projet qui échappera au versionning git, mais ce n'est pas idéal.
-
-Ansible intègre un trousseau de secret appelé , **Ansible Vault** permet de chiffrer des valeurs **variables par variables** ou des **fichiers complets**.
-Les valeurs stockées dans le trousseaux sont déchiffrée à l'exécution après dévérouillage du trousseau. 
-
-- `ansible-vault create /var/secrets.yml`
-- `ansible-vault edit /var/secrets.yml` ouvre `$EDITOR` pour changer le fichier de variables.
-- `ansible-vault encrypt_file /vars/secrets.yml` pour chiffrer un fichier existant
-- `ansible-vault encrypt_string monmotdepasse` permet de chiffrer une valeur avec un mot de passe. le résultat peut être ensuite collé dans un fichier de variables par ailleurs en clair.
-
-Pour déchiffrer il est ensuite nécessaire d'ajouter l'option `--ask-vault-pass` au moment de l'exécution de `ansible` ou `ansible-playbook`
-
-Il existe également un mode pour gérer plusieurs mots de passe associés à des identifiants.
-
-## Ansible dans le cloud
-
-L'automatisation Ansible fait d'autant plus sens dans un environnement d'infrastructures dynamique:
-
-- L'agrandissement horizontal implique de résinstaller régulièrement des machines identiques
-- L'automatisation et la gestion des configurations permet de mieux contrôler des environnements de plus en plus complexes.
-
-Il existe de nombreuses solutions pour intégrer Ansible avec les principaux providers de cloud (modules ansible, plugins d'API, intégration avec d'autre outils d'IaC Cloud comme Terraform ou Cloudformation).
-
-## Inventaires dynamiques
-
-Les inventaires que nous avons utilisés jusqu'ici implique d'affecter à la main les adresses IP des différents noeuds de notre infrastructure. Cela devient vite ingérable.
-
-La solution ansible pour le pas gérer les IP et les groupes à la main est appelée `inventaire dynamique` ou `inventory plugin`. Un inventaire dynamique est simplement un programme qui renvoie un JSON respectant le format d'inventaire JSON ansible, généralement en contactant l'api du cloud provider ou une autre source.
+Voici, extrait de la documentation Ansible sur les "Best Practice", l'une des organisations de référence d'un projet ansible de configuration d'une infrastructure:
 
 ```
-$ ./inventory_terraform.py
-{
-  "_meta": {
-    "hostvars": {
-      "balancer0": {
-        "ansible_host": "104.248.194.100"
-      },
-      "balancer1": {
-        "ansible_host": "104.248.204.222"
-      },
-      "awx0": {
-        "ansible_host": "104.248.204.202"
-      },
-      "appserver0": {
-        "ansible_host": "104.248.202.47"
-      }
-    }
-  },
-  "all": {
-    "children": [],
-    "hosts": [
-      "appserver0",
-      "awx0",
-      "balancer0",
-      "balancer1"
-    ],
-    "vars": {}
-  },
-  "appservers": {
-    "children": [],
-    "hosts": [
-      "balancer0",
-      "balancer1"
-    ],
-    "vars": {}
-  },
-  "awxnodes": {
-    "children": [],
-    "hosts": [
-      "awx0"
-    ],
-    "vars": {}
-  },
-  "balancers": {
-    "children": [],
-    "hosts": [
-      "appserver0"
-    ],
-    "vars": {}
-  }
-}%  
+production                # inventory file for production servers
+staging                   # inventory file for staging environment
+
+group_vars/
+   group1.yml             # here we assign variables to particular groups
+   group2.yml
+host_vars/
+   hostname1.yml          # here we assign variables to particular systems
+   hostname2.yml
+
+library/                  # if any custom modules, put them here (optional)
+module_utils/             # if any custom module_utils to support modules, put them here (optional)
+filter_plugins/           # if any custom filter plugins, put them here (optional)
+
+site.yml                  # master playbook
+webservers.yml            # playbook for webserver tier
+dbservers.yml             # playbook for dbserver tier
+
+roles/
+    common/               # this hierarchy represents a "role"
+        ...               # role code
+
+    webtier/              # same kind of structure as "common" was above, done for the webtier role
+    monitoring/           # ""
+    fooapp/               # ""
+
 ```
 
-On peut ensuite appeler `ansible-playbook` en utilisant ce programme plutôt qu'un fichier statique d'inventaire: `ansible-playbook -i inventory_terraform.py configuration.yml`
+Plusieurs remarques:
 
-## Étendre et intégrer Ansible
+- Chaque environnement (staging, production) dispose d'un inventaire ce qui permet de préciser à runtime quel environnement cibler avec l'option `--inventory production`.
+- Chaque groupe de serveurs (tier) dispose de son playbook
+  - qui s'applique sur le groupe en question.
+  - éventuellement définit quelques variables spécifiques (mais il vaut mieux les mettre dans l'inventaire ou les dossiers cf suite).
+  - Idéalement contient un minimum de tâches et plutôt des roles (ie des tâches rangées dans une sorte de module)
+- Pour limiter la taille de l'inventaire principal on range les variables communes dans des dossiers `group_vars` et `host_vars`. On met à l'intérieur un fichier `<nom_du_groupe>.yml` qui contient un dictionnaire de variables. 
+- On cherche à modulariser au maximum la configuration dans des roles c'est à dire des modules rendus génériques et specifique à un objectif de configuration.
+- Ce modèle d'organisation correspond plutôt à la **configuration** de base d'une infrastructure (playbooks à exécuter régulièrement) qu'à l'usage de playbooks ponctuels comme pour le déploiement. Mais, bien sur, on peut ajouter un dossier `playbooks` ou `operations` pour certaines opérations ponctuelles. (cf cours 4)
+- Si les modules de Ansible (complétés par les commandes bash) ne suffisent pas on peut développer ses propre modules ansible.
+  - Il s'agit de programmes python plus ou moins complexes
+  - On les range alors dans le dossier `library` du projet ou d'un role et on le précise éventuellement dans `ansible.cfg`.
+- Observons le role `Common` :  il est utilisé ici pour rassembler les taches de base des communes à toutes les machines. Par exemple s'assurer que les clés ssh de l'équipe sont présentes, que les dépots spécifiques sont présents etc. 
+
+![](../../images/devops/ansible2.png)
+
+## Roles Ansible
+
+### Objectif:
+
+- Découper les tâches de configuration en sous ensembles réutilisables (une suite d'étapes de configuration).
+
+- Ansible est une sorte de langage de programmation et l'intéret du code est de pouvoir créer des fonction regroupées en librairies et les composer. Les roles sont les "librairies/fonction" ansible en quelque sorte.
+
+- Comme une fonction un role prend généralement des paramètres qui permettent de personnaliser son comportement.
+
+- Tout le nécessaire doit y être (fichiers de configurations, archives et binaires à déployer, modules personnels dans `library` etc.)
+
+- Remarque ne pas confondre **modules** et **roles** : `file` est un module `geerlingguy.docker` est un role. On **doit** écrire des roles pour coder correctement en Ansible, on **peut** écrire des modules mais c'est largement facultatif car la plupart des actions existent déjà.
+
+- Présentation d'un exemple de role : [https://github.com/geerlingguy/ansible-role-docker](https://github.com/geerlingguy/ansible-role-docker)
+    - Dans la philosophie Ansible on recherche la généricité des roles. On cherche à ajouter des paramètres pour que le rôle s'adapte à différents cas (comme notre playbook flask app).
+    - Une bonne pratique: préfixer le nom des paramètres par le nom du rôle exemple `docker_edition`.
+    - Cependant la généricité est nécessaire quand on veut distribuer le role ou construire des outils spécifiques qui serve à plus endroit de l'infrastructure mais elle augmente la complexité.
+    - Donc pour les roles internes on privilégie la simplicité.
+    - Les roles contiennent idéalement un fichier `README` en décrire l'usage et un fichier `meta/main.yml` qui décrit la compatibilité et les dépendanice en plus de la licence et l'auteur.
+    - Il peuvent idéalement être versionnés dans des dépots à part et installé avec `ansible-galaxy`
 
 
-### La bonne pratique : utiliser un plugin d'inventaire pour alimenter
+### Structure d'un rôle
 
-Bonne pratique : Normalement l'information de configuration Ansible doit provenir au maximum de l'inventaire. Ceci est conforme à l'orientation plutôt déclarative d'Ansible et à son exécution descendante (master -> nodes). La méthode à privilégier pour intégrer Ansible à des sources d'information existantes est donc d'utiliser ou développer un **plugin d'inventaire**.
+Un rôle est un dossier avec des sous dossiers qui répondent à une convention de nommage précise (contrairement à l'organisation d'un projet Ansible, qui peut être plus chaotique), généralement quelque chose comme :
 
-[https://docs.ansible.com/ansible/latest/plugins/inventory.html](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
+```
+roles/
+    mediawiki/            # le nom du rôle
+        tasks/            #
+            main.yml      #  <-- fichier de tasks principal
+            autre.yml     #  <-- fichier(s) de tasks en plus
+        handlers/         #
+            main.yml      #  <-- handlers file
+        templates/        #  <-- files for use with the template resource
+            ntp.conf.j2   #  <------- templates end in .j2
+        files/            #
+            foo.sh        #  <-- script files for use with the script resource
+        defaults/         #
+            main.yml      #  <-- default lower priority variables for this role
+```
 
-On peut cependant alimenter le dictionnaire de variable Ansible au fur et à mesure de l'exécution, en particulier grâce à la directive `register` et au module `set_fact`.
+Voici la version exhaustive :
+```
+roles/
+    requirements.yml      # la liste des rôles nécessaires et comment les récupérer
+    mediawiki/            # le nom du rôle
+        tasks/            #
+            main.yml      #  <-- tasks file can include smaller files if warranted
+        handlers/         #
+            main.yml      #  <-- handlers file
+        templates/        #  <-- files for use with the template resource
+            ntp.conf.j2   #  <------- templates end in .j2
+        files/            #
+            foo.sh        #  <-- script files for use with the script resource
+        vars/             #
+            main.yml      #  <-- variables associated with this role
+        defaults/         #
+            main.yml      #  <-- default lower priority variables for this role
+        meta/             #
+            main.yml      #  <-- role dependencies
+        molecule/         # pour le test du rôle
+            check.yml
+            converge.yml
+            idempotent.yml
+            verify.yml
+        # Plus rare :
+        library/          # roles can also include custom modules
+        module_utils/     # roles can also include custom module_utils
+        lookup_plugins/
+```
 
-Exemple:
+On constate que les noms des sous dossiers correspondent souvent à des sections du playbook. En fait le principe de base est d'extraire les différentes listes de taches ou de variables dans des sous-dossier
+
+- Remarque : les fichier de liste **doivent nécessairement** s'appeler **main.yml**" (pas très intuitif)
+- Remarque2 : `main.yml` peut en revanche importer d'autre fichiers aux noms personnalisés (exp role docker de geerlingguy)
+
+- Le dossier `defaults` contient les valeurs par défaut des paramètres du role. Ces valeurs ne sont jamais prioritaires (elles sont écrasées par n'importe quelle redéfinition)
+- Le fichier `meta/main.yml` est facultatif mais conseillé et contient des informations sur le role
+  - auteur
+  - license
+  - compatibilité
+  - version
+  - dépendances à d'autres roles.
+- Le dossier `files` contient les fichiers qui ne sont pas des templates (pour les module `copy` ou `sync`, `script` etc).
+
+### Ansible Galaxy
+
+C'est le store de roles officiel d'Ansible : [https://galaxy.ansible.com/](https://galaxy.ansible.com/)
+
+C'est également le nom d'une commande `ansible-galaxy` qui permet d'installer des roles et leurs dépendances depuis internet. Un sorte de gestionnaire de paquet pour ansible.
+
+Elle est utilisée généralement sour la forme `ansible-galaxy install -r roles/requirements.yml -p roles` ou plus simplement `ansible-galaxy install <role>` mais installe dans `/etc/ansible/roles`.
+
+Tous les rôles ansible sont communautaires (pas de roles officiels) et généralement stockés sur github.
+
+Mais on peut voir la popularité la qualité et les tests qui garantissement la plus ou moins grande fiabilité du role
+
+{{% notice note %}}
+Il existe des roles pour installer un peu n'importe quelle application serveur courante aujourd'hui. Passez du temps à explorer le web avant de développer quelque chose avec Ansible
+{{% /notice %}}
+
+### Installer des roles avec `requirements.yml`
+
+Conventionnellement on utilise un fichier `requirements.yml` situé dans `roles` pour décrire la liste des roles nécessaires à un projet.
 
 ```yaml
-# this is just to avoid a call to |default on each iteration
-- set_fact:
-    postconf_d: {}
-
-- name: 'get postfix default configuration'
-  command: 'postconf -d'
-  register: postconf_result
-  changed_when: false
-
-# the answer of the command give a list of lines such as:
-# "key = value" or "key =" when the value is null
-- name: 'set postfix default configuration as fact'
-  set_fact:
-    postconf_d: >
-      {{ postconf_d | combine(dict([ item.partition('=')[::2]map'trim') ])) }}
-  loop: postconf_result.stdout_lines
+- src: geerlingguy.repo-epel
+- src: geerlingguy.haproxy
+- src: geerlingguy.docke
+# from GitHub, overriding the name and specifying a specific tag
+- src: https://github.com/bennojoy/nginx
+  version: master
+  name: nginx_role
 ```
 
-On peut explorer plus facilement la hiérarchie d'un inventaire statique ou dynamique avec la commande:
-
-```
-ansible-inventory --inventory <inventory> --graph
-```
-
-### Principaux type de plugins possibles pour étendre Ansible
-
-[https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
-
-- modules
-- inventory plugins
-- connection plugins
-- callback plugins : https://docs.ansible.com/ansible/latest/collections/index_callback.html
-- lookup plugins : https://docs.ansible.com/ansible/latest/collections/index_lookup.html et https://docs.ansible.com/ansible/latest/plugins/lookup.html
-- filter plugins
-
-<!-- ### Intégration Ansible et AWS
-
-Pour les VPS de base Amazon EC2 : utiliser un plugin d'inventaire AWS et les modules adaptés.
-
-- Module EC2: [https://docs.ansible.com/ansible/latest/modules/ec2_module.html](https://docs.ansible.com/ansible/latest/modules/ec2_module.html).
-- Plugin d'inventaire: [https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html](https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html). -->
-
-<!-- ### Intégration Ansible Nagios
+- Ensuite pour les installer on lance: `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
 
-**Possibilité 1** : Gérer l'exécution de tâches Ansible et le monitoring Nagios séparément, utiliser le [module nagios](https://docs.ansible.com/ansible/latest/modules/nagios_module.html) pour désactiver les alertes Nagios lorsqu'on manipule les ressources monitorées par Nagios.
+#### Dépendances entre rôles
 
-**Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes. -->
+ à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré
+Si un role dépend d'autres roles, les dépendances sont décrite dans le fichier `meta/main.yml` comme suit
 
-### Ansible et Terraform
+```yaml
+---
+dependencies:
+  - role: common
+    vars:
+      some_parameter: 3
+  - role: apache
+    vars:
+      apache_port: 80
+  - role: postgres
+    vars:
+      dbname: blarg
+      other_parameter: 12
+``` 
 
-Voir TP4.
-
-### Ansible et Kubernetes
-
-https://docs.ansible.com/ansible/latest/scenario_guides/guide_kubernetes.html
+Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré.
 
 
-## Exécuter Ansible en production : les stratégies d'exécution:
+## Tester les roles avec Molecule et le Test Driven Development
 
-https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
+Pour des rôles fiables il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau rôle pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker.
+
+On crée différents types de scénarios, même si celui par défaut par Molecule permet déjà d'avoir un bon test du fonctionnement de notre rôle, en couvrant differents cas dès le début :
+
+- `check.yml`
+- `converge.yml`
+- `idempotent.yml`
+- `verify.yml`
+
+<!-- TODO: -  tu peux l'écrire avec ansible qui vérifie tout tâche par tâche écrite originalement
+- Ou alors avec testinfra la lib python spécialisée en collecte de facts os -->
 
 
-## Serveur pour exécuter Ansible dans une équipe
+<!-- Et du coup ça fait du tdd des le début -->
 
-- AWX/Tower
-  - Serveur officiel RedHat et sa version open source
-  - assez lourd et installable uniquement dans kubernetes/openshift
-  - très puissant
-  - plein de plugins d'intégration
-  - logging des exécutions assez optimal
+<!-- Y a un template
+Et il faut commencer par la -->
 
-- Jenkins
-  - Un peu vieux mais très versatile
-  - un bon plugin ansible
-  - gestion de ansible-vault et des credentials
-
-- Rundeck
-  - une alternative à AWX/Ansible Tower assez populaire
-
-- Gitlab
-  - faisable mais pas très bien intégré
-
-- Un simple serveur avec Ansible d'installé
-
-- Depuis la machine de chaque adminsys avec un wrapper maison bash ou python pour cloner les bonnes versions et pousser les logs de façon centralisée
+<!-- Plein de drivers pas fonctionnels sauf docker -->
+<!-- Pour des cas compliqués genre wireguard ou ynh ça marche pas du coup driver hcloud est le meilleur driver vps -->

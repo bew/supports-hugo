@@ -1,221 +1,226 @@
 ---
-title: 'Cours 3 - Organiser un projet'
+title: 'Cours 3 - Les variables, les structures de contrôle et les templates Jinja2'
 draft: false
-weight: 12
+weight: 30
 ---
 
-## Organisation d'un dépôt de code Ansible
+## Variables Ansible
 
-Voici, extrait de la documentation Ansible sur les "Best Practice", l'une des organisations de référence d'un projet ansible de configuration d'une infrastructure:
+Ansible utilise en arrière plan un dictionnaire contenant de nombreuses variables.
 
-```
-production                # inventory file for production servers
-staging                   # inventory file for staging environment
+Pour s'en rendre compte on peut lancer : 
+`ansible <hote_ou_groupe> -m debug -a "msg={{ hostvars }}"`
 
-group_vars/
-   group1.yml             # here we assign variables to particular groups
-   group2.yml
-host_vars/
-   hostname1.yml          # here we assign variables to particular systems
-   hostname2.yml
+Ce dictionnaire contient en particulier:
 
-library/                  # if any custom modules, put them here (optional)
-module_utils/             # if any custom module_utils to support modules, put them here (optional)
-filter_plugins/           # if any custom filter plugins, put them here (optional)
+- des variables de configuration ansible (`ansible_user` par exemple)
+- les `ansible_facts`, c'est à dire des variables dynamiques caractérisant les systèmes cible (par exemple `ansible_os_family`) et récupéré au lancement d'un playbook.
+- des variables personnalisées (de l'utilisateur) que vous définissez avec vos propre nom généralement en **snake_case**.
 
-site.yml                  # master playbook
-webservers.yml            # playbook for webserver tier
-dbservers.yml             # playbook for dbserver tier
+### Définition des variables
 
-roles/
-    common/               # this hierarchy represents a "role"
-        ...               # role code
+On peut définir et modifier la valeur des variables à différents endroits du code ansible:
 
-    webtier/              # same kind of structure as "common" was above, done for the webtier role
-    monitoring/           # ""
-    fooapp/               # ""
+- La section `vars:` du playbook.
+- Un fichier de variables appelé avec `var_files:`
+- L'inventaire : variables pour chaque machine ou pour le groupe.
+- Dans des dossier extension de l'inventaire `group_vars`, `host_vars`
+- Dans le dossier `defaults` des roles (cf partie sur les roles)
+- Dans une tâche avec le module `set_facts`.
+- Au runtime au moment d'appeler la CLI ansible avec `--extra-vars "version=1.23.45 other_variable=foo"`
 
-```
+Lorsque définies plusieurs fois, les variables ont des priorités en fonction de l'endroit de définition.
+L'ordre de priorité est plutôt complexe: <https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>
 
-Plusieurs remarques:
+En résumé la règle peut être exprimée comme suit: les variables de runtime sont prioritaires sur les variables dans un playbook qui sont prioritaires sur les variables de l'inventaire qui sont prioritaires sur les variables par défaut d'un role.
 
-- Chaque environnement (staging, production) dispose d'un inventaire ce qui permet de préciser à runtime quel environnement cibler avec l'option `--inventory production`.
-- Chaque groupe de serveurs (tier) dispose de son playbook
-  - qui s'applique sur le groupe en question.
-  - éventuellement définit quelques variables spécifiques (mais il vaut mieux les mettre dans l'inventaire ou les dossiers cf suite).
-  - Idéalement contient un minimum de tâches et plutôt des roles (ie des tâches rangées dans une sorte de module)
-- Pour limiter la taille de l'inventaire principal on range les variables communes dans des dossiers `group_vars` et `host_vars`. On met à l'intérieur un fichier `<nom_du_groupe>.yml` qui contient un dictionnaire de variables. 
-- On cherche à modulariser au maximum la configuration dans des roles c'est à dire des modules rendus génériques et specifique à un objectif de configuration.
-- Ce modèle d'organisation correspond plutôt à la **configuration** de base d'une infrastructure (playbooks à exécuter régulièrement) qu'à l'usage de playbooks ponctuels comme pour le déploiement. Mais, bien sur, on peut ajouter un dossier `playbooks` ou `operations` pour certaines opérations ponctuelles. (cf cours 4)
-- Si les modules de Ansible (complétés par les commandes bash) ne suffisent pas on peut développer ses propre modules ansible.
-  - Il s'agit de programmes python plus ou moins complexes
-  - On les range alors dans le dossier `library` du projet ou d'un role et on le précise éventuellement dans `ansible.cfg`.
-- Observons le role `Common` :  il est utilisé ici pour rassembler les taches de base des communes à toutes les machines. Par exemple s'assurer que les clés ssh de l'équipe sont présentes, que les dépots spécifiques sont présents etc. 
+- Bonne pratique: limiter les redéfinitions de variables en cascade (au maximum une valeur par défaut, une valeur contextuelle et une valeur runtime) pour éviter que le playbook soit trop complexe et difficilement compréhensible et donc maintenable.
 
-![](../../images/devops/ansible2.png)
+<!-- ### Remarques de syntaxe -->
 
-## Roles Ansible
+<!-- - `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire. -->
 
-### Objectif:
+### Variables spéciales
 
-- Découper les tâches de configuration en sous ensembles réutilisables (une suite d'étapes de configuration).
+https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
 
-- Ansible est une sorte de langage de programmation et l'intéret du code est de pouvoir créer des fonction regroupées en librairies et les composer. Les roles sont les "librairies/fonction" ansible en quelque sorte.
+Les plus utiles:
 
-- Comme une fonction un role prend généralement des paramètres qui permettent de personnaliser son comportement.
+- `ansible_facts`: faits récoltés par Ansible (Ansible Facts) sur l'hôte en cours
+- `hostvars`: dictionaire de toute les variables rangées par hôte de l'inventaire.
+- `ansible_host`: information utilisée pour la connexion (ip ou domaine).
+- `inventory_hostname`: nom de la machine dans l'inventaire.
+- `groups`: dictionnaire de tous les groupes avec la liste des machines appartenant à chaque groupe.
 
-- Tout le nécessaire doit y être (fichiers de configurations, archives et binaires à déployer, modules personnels dans `library` etc.)
+Pour explorer chacune de ces variables vous pouvez utiliser le module `debug` en mode adhoc ou dans un playbook :
 
-- Remarque ne pas confondre **modules** et **roles** : `file` est un module `geerlingguy.docker` est un role. On **doit** écrire des roles pour coder correctement en Ansible, on **peut** écrire des modules mais c'est largement facultatif car la plupart des actions existent déjà.
+`ansible <hote_ou_groupe> -m debug -a "msg={{ ansible_host }}" -vvv`
 
-- Présentation d'un exemple de role : [https://github.com/geerlingguy/ansible-role-docker](https://github.com/geerlingguy/ansible-role-docker)
-    - Dans la philosophie Ansible on recherche la généricité des roles. On cherche à ajouter des paramètres pour que le rôle s'adapte à différents cas (comme notre playbook flask app).
-    - Une bonne pratique: préfixer le nom des paramètres par le nom du rôle exemple `docker_edition`.
-    - Cependant la généricité est nécessaire quand on veut distribuer le role ou construire des outils spécifiques qui serve à plus endroit de l'infrastructure mais elle augmente la complexité.
-    - Donc pour les roles internes on privilégie la simplicité.
-    - Les roles contiennent idéalement un fichier `README` en décrire l'usage et un fichier `meta/main.yml` qui décrit la compatibilité et les dépendanice en plus de la licence et l'auteur.
-    - Il peuvent idéalement être versionnés dans des dépots à part et installé avec `ansible-galaxy`
+Attention, les facts ne sont pas relevés en mode ad-hoc. Il faut donc utiliser le module `debug`.
 
+Vous pouvez exporter les ansible_facts en JSON pour plus de lisibilité :
+`ansible all -m setup --tree ./ansible_facts_export`
 
-### Structure d'un rôle
+Puis les lire avec `cat ./ansible_facts_export/votremachine.json | jq` (il faut que jq soit installé, sinon tout ouvrir dans VSCode avec `code ./ansible_facts_export`).
 
-Un rôle est un dossier avec des sous dossiers qui répondent à une convention de nommage précise (contrairement à l'organisation d'un projet Ansible, qui peut être plus chaotique), généralement quelque chose comme :
+### Facts
 
-```
-roles/
-    mediawiki/            # le nom du rôle
-        tasks/            #
-            main.yml      #  <-- fichier de tasks principal
-            autre.yml     #  <-- fichier(s) de tasks en plus
-        handlers/         #
-            main.yml      #  <-- handlers file
-        templates/        #  <-- files for use with the template resource
-            ntp.conf.j2   #  <------- templates end in .j2
-        files/            #
-            foo.sh        #  <-- script files for use with the script resource
-        defaults/         #
-            main.yml      #  <-- default lower priority variables for this role
-```
+Les facts sont des valeurs de variables récupérées au début de l'exécution durant l'étape **gather_facts** et qui décrivent l'état courant de chaque machine.
 
-Voici la version exhaustive :
-```
-roles/
-    requirements.yml      # la liste des rôles nécessaires et comment les récupérer
-    mediawiki/            # le nom du rôle
-        tasks/            #
-            main.yml      #  <-- tasks file can include smaller files if warranted
-        handlers/         #
-            main.yml      #  <-- handlers file
-        templates/        #  <-- files for use with the template resource
-            ntp.conf.j2   #  <------- templates end in .j2
-        files/            #
-            foo.sh        #  <-- script files for use with the script resource
-        vars/             #
-            main.yml      #  <-- variables associated with this role
-        defaults/         #
-            main.yml      #  <-- default lower priority variables for this role
-        meta/             #
-            main.yml      #  <-- role dependencies
-        molecule/         # pour le test du rôle
-            check.yml
-            converge.yml
-            idempotent.yml
-            verify.yml
-        # Plus rare :
-        library/          # roles can also include custom modules
-        module_utils/     # roles can also include custom module_utils
-        lookup_plugins/
-```
+- Par exemple, `ansible_os_family` est un fact/variable décrivant le type d'OS installé sur la machine. Elle n'existe qu'une fois les facts récupérés.
 
-On constate que les noms des sous dossiers correspondent souvent à des sections du playbook. En fait le principe de base est d'extraire les différentes listes de taches ou de variables dans des sous-dossier
+Lors d'une **commande adhoc** ansible les **facts** ne sont pas récupérés : la variable `ansible_os_family` ne sera pas disponible.
 
-- Remarque : les fichier de liste **doivent nécessairement** s'appeler **main.yml**" (pas très intuitif)
-- Remarque2 : `main.yml` peut en revanche importer d'autre fichiers aux noms personnalisés (exp role docker de geerlingguy)
+La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html
 
-- Le dossier `defaults` contient les valeurs par défaut des paramètres du role. Ces valeurs ne sont jamais prioritaires (elles sont écrasées par n'importe quelle redéfinition)
-- Le fichier `meta/main.yml` est facultatif mais conseillé et contient des informations sur le role
-  - auteur
-  - license
-  - compatibilité
-  - version
-  - dépendances à d'autres roles.
-- Le dossier `files` contient les fichiers qui ne sont pas des templates (pour les module `copy` ou `sync`, `script` etc).
+## Structures de contrôle Ansible
 
-### Ansible Galaxy
+### La directive `when:`
 
-C'est le store de roles officiel d'Ansible : [https://galaxy.ansible.com/](https://galaxy.ansible.com/)
-
-C'est également le nom d'une commande `ansible-galaxy` qui permet d'installer des roles et leurs dépendances depuis internet. Un sorte de gestionnaire de paquet pour ansible.
-
-Elle est utilisée généralement sour la forme `ansible-galaxy install -r roles/requirements.yml -p roles` ou plus simplement `ansible-galaxy install <role>` mais installe dans `/etc/ansible/roles`.
-
-Tous les rôles ansible sont communautaires (pas de roles officiels) et généralement stockés sur github.
-
-Mais on peut voir la popularité la qualité et les tests qui garantissement la plus ou moins grande fiabilité du role
-
-{{% notice note %}}
-Il existe des roles pour installer un peu n'importe quelle application serveur courante aujourd'hui. Passez du temps à explorer le web avant de développer quelque chose avec Ansible
-{{% /notice %}}
-
-### Installer des roles avec `requirements.yml`
-
-Conventionnellement on utilise un fichier `requirements.yml` situé dans `roles` pour décrire la liste des roles nécessaires à un projet.
+Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
 
 ```yaml
-- src: geerlingguy.repo-epel
-- src: geerlingguy.haproxy
-- src: geerlingguy.docke
-# from GitHub, overriding the name and specifying a specific tag
-- src: https://github.com/bennojoy/nginx
-  version: master
-  name: nginx_role
+- name: start nginx service
+  systemd:
+    name: nginx
+    state: started
+  when: ansible_os_family == 'RedHat'
 ```
 
-- Ensuite pour les installer on lance: `ansible-galaxy install -r roles/requirements.yml -p roles`.
+Sinon la tâche est sautée (skipped) durant l'exécution.
 
+### La directive `loop:`
 
-#### Dépendances entre rôles
+Cette directive permet d'exécuter une tâche plusieurs fois basée sur une liste de valeurs :
 
- à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré
-Si un role dépend d'autres roles, les dépendances sont décrite dans le fichier `meta/main.yml` comme suit
+[https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html)
+
+exemple:
 
 ```yaml
----
-dependencies:
-  - role: common
-    vars:
-      some_parameter: 3
-  - role: apache
-    vars:
-      apache_port: 80
-  - role: postgres
-    vars:
-      dbname: blarg
-      other_parameter: 12
-``` 
+- hosts: localhost
+  tasks:
+    - name: exemple de boucle
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - message1
+        - message2
+        - message3
+```
 
-Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré.
+On accéde aux différentes valeurs qu'elle prend avec `{{ item }}`.
+
+On peut également contrôler cette boucle avec quelques paramètres:
+
+```yaml
+- hosts: localhost
+  vars:
+    messages:
+      - message1
+      - message2
+      - message3
+
+  tasks:
+    - name: exemple de boucle
+      debug:
+        msg: "message numero {{ num }} : {{ message }}"
+      loop: "{{ messages }}"
+      loop_control:
+        loop_var: message
+        index_var: num
+    
+```
+
+Cette fonctionnalité de boucle était anciennement accessible avec le mot clé `with_items:` qui est maintenant déprécié.
 
 
-## Tester les roles avec Molecule et le Test Driven Development
 
-Pour des rôles fiables il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau rôle pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker.
+## Jinja2 et variables dans les playbooks et rôles (fichiers de code)
 
-On crée différents types de scénarios, même si celui par défaut par Molecule permet déjà d'avoir un bon test du fonctionnement de notre rôle, en couvrant differents cas dès le début :
+La plupart des fichiers Ansible (sauf l'inventaire) sont traités avec le moteur de template python JinJa2.
 
-- `check.yml`
-- `converge.yml`
-- `idempotent.yml`
-- `verify.yml`
+Ce moteur permet de créer des valeurs dynamiques dans le code des playbooks, des roles, et des fichiers de configuration.
 
-<!-- TODO: -  tu peux l'écrire avec ansible qui vérifie tout tâche par tâche écrite originalement
-- Ou alors avec testinfra la lib python spécialisée en collecte de facts os -->
+- Les variables écrites au format `{{ mavariable }}` sont remplacées par leur valeur provenant du dictionnaire d'exécution d'Ansible.
+
+- Des filtres (fonctions de transformation) permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}` (Voir plus bas)
 
 
-<!-- Et du coup ça fait du tdd des le début -->
+### Filtres Jinja
 
-<!-- Y a un template
-Et il faut commencer par la -->
+Pour transformer la valeur des variables à la volée lors de leur appel on peut utiliser des filtres (jinja2) :
 
-<!-- Plein de drivers pas fonctionnels sauf docker -->
-<!-- Pour des cas compliqués genre wireguard ou ynh ça marche pas du coup driver hcloud est le meilleur driver vps -->
+- par exemple on peut fournir une valeur par défaut pour une variable avec filtre default: `{{ hostname | default('localhost') }}` 
+- Un autre usage courant des filtres est de reformater et filtrer des listes et dictionnaires de paramètre. Ces syntaxes sont peut intuitives. Vous pouvez vous entrainer en regardant ces tutoriels:
+  - [https://www.tailored.cloud/devops/how-to-filter-and-map-lists-in-ansible/](https://www.tailored.cloud/devops/how-to-filter-and-map-lists-in-ansible/)
+  - [https://www.tailored.cloud/devops/advanced-list-operations-ansible/](https://www.tailored.cloud/devops/advanced-list-operations-ansible/)
+
+La liste complète des filtres ansible se trouve ici : [https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html)
+<!-- TODO: ajout de liens vers jinja filter custom -->
+
+
+### Jinja2 et les variables dans les fichiers de templates
+
+Les fichiers de templates (.j2) utilisés avec le module template, généralement pour créer des fichiers de configuration peuvent **contenir des variables** et des **filtres** comme les fichier de code (voir au dessus) **mais également** d'autres constructions jinja2 comme:
+
+- Des `if` : `{% if nginx_state == 'present' %}...{% endif %}`.
+- Des boucles `for` : `{% for host in groups['appserver'] %}...{% endfor %}`.
+- Des inclusions de templates `{% include 'autre_fichier_template.j2' %}`
+
+
+## Imports et includes
+
+Il est possible d'importer le contenu d'autres fichiers dans un playbook:
+
+- `import_tasks`: importe une liste de tâches (atomiques)
+- `import_playbook`: importe une liste de play contenus dans un playbook.
+
+Les deux instructions précédentes désignent un import **statique** qui est résolu avant l'exécution.
+
+Au contraire, `include_tasks` permet d'intégrer une liste de tâche **dynamiquement** pendant l'exécution
+
+Par exemple:
+
+```yaml
+vars:
+  apps:
+    - app1
+    - app2
+    - app3
+
+tasks:
+  - include_tasks: install_app.yml
+    loop: "{{ apps }}"
+```
+
+Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas facilement être connu à l'avance on **doit** utiliser `include_tasks`.
+
+
+
+## Debugger un playbook
+
+Avec Ansible on dispose d'au moins trois manières de debugger un playbook :
+
+- Rendre la sortie verbeuse (mode debug) avec `-vvv`.
+
+- Utiliser une tâche avec le module `debug` : `debug msg="{{ mavariable }}"`.
+
+- Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
+
+Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html
+
+
+<!-- TODO: laïus sur register a et a.stdout -->
+### Les 7 commandes de debug dans Ansible
+
+| Command                | Shortcut | Action                                    |
+|------------------------|----------|-------------------------------------------|
+| print                  | p        | Print information about the task          |
+| task.args[key] = value |          | Update module arguments                   |
+| task_vars[key] = value |          | Update task variables (you must update_task next) |
+| update_task            | u        | Recreate a task with updated task variables |
+| redo                   | r        | Run the task again                        |
+| continue               | c        | Continue executing, starting with the next task |
+| quit                   | q        | Quit the debugger                         |
+

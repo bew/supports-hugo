@@ -1,7 +1,7 @@
 ---
 title: "TP2 - Créer un playbook de déploiement d'application flask" 
 draft: false
-weight: 22
+weight: 21
 ---
 <!-- 
 ## Création du projet
@@ -90,19 +90,6 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. ajoutez pour cela la directive `become: yes` au début du playbook.
 
-```yaml
-    - name: Ensure basic dependencies are present
-      apt:
-        name:
-          - python3-dev
-          - python3-pip
-          - python3-virtualenv
-          - virtualenv
-          - nginx
-          - git
-        state: present
-```
-
 En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend avec `{{ item }}`), on va pouvoir exécuter plusieurs fois cette tâche :
 
 ```yaml
@@ -119,7 +106,7 @@ En utilisant une `loop` (et en accédant aux différentes valeurs qu'elle prend 
         - git
 ```
 
-- Relancez bien votre playbook à chaque tache : comme Ansible est idempotent il n'est pas grave en situation de développement d'interrompre l'exécution du playbook et de reprendre l'exécution après un échec.
+- Relancez bien votre playbook à chaque t^che : comme Ansible est idempotent il n'est pas grave en situation de développement d'interrompre l'exécution du playbook et de reprendre l'exécution après un échec.
 
 - Ajoutez une tâche `systemd` pour s'assurer que le service `nginx` est démarré.
 

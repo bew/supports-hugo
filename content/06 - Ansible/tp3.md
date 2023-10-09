@@ -1,7 +1,7 @@
 ---
 title: "TP3 - Structurer le projet avec des rôles" 
 draft: false
-weight: 23
+weight: 41
 ---
 
 <!-- ## Ajouter un provisionneur d'infra maison pour créer les machines automatiquement

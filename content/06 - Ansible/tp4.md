@@ -1,7 +1,7 @@
 ---
 title: "TP4 bonus - Simuler un load balancer" 
 draft: false
-weight: 24
+weight: 50
 ---
 
  ## Infrastructure multi-tiers avec load balancer

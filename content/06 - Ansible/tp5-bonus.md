@@ -1,7 +1,7 @@
 ---
 title: "TP5 Bonus - Automatisation du déploiement avec Gitlab CI" 
 draft: false
-weight: 25
+weight: 51
 ---
 
  ## Versionner le projet et utiliser la CI gitlab avec Ansible pour automatiser le déploiement

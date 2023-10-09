@@ -1,7 +1,7 @@
 ---
 title: "TP6 Bonus - Serveur de contrôle AWX" 
 draft: false
-weight: 26
+weight: 52
 ---
 ## Installer AWX ou Rundeck
 
