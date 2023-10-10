@@ -495,14 +495,14 @@ Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d
 {{% /expand %}}
 
 - Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres taches mais sans les handlers que vous laisserez à la fin du playbook.
-- 
+
 {{% expand "Réponse  :" %}}
 
 > Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
-> 
+
 {{% /expand %}}
 
-- Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de taches. Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit ou vous les avez supprimées.
+- Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de tâches. Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit ou vous les avez supprimées.
 - Vérifiez que le playbook fonctionne et est toujours idempotent.
 - Ajoutez une tâche `debug: msg={{ app }}` au début du playbook pour visualiser le contenu de la variable.
 
