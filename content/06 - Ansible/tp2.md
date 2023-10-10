@@ -439,12 +439,12 @@ Vous pouvez consultez la solution également directement sur le site de github.
 
 Pour le moment dans notre playbook, les deux tâches de redémarrage de service sont en mode `restarted` c'est à dire qu'elles redémarrent le service à chaque exécution (résultat: `changed`) et ne sont donc pas idempotentes. En imaginant qu'on lance ce playbook toutes les 15 minutes dans un cron pour stabiliser la configuration, on aurait un redémarrage de nginx 4 fois par heure sans raison.
 
-On désire plutôt ne relancer/recharger le service que lorsque la configuration conrespondante a été modifiée. c'est l'objet des taches spéciales nommées `handlers`.
+On désire plutôt ne relancer/recharger le service que lorsque la configuration conrespondante a été modifiée. c'est l'objet des tâches spéciales nommées `handlers`.
 
 Ajoutez une section `handlers:` à la suite
 
 - Déplacez la tâche de redémarrage/reload de `nginx` dans cette section et mettez comme nom `reload nginx`.
-- Ajoutez aux deux taches de modification de la configuration la directive `notify: <nom_du_handler>`.
+- Ajoutez aux deux tâches de modification de la configuration la directive `notify: <nom_du_handler>`.
 
 - Testez votre playbook. il devrait être idempotent sauf le restart de `hello.service`.
 - Testez le handler en ajoutant un commentaire dans le fichier de configuration `nginx.conf.j2`.
@@ -490,15 +490,15 @@ Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d
 - Identifiez dans le playbook précédent les tâches qui sont exactement communes aux deux installations.
 {{% expand "Réponse  :" %}}
 
-> Il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
+> Il s'agit des tâches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
 
 {{% /expand %}}
 
-- Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres taches mais sans les handlers que vous laisserez à la fin du playbook.
+- Créez un nouveau fichier `deploy_app_tasks.yml` et copier à l'intérieur la liste de toutes les autres tâches mais sans les handlers que vous laisserez à la fin du playbook.
 
 {{% expand "Réponse  :" %}}
 
-> Il reste donc dans le playbook seulement les deux premières taches et les handlers, les autres taches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
+> Il reste donc dans le playbook seulement les deux premières tâches et les handlers, les autres tâches (toutes celles qui contiennent des parties variables) sont dans `deploy_app_tasks.yml`.
 
 {{% /expand %}}
 
@@ -528,7 +528,7 @@ Il faudra modifier la tâche de debug par `debug: msg={{ flask_apps }}`. Observo
 
 - A la task `debug:`, ajoutez la directive `loop: "{{ flask_apps }}` et remplacez le `msg={{ flask_apps }}` par `msg={{ item }}`. Que se passe-t-il ?
 
-- Utilisez la directive `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications, en complétant comme suit :
+- Utilisez la directive `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les tâches pour chacune des deux applications, en complétant comme suit :
 
 ```yaml
 - include_tasks: deploy_app_tasks.yml
