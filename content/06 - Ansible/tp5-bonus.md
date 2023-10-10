@@ -4,7 +4,7 @@ draft: false
 weight: 51
 ---
 
- ## Versionner le projet et utiliser la CI Gitlab avec Ansible pour automatiser le déploiement
+## Versionner le projet et utiliser la CI Gitlab avec Ansible pour automatiser le déploiement
 
 - Créez un compte sur la forge logicielle `gitlab.com` et créez un projet (dépôt) public.
 - Affichez et copiez `cat ~/.ssh/id_ed25519.pub`.
@@ -71,14 +71,14 @@ before_script: # some steps to execute before the main pipeline stage
 
 - Ajoutez une plannification dans la section `CI / CD`.
 
-## Bonus: Créez une planification pour le rolling upgrade de notre application
+## Bonus : Créez une planification pour le rolling upgrade de notre application
 
 <!-- - Modifiez `only: refs:` pour ajouter la branche `rolling_upgrade`. -->
 <!-- - Modifier la commande ansible pour lancer le playbook d'upgrade. -->
 - Dans `CI / CD > Schedules` ajoutez un job planifié toute les 5 min (en production toutes les nuits serait plus adapté).
 - Observez le résultat.
 
-## Bonus: un déploiement plus sécurisé avec un _webhook_
+## Bonus : un déploiement léger et sécurisé avec `ansible-pull`
 
 ### Logs dans Ansible et création du script d'exécution
 
@@ -87,6 +87,13 @@ Pour suivre ce qu'il se passe, ajoutez la ligne suivante dans votre fichier `ans
 ```bash
 log_path=./ansible_log.txt
 ```
+### Editer `crontab`
+
+En lisant la documentation et en mettant en place un `cron` (ou un `timer` systemd), mettre en place un déploiement "inversé" avec `ansible-pull`.
+
+## Bonus : un déploiement plus sécurisé avec un _webhook_
+
+### Création du script d'exécution
 
 - à la racine du dépôt Ansible, créez un script Bash nommé `ansible-run.sh`, copiez et collez le contenu suivant dans le fichier `ansible-run.sh` et en remplaçant :
 
