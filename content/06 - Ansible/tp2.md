@@ -502,8 +502,9 @@ Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d
 
 {{% /expand %}}
 
-- Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de tâches. Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit ou vous les avez supprimées.
-- Vérifiez que le playbook fonctionne et est toujours idempotent. Note: si vous avez récupéré une solution, il va falloir récupérer le fichier d'inventaire d'un autre rpojet et adapter la sections `hosts:` du playbook.
+Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une **liste de tâches**.
+- Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit où vous les avez supprimées.
+- Vérifiez que le playbook fonctionne et est toujours idempotent. _Note: si vous avez récupéré une solution, il va falloir récupérer le fichier d'inventaire d'un autre projet et adapter la sections `hosts:` du playbook._
 
 - Ajoutez une tâche `debug: msg={{ app }}` au début du playbook pour visualiser le contenu de la variable.
 
