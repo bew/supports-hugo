@@ -472,7 +472,7 @@ Ajoutez une section `handlers:` à la suite
 - Pour la solution clonez le dépôt de base à l'adresse <https://github.com/Uptime-Formation/ansible-tp-solutions>
 - Renommez le clone en tp2.
 - ouvrez le projet avec VSCode.
-- Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
+- Activez la branche `tp2_before_handlers_correction` avec `git checkout tp2_before_handlers_correction`.
 
 Le dépôt contient également les corrigés du TP3 et TP4 dans d'autres branches.
 
@@ -528,6 +528,9 @@ flask_apps:
 - Créez le dossier `group_vars` et déplacez le dictionnaire `flask_apps` dans un fichier `group_vars/appservers.yml`. Comme son nom l'indique ce dossier permet de définir les variables pour un groupe de serveurs dans un fichier externe.
 
 - Testez en relançant le playbook que le déplacement des variables est pris en compte correctement.
+
+- Pour la solution : activez la branche `tp2_correction` avec `git checkout tp2_correction`.
+
 
 ## Bonus 3 : pour pratiquer
 
