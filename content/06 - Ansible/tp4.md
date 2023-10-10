@@ -4,7 +4,7 @@ draft: false
 weight: 50
 ---
 
- ## Infrastructure multi-tiers avec load balancer
+ ## Infrastructure multi-tier avec load balancer
 
 Pour configurer notre infrastructure:
 

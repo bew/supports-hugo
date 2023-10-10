@@ -391,6 +391,15 @@ Ajoutons des variables pour gérer dynamiquement les paramètres de notre déplo
     domain: hello.test
 ```
 (remplacez `hello.test` par `hello.test.votrenom.formation.doxx.fr` le cas échéant si vous avez accès à un nom de domaine public)
+
+- ajoutons une petite task dans la section `pre_tasks:` pour afficher cette variable au début du playbook, c'est le module `debug` :
+
+```yaml
+  pre_tasks:
+    - debug:
+        msg: "{{ app }}"
+```
+
 - Remplacez dans le playbook précédent et les deux fichiers de template:
   - toutes les occurence de la chaine `hello` par `{{ app.name }}`
   - toutes les occurence de la chaine `flask` par `{{ app.user }}`

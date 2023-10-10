@@ -226,7 +226,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
   vars:
     logfile_name: "auth.log"
 
-  var_files:
+  vars_files:
     - mesvariables.yml
 
   roles:
@@ -258,7 +258,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
   vars:
     logfile_name: "auth.log"
 
-  var_files:
+  vars_files:
     - mesvariables.yml
 
   pre_tasks:

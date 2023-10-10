@@ -85,18 +85,19 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 ## Ajouter une installation mysql simple à une de vos machines avec un rôle trouvé sur Internet
 
 - Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les rôles (c'est une convention ansible à respecter).
-- Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du rôle `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux rôles de références.
+- Les rôles sont sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/), mais difficilement trouvables... cherchons sur GitHub l'adresse du dépôt Git avec le **nom** du rôle `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux rôles de références.
 - Pour décrire les rôles nécessaires pour notre projet il faut créer un fichier `requirements.yml` contenant la liste de ces rôles. Ce fichier peut être n'importe où mais il faut généralement le mettre directement dans le dossier `roles` (autre convention).
 
 - Ajoutez à l'intérieur du fichier:
 
 ```yaml
-- src: <nom_du_role_mysql>
+- src: <adresse_du_depot_git_du_role_mysql>
+  name: geerlingguy.mysql
 ```
 
-- Pour installez le role lancez ensuite `ansible-galaxy install -r roles/requirements.yml -p roles`.
+- Pour installez le rôle lancez ensuite `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
-- Ajoutez la ligne `geerlingguy.*` au fichier `.gitignore` pour ne pas ajouter les roles externes à votre dépot git.
+- Ajoutez la ligne `geerlingguy.*` au fichier `.gitignore` pour ne pas ajouter les rles externes à votre dépot git.
 
 - Pour installer notre base de données, ajoutez un playbook `dbservers.yml` appliqué au groupe `dbservers` avec juste une section:
 
