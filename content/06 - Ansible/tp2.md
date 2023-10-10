@@ -503,7 +503,8 @@ Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d
 {{% /expand %}}
 
 - Ce nouveau fichier n'est pas à proprement parler un `playbook` mais une liste de tâches. Utilisez `include_tasks:` pour importer cette liste de tâches à l'endroit ou vous les avez supprimées.
-- Vérifiez que le playbook fonctionne et est toujours idempotent.
+- Vérifiez que le playbook fonctionne et est toujours idempotent. Note: si vous avez récupéré une solution, il va falloir récupérer le fichier d'inventaire d'un autre rpojet et adapter la sections `hosts:` du playbook.
+
 - Ajoutez une tâche `debug: msg={{ app }}` au début du playbook pour visualiser le contenu de la variable.
 
 - Ensuite remplacez la variable `app` par une liste `flask_apps` de deux dictionnaires (avec `name`, `domain`, `user` différents les deux dictionnaires et `repository` et `version` identiques).
@@ -523,7 +524,11 @@ flask_apps:
     repository: https://github.com/e-lie/flask_hello_ansible.git
 ```
 
-- Utilisez les directives `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications.
+Il faudra modifier la tâche de debug par `debug: msg={{ flask_apps }}`. Observons le contenu de cette variable.
+
+- A la task `debug,`, ajoutez la directive `loop: "{{ flask_apps }}` et remplacez le `msg={{ flask_apps }}` par `msg={{ item }}`. Que se passe-t-il ?
+
+- Utilisez la directive `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications. La directive `loop_var` permet de renommer la variable sur laquelle on boucle par un nom de variable de notre choix.
 
 - Créez le dossier `group_vars` et déplacez le dictionnaire `flask_apps` dans un fichier `group_vars/appservers.yml`. Comme son nom l'indique ce dossier permet de définir les variables pour un groupe de serveurs dans un fichier externe.
 
