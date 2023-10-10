@@ -526,9 +526,18 @@ flask_apps:
 
 Il faudra modifier la tâche de debug par `debug: msg={{ flask_apps }}`. Observons le contenu de cette variable.
 
-- A la task `debug,`, ajoutez la directive `loop: "{{ flask_apps }}` et remplacez le `msg={{ flask_apps }}` par `msg={{ item }}`. Que se passe-t-il ?
+- A la task `debug:`, ajoutez la directive `loop: "{{ flask_apps }}` et remplacez le `msg={{ flask_apps }}` par `msg={{ item }}`. Que se passe-t-il ?
 
-- Utilisez la directive `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications. La directive `loop_var` permet de renommer la variable sur laquelle on boucle par un nom de variable de notre choix.
+- Utilisez la directive `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications, en complétant comme suit :
+
+```yaml
+- include_tasks: deploy_app_tasks.yml
+  loop: "{{ __A_COMPLETER__ }}"
+  loop_control:
+    loop_var: __A_COMPLETER__
+```
+
+ La directive `loop_var` permet de renommer la variable sur laquelle on boucle par un nom de variable de notre choix.
 
 - Créez le dossier `group_vars` et déplacez le dictionnaire `flask_apps` dans un fichier `group_vars/appservers.yml`. Comme son nom l'indique ce dossier permet de définir les variables pour un groupe de serveurs dans un fichier externe.
 
