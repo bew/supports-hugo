@@ -136,10 +136,7 @@ Lancez le webhook en utilisant la commande suivante dans un nouveau terminal (si
 ```
 
 Pour tester le webhook, ouvrez simplement un navigateur web et accédez à l'URL suivante en remplaçant `localhost` par l'adresse IP de votre serveur si nécessaire :
-
-```
-http://localhost:9999/hooks/redeploy-webhook
-```
+<http://localhost:9999/hooks/redeploy-webhook>
 
 Le webhook exécutera le script `ansible-run.sh`, qui lancera votre playbook Ansible. 
 **Le webhook attend que le playbook finisse**, ce qui peut prendre du temps. Ensuite, il affichera le retour de la sortie standard (ou une erreur).
