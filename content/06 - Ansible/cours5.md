@@ -14,6 +14,7 @@ Il est à noter tout de même qu'Ansible est généralement apprécié d'un poin
 
 Pour les cas plus spécifiques et si vous voulez éviter ssh, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
 
+
 ## Authentification et SSH
 
 Il faut idéalement éviter de créer un seul compte ansible de connexion pour toutes les machines:
@@ -42,7 +43,7 @@ Attention : les dépôts Git peuvent cacher des secrets dans leur historique.
 <!-- Pour chercher et nettoyer un secret dans un dépôt l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/ -->
 
 
-## Ansible vault
+## Ansible Vault
 
 Pour éviter de divulguer des secrets par inadvertance, il est possible de gérer les secrets avec des variables d'environnement ou avec un fichier variable externe au projet qui échappera au versionning git, mais ce n'est pas idéal.
 
@@ -203,8 +204,8 @@ Voir TP4.
 
 ### Ansible et Kubernetes
 
-https://docs.ansible.com/ansible/latest/scenario_guides/guide_kubernetes.html
-
+- pour déployer un cluster initialement, avec `kubespray`
+- pour ajouter et supprimer des ressources K8S avec le module `community.kubernetes.k8s`
 
 ## Exécuter Ansible en production : les stratégies d'exécution:
 
@@ -234,3 +235,7 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
 - Un simple serveur avec Ansible d'installé
 
 - Depuis la machine de chaque adminsys, en clonant les bonnes versions des dépôts Git, en récupérant un Vault et en poussant les logs de façon centralisée
+
+## Exemple d'installation complexe
+
+![](../../images/ansible/ansible_admin.png)

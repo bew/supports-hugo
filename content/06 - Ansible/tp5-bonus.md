@@ -80,9 +80,10 @@ before_script: # some steps to execute before the main pipeline stage
 
 ## Bonus : un déploiement léger et sécurisé avec `ansible-pull`
 
-### Editer `crontab`
+<https://blog.octo.com/ansible-pull-killer-feature/>
 
-En lisant la documentation et en mettant en place un `cron` (ou un `timer` systemd), mettre en place un déploiement "inversé" avec `ansible-pull`.
+- En lisant cet article, mettre en place un déploiement "inversé" avec `ansible-pull`.
+- En mettant en place un `cron` (ou un `timer` systemd), lancez ce déploiement toutes les 5min, et observez dans les logs.
 
 ## Bonus : un déploiement plus sécurisé avec un _webhook_
 
