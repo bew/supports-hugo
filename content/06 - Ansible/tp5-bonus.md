@@ -139,7 +139,10 @@ Pour tester le webhook, ouvrez simplement un navigateur web et accédez à l'URL
 <http://localhost:9999/hooks/redeploy-webhook>
 
 Le webhook exécutera le script `ansible-run.sh`, qui lancera votre playbook Ansible. 
-**Le webhook attend que le playbook finisse**, ce qui peut prendre du temps. Ensuite, il affichera le retour de la sortie standard (ou une erreur).
+
+**Le webhook attend que le playbook finisse, laissons la page se charger dans le navigateur**, ce qui peut prendre du temps. Ensuite, il affichera le retour de la sortie standard (ou une erreur).
+
+Faites un `tail -f ansible_log.txt` pour suivre le playbook le temps qu'il se termine, puis observer le retour de la requête HTTP dans votre navigateur.
 
 ### Intégration à Gitlab CI
 

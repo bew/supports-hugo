@@ -13,6 +13,7 @@ TODO:
 - become_user
 - delegate
 - topo clair sur collections
+- passer à webhookd (nécessite ubnutu 22)
 
 TODO: Répartir la biblio par section
 
