@@ -189,6 +189,11 @@ L'idée est la suivante :
 
 - Votre role est prêt : lancez `appservers.yml` et debuggez le résultat le cas échéant.
 
+## Facultatif: rendre le rôle compatible avec le mode `--check`
+
+- Ajouter une app dans la variable `flask_apps` et lancer le playbook avec `--check`. Que se passe-t-il ? Pourquoi ?
+- ajoutez une instruction `ignore_errors: {{ ansible_check_mode }}` au bon endroit. Re-testons.
+
 ## Facultatif: Ajouter un paramètre d'exécution à notre rôle pour mettre à jour l'application.
 
 {{% expand "Facultatif  :" %}}
