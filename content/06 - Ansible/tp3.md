@@ -160,9 +160,21 @@ app:
   user: defaultflask
 ```
 
-Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (la liste de deux applications du TP2). Elle est présente pour éviter que le role plante en l'absence de variable (valeurs de fallback).
+Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (la liste de deux applications du TP2), ou bien celles fournies dans le playbook (si vous n'avez pas déplacé la variable `flask_apps`). Elle est présente pour éviter que le rôle plante en l'absence de variable (valeurs de fallback).
 
-- Copiez les tâches (juste la liste de tiret sans l'intitulé de section `tasks:`) contenues dans le playbook `appservers` dans le fichier `tasks/main.yml`.
+### Découpage des tasks du rôle
+
+Occupons-nous maintenant de la liste de tâches de notre rôle.
+Une règle simple : **il n'y a jamais de playbooks dans un rôle** : il n'y a que des listes de tâches.
+
+L'idée est la suivante :
+- on veut avoir un playbook final qui n'aie que des variables (section `vars:`), un groupe de `hosts:` et l'invocation de notre rôle
+
+- dans le rôle dans le dossier `tasks` on veut avoir deux fichiers :
+  - un `main.yml` qui sert à invoquer une "boucle principale" (avec `include_tasks:` et `loop:`)
+  - ...et la liste de tasks à lancer pour chaque item de la liste `flask_apps`
+
+- Copiez les tâches (juste la liste de tirets sans l'intitulé de section `tasks:`) contenues dans le playbook `appservers` dans le fichier `tasks/main.yml`.
 
 - De la même façon copiez le handler dans `handlers/main.yml` sans l'intitulé `handlers:`.
 - Copiez également le fichier `deploy_flask_tasks.yml` dans le dossier `tasks`.
@@ -181,7 +193,7 @@ Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (
 
 {{% expand "Facultatif  :" %}}
 
-Notre role `flaskapp` est jusqu'ici concu pour être un rôle de configuration, idéalement lancé régulièrement à l'aide d'un cron ou de AWX. En particulier, nous avons mis les paramètres `update` et `force` à `false` au niveau de notre tâche qui clone le code avec git. Ces paramètres indiquent si la tâche doit récupérer systématiquement la dernière version. Dans notre cas il pourrait être dangereux de mettre à jour l'application à chaque fois donc nous avons mis `false` pour éviter d'écraser l'application existante avec une version récente.
+Notre rôle `flaskapp` est jusqu'ici concu pour être un rôle de configuration, idéalement lancé régulièrement à l'aide d'un cron ou de AWX. En particulier, nous avons mis les paramètres `update` et `force` à `false` au niveau de notre tâche qui clone le code avec git. Ces paramètres indiquent si la tâche doit récupérer systématiquement la dernière version. Dans notre cas il pourrait être dangereux de mettre à jour l'application à chaque fois donc nous avons mis `false` pour éviter d'écraser l'application existante avec une version récente.
 
 Nous aimerions maintenant créer un playbook `upgrade_apps.yml` qui contrairement à `configuration.yml` devrait être lancé ponctuellement pour mettre à jour l'application. Il serait bête de ne pas réutiliser notre role pour cette tâche : nous allons rajouter un paramère `flask_upgrade_apps`.
 

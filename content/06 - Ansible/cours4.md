@@ -81,6 +81,10 @@ Plusieurs remarques:
 
 Un rôle est un dossier avec des sous dossiers qui répondent à une convention de nommage précise (contrairement à l'organisation d'un projet Ansible, qui peut être plus chaotique), généralement quelque chose comme :
 
+![](../../images/ansible/simple_hierarchy.jpg)
+
+ou encore :
+
 ```
 roles/
     mediawiki/            # le nom du rôle
