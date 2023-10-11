@@ -86,7 +86,7 @@ En lisant la documentation et en mettant en place un `cron` (ou un `timer` syste
 
 ## Bonus : un déploiement plus sécurisé avec un _webhook_
 
-### Création du script d'exécution
+### Logs dans Ansible et création du script d'exécution
 
 - à la racine du dépôt Ansible, créez un script Bash nommé `ansible-run.sh`, copiez et collez le contenu suivant dans le fichier `ansible-run.sh` et en remplaçant :
 
@@ -96,8 +96,6 @@ ansible-playbook deploy_docker_app.yml --diff -v
 ```
 
 - rendez le script exécutable avec `chmod +x ansible-run.sh`
-
-### Logs dans Ansible et création du script d'exécution
 
 Pour suivre ce qu'il se passe, ajoutez la ligne suivante dans votre fichier `ansible.cfg` pour spécifier le chemin du fichier de logs (`ansible_log.txt` en l'occurrence) :
 
