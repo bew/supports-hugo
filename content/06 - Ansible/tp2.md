@@ -150,6 +150,8 @@ N'hésitez pas à tester l'option `--diff -v` avec vos commandes pour voir l'ava
         clone: yes
         update: no
 ```
+<!-- TODO: expliquer qu'il faudrait p'tet utiliser become_user ou pas faire ces trucs en root car corriger les permissions en recurse après c'est bourrin -->
+<!-- become_user: "{{ app.user }}" -->
 
 - Lancez votre playbook et allez vérifier sur une machine en ssh que le code est bien téléchargé.
 
@@ -192,6 +194,7 @@ Notre application sera exécutée en tant qu'utilisateur flask pour des raisons 
         path: /home/flask/hello
         state: directory
         owner: "flask"
+        group: www-data
         recurse: true
 ```
 
@@ -302,14 +305,15 @@ server {
         version: "master"
         clone: yes
         update: no
-    
+      become_user:  "{{ app.user }}"
+
     - name: Install python dependencies for the webapp in a virtualenv
       pip:
         requirements: /home/flask/hello/requirements.txt
         virtualenv: /home/flask/hello/venv
         virtualenv_python: python3
-    
-    - name: Change permissions of app directory recursively
+
+    - name: Change permissions of app directory recursively if needed
       file:
         path: /home/flask/hello
         state: directory
