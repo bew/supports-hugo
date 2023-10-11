@@ -86,7 +86,7 @@ En lisant la documentation et en mettant en place un `cron` (ou un `timer` syste
 
 ## Bonus : un déploiement plus sécurisé avec un _webhook_
 
-### Logs dans Ansible et création du script d'exécution
+### Création du script d'exécution et logs dans Ansible
 
 - à la racine du dépôt Ansible, créez un script Bash nommé `ansible-run.sh`, copiez et collez le contenu suivant dans le fichier `ansible-run.sh` et en remplaçant :
 
