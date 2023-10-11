@@ -88,11 +88,11 @@ En lisant la documentation et en mettant en place un `cron` (ou un `timer` syste
 
 ### Création du script d'exécution et logs dans Ansible
 
-- à la racine du dépôt Ansible, créez un script Bash nommé `ansible-run.sh`, copiez et collez le contenu suivant dans le fichier `ansible-run.sh` et en remplaçant :
+- à la racine du dépôt Ansible, créez un script Bash nommé `ansible-run.sh`, copiez et collez le contenu suivant dans le fichier `ansible-run.sh` et **remplacez la commande par un vrai playbook** situé dans le même dossier :
 
 ```bash
 #!/bin/bash
-ansible-playbook deploy_docker_app.yml --diff -v
+ansible-playbook deploy.yml --diff -v
 ```
 
 - rendez le script exécutable avec `chmod +x ansible-run.sh`
@@ -129,7 +129,7 @@ Ensuite, créons un fichier de configuration pour le webhook.
 
 ### Lancement et test du webhook
 
-Lancez le webhook en utilisant la commande suivante dans un nouveau terminal (si le terminal se ferme, le programme s'arrêtera) :
+Lancez le webhook en utilisant la commande suivante dans un nouveau terminal (si le terminal se ferme, le webhook s'arrêtera) :
 
 ```bash
 /usr/bin/webhook -nopanic -hooks /etc/webhook.conf -port 9999 -verbose
@@ -141,7 +141,8 @@ Pour tester le webhook, ouvrez simplement un navigateur web et accédez à l'URL
 http://localhost:9999/hooks/redeploy-webhook
 ```
 
-Le webhook exécutera le script `ansible-run.sh`, qui lancera votre playbook Ansible et affichera son retour (ou une erreur).
+Le webhook exécutera le script `ansible-run.sh`, qui lancera votre playbook Ansible. 
+**Le webhook attend que le playbook finisse**, ce qui peut prendre du temps. Ensuite, il affichera le retour de la sortie standard (ou une erreur).
 
 ### Intégration à Gitlab CI
 
