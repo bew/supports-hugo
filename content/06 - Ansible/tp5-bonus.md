@@ -114,7 +114,7 @@ sudo apt install webhook
 ```
 Ensuite, créons un fichier de configuration pour le webhook.
 
-- Avec `nano` ou `vi` par exemple, faites `sudo nano /etc/webhook.conf`, modifiez-le avec le contenu suivant **en adaptant la partie `/home/formateur/projet-ansible` avec le chemin de votre projet**, puis enregistrez et quittez le fichier (pour `nano`, en appuyant sur `Ctrl + X`, suivi de `Y`, puis appuyez sur `Entrée`) :
+- Avec `nano` ou `vi` par exemple, faites `sudo nano /etc/webhook.conf` pour créer le fichier puis modifions-le avec le contenu suivant **en adaptant la partie `/home/formateur/projet-ansible` avec le chemin de votre projet**, puis enregistrez et quittez le fichier (pour `nano`, en appuyant sur `Ctrl + X`, suivi de `Y`, puis appuyez sur `Entrée`) :
 
 ```json
 [
