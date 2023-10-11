@@ -152,7 +152,7 @@ textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[typ
     margin: 0;
     font-weight: 300;
 }
-.searchbox input::-webkit-input-placeholder {
+/* .searchbox input::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 .searchbox input::-moz-placeholder {
@@ -163,7 +163,7 @@ textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[typ
 }
 .searchbox input:-ms-input-placeholder {
     color: rgba(255, 255, 255, 0.6);
-}
+} */
 #sidebar-toggle-span {
     display: none;
 }
