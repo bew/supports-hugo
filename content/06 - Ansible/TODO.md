@@ -3,6 +3,17 @@ title: "TODO formation Ansible"
 draft: true
 ---
 
+TODO: refaire un bel histoirque git ansible-tp-solutions
+
+TODO:
+- no_log
+- {{ ansible_managed }}
+- async
+- exo clair avec le vault
+- become_user
+- delegate
+- topo clair sur collections
+
 TODO: Répartir la biblio par section
 
 FIXME: ajout de liens vers module ynh créé et vers doc officielle "quand doit-on créer un module ?"
@@ -42,6 +53,10 @@ FIXME:
 
 ## changed_when / failed_when / ignore_errors
 
+- exo avec register
+
 ## Les conditions
 
+- exo avec conditions
 ## Les tags
+- tags et limit et host patterns
