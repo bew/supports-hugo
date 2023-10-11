@@ -6,7 +6,7 @@ weight: 50
 
 # Sécurité
 
-Les problématiques de sécurité linux ne sont pas résolue magiquement par Ansible. Tous le travail de réflexion et de sécurisation reste identique mais peut comme le reste être mieux controllé grace à l'approche déclarative de l'infrastructure as code.
+Les problématiques de sécurité linux ne sont pas résolues magiquement par Ansible. Tout le travail de réflexion et de sécurisation reste identique mais peut comme le reste être mieux contrôlé grace à l'approche déclarative de l'infrastructure as code.
 
 Si cette problématique des liens entre Ansible et sécurité vous intéresse : `Security automation with Ansible`
 
@@ -15,8 +15,6 @@ Il est à noter tout de même qu'Ansible est généralement apprécié d'un poin
 Pour les cas plus spécifiques et si vous voulez éviter ssh, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
 
 ## Authentification et SSH
-
-Un bonne pratique importante : changez le port de connexion ssh pour un port atypique. Ajoutez la variable `ansible_ssh_port=17728` dans l'inventaire.
 
 Il faut idéalement éviter de créer un seul compte ansible de connexion pour toutes les machines:
 - difficile à bouger
@@ -32,9 +30,7 @@ Le mode de connexion par défaut de Ansible est SSH cependant il est possible d'
 
 - Une autre connexion courante est `ansible_connection=local` qui permet de configurer la machine locale sans avoir besoin d'installer un serveur ssh.
 
-- Citons également les connexions `ansible_connexion=docker` et `ansible_connexion=lxd` pour configurer des conteneurs linux ainsi que `ansible_connexion=` pour les serveurs windows
-
-- Les questions de sécurités de la connexion se posent bien sur différemment selon le mode de connexion utilisés (port, authentification, etc.)
+- Citons également les connexions `ansible_connection=docker` et `ansible_connection=lxd` pour configurer des conteneurs linux ainsi que `ansible_connection=winrm` pour les serveurs windows
 
 - Pour débugger les connexions et diagnotiquer leur sécurité on peut afficher les détails de chaque connection ansible avec le mode de verbosité maximal (network) en utilisant le paramètre `-vvvv`.
 
@@ -42,13 +38,9 @@ Le mode de connexion par défaut de Ansible est SSH cependant il est possible d'
 
 Le principal risque de sécurité lié à Ansible comme avec Docker et l'IaC en général consiste à laisser trainer des secrets (mot de passe, identités de clients, api token, secret de chiffrement / migration etc.) dans le code ou sur les serveurs (moins problématique).
 
-Attention : les dépôt git peuvent cacher des secrets dans leur historique. Pour chercher et nettoyer un secret dans un dépôt l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/
+Attention : les dépôts Git peuvent cacher des secrets dans leur historique.
+<!-- Pour chercher et nettoyer un secret dans un dépôt l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/ -->
 
-## Désactiver le logging des informations sensibles
-
-Ansible propose une directive `no_log: yes` qui permet de désactiver l'affichage des valeurs d'entrée et de sortie d'une tâche.
-
-Il est ainsi possible de limiter la prolifération de données sensibles.
 
 ## Ansible vault
 
@@ -66,9 +58,15 @@ Pour déchiffrer il est ensuite nécessaire d'ajouter l'option `--ask-vault-pass
 
 Il existe également un mode pour gérer plusieurs mots de passe associés à des identifiants.
 
+## Désactiver le logging des informations sensibles
+
+Ansible propose une directive `no_log: yes` qui permet de désactiver l'affichage des valeurs d'entrée et de sortie d'une tâche.
+
+Il est ainsi possible de limiter la prolifération de données sensibles dans les logs qui enregistrent le résultat des playbooks Ansible.
+
 ## Ansible dans le cloud
 
-L'automatisation Ansible fait d'autant plus sens dans un environnement d'infrastructures dynamique:
+L'automatisation Ansible fait d'autant plus sens dans un environnement d'infrastructures dynamique :
 
 - L'agrandissement horizontal implique de résinstaller régulièrement des machines identiques
 - L'automatisation et la gestion des configurations permet de mieux contrôler des environnements de plus en plus complexes.
@@ -77,9 +75,9 @@ Il existe de nombreuses solutions pour intégrer Ansible avec les principaux pro
 
 ## Inventaires dynamiques
 
-Les inventaires que nous avons utilisés jusqu'ici implique d'affecter à la main les adresses IP des différents noeuds de notre infrastructure. Cela devient vite ingérable.
+Les inventaires que nous avons utilisés jusqu'ici impliquent d'affecter à la main les adresses IP des différents noeuds de notre infrastructure. Cela devient vite ingérable.
 
-La solution ansible pour le pas gérer les IP et les groupes à la main est appelée `inventaire dynamique` ou `inventory plugin`. Un inventaire dynamique est simplement un programme qui renvoie un JSON respectant le format d'inventaire JSON ansible, généralement en contactant l'api du cloud provider ou une autre source.
+La solution ansible pour ne pas gérer les IP et les groupes à la main est appelée `inventaire dynamique` ou `inventory plugin`. Un inventaire dynamique est simplement un programme qui renvoie un JSON respectant le format d'inventaire JSON ansible, généralement en contactant l'API du cloud provider ou une autre source.
 
 ```
 $ ./inventory_terraform.py
@@ -138,7 +136,6 @@ $ ./inventory_terraform.py
 On peut ensuite appeler `ansible-playbook` en utilisant ce programme plutôt qu'un fichier statique d'inventaire: `ansible-playbook -i inventory_terraform.py configuration.yml`
 
 ## Étendre et intégrer Ansible
-
 
 ### La bonne pratique : utiliser un plugin d'inventaire pour alimenter
 
@@ -229,11 +226,11 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
   - gestion de ansible-vault et des credentials
 
 - Rundeck
-  - une alternative à AWX/Ansible Tower assez populaire
+  - une alternative à AWX/Ansible Tower assez populaire et plus légère
 
 - Gitlab
   - faisable mais pas très bien intégré
 
 - Un simple serveur avec Ansible d'installé
 
-- Depuis la machine de chaque adminsys avec un wrapper maison bash ou python pour cloner les bonnes versions et pousser les logs de façon centralisée
+- Depuis la machine de chaque adminsys, en clonant les bonnes versions des dépôts Git, en récupérant un Vault et en poussant les logs de façon centralisée
