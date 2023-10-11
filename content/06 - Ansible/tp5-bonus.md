@@ -80,13 +80,6 @@ before_script: # some steps to execute before the main pipeline stage
 
 ## Bonus : un déploiement léger et sécurisé avec `ansible-pull`
 
-### Logs dans Ansible et création du script d'exécution
-
-Pour suivre ce qu'il se passe, ajoutez la ligne suivante dans votre fichier `ansible.cfg` pour spécifier le chemin du fichier de logs (`ansible_log.txt` en l'occurrence) :
-
-```bash
-log_path=./ansible_log.txt
-```
 ### Editer `crontab`
 
 En lisant la documentation et en mettant en place un `cron` (ou un `timer` systemd), mettre en place un déploiement "inversé" avec `ansible-pull`.
@@ -104,7 +97,15 @@ ansible-playbook deploy_docker_app.yml --diff -v
 
 - rendez le script exécutable avec `chmod +x ansible-run.sh`
 
-- dans un terminal, faites `bash ansible-run.sh` pour tester votre script de déploiement.
+### Logs dans Ansible et création du script d'exécution
+
+Pour suivre ce qu'il se passe, ajoutez la ligne suivante dans votre fichier `ansible.cfg` pour spécifier le chemin du fichier de logs (`ansible_log.txt` en l'occurrence) :
+
+```bash
+log_path=./ansible_log.txt
+```
+
+- dans un terminal, faites `./ansible-run.sh` et observez les logs pour tester votre script de déploiement.
 
 ### Installation et configuration du Webhook
 
