@@ -13,6 +13,7 @@ draft: false
 - [git - petit guide (en français)](https://rogerdudler.github.io/git-guide/index.fr.html)
 - [Et merde, Git!?! (en français)](https://ohshitgit.com/fr)
 - [Une Référence Visuelle de Git (en français)](https://marklodato.github.io/visual-git-guide/index-fr.html)
+- [Confusing git terminology](https://jvns.ca/blog/2023/11/01/confusing-git-terminology)
 
 ### Documentation
 
