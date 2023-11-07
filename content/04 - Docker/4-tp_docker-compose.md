@@ -72,7 +72,7 @@ def mainpage():
                 Salut <input type="text" name="name" value="{0}"> !
                 <input type="submit" value="submit">
                 </form>
-                <p>Tu ressembles à ça :
+                <p>Tu ressembles a ca :
                 <img src="/monster/{1}"/>
             '''.format(name, name_hash)
     footer = '</body></html>'
@@ -88,21 +88,21 @@ def get_identicon(name):
         redis_unreachable = False
         if image is not None:
             found_in_cache = True
-            logging.info("Image trouvée dans le cache")
+            logging.info("Image trouvee dans le cache")
     except:
         redis_unreachable = True
         logging.warning("Cache redis injoignable")
 
     if not found_in_cache:
-        logging.info("Image non trouvée dans le cache")
+        logging.info("Image non trouvee dans le cache")
         try:
             r = requests.get('http://dnmonster:8080/monster/' + name + '?size=80')
             image = r.content
-            logging.info("Image générée grâce au service dnmonster")
+            logging.info("Image generee grace au service dnmonster")
 
             if not redis_unreachable:
                 cache.set(name, image)
-                logging.info("Image enregistrée dans le cache redis")
+                logging.info("Image enregistree dans le cache redis")
         except:
             logging.critical("Le service dnmonster est injoignable !")
             abort(503)
