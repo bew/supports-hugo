@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.7-slim
 
 # RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 RUN pip install Flask uWSGI requests redis
