@@ -111,7 +111,6 @@ spec:
               name: redis
 ```
 
-- Installez `skaffold` en suivant les indications ici: [https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
 - Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
 
@@ -146,6 +145,9 @@ spec:
           ports:
             - containerPort: 5000
 ```
+
+### Skaffold
+- Installez `skaffold` en suivant les indications ici: [https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
 L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notre Kubernetes doit pouvoir accéder à la nouvelle version de l'image construite à partir du `Dockerfile`. Nous allons utiliser `skaffold` pour cela.
 Il y a plusieurs possibilités :

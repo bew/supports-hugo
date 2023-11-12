@@ -96,7 +96,7 @@ Il existe plusieurs variantes d'**ingress controller**:
 
 Chaque provider de cloud et flavour de kubernetes est légèrement différent au niveau de la configuration du controlleur ce qui peut être déroutant au départ:
 
-- minikube permet d'activer l'ingress nginx simplement (voir TP)
+- minikube permet d'activer l'ingress nginx simplement
 - autre example: k3s est fourni avec traefik configuré par défaut
 - On peut installer plusieurs `ingress controllers` correspondant à plusieurs `IngressClasses`
 

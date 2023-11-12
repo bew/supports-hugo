@@ -13,6 +13,7 @@ Nous allons d'abord passer par la première option.
 
 ## Découverte de Kubernetes
 
+
 ### Installer le client CLI `kubectl`
 
 kubectl est le point d'entré universel pour contrôler tous les type de cluster kubernetes. 
@@ -26,7 +27,7 @@ Nous allons explorer kubectl au fur et à mesure des TPs. Cependant à noter que
 La méthode d'installation importe peu. Pour installer kubectl sur Ubuntu nous ferons simplement: `sudo snap install kubectl --classic`.
 
 - Faites `kubectl version` pour afficher la version du client kubectl.
-### Installer Minikube
+<!-- ### Installer Minikube
 
 **Minikube** est la version de développement de Kubernetes (en local) la plus répendue. Elle est maintenue par la cloud native foundation et très proche de kubernetes upstream. Elle permet de simuler un ou plusieurs noeuds de cluster sous forme de conteneurs docker ou de machines virtuelles.
 
@@ -42,7 +43,7 @@ Minikube configure automatiquement kubectl (dans le fichier `~/.kube/config`) po
 
 - Testez la connexion avec `kubectl get nodes`.
 
-Affichez à nouveau la version `kubectl version`. Cette fois-ci la version de kubernetes qui tourne sur le cluster actif est également affichée. Idéalement le client et le cluster devrait être dans la même version mineure par exemple `1.20.x`.
+Affichez à nouveau la version `kubectl version`. Cette fois-ci la version de kubernetes qui tourne sur le cluster actif est également affichée. Idéalement le client et le cluster devrait être dans la même version mineure par exemple `1.20.x`. -->
 
 ##### Bash completion
 
@@ -58,15 +59,37 @@ echo "source <(kubectl completion bash)" >> ${HOME}/.bashrc
 
 **Vous pouvez désormais appuyer sur `<Tab>` pour compléter vos commandes `kubectl`, c'est très utile !**
 
+## Installation de `k3s`
+
+K3s est une distribution de Kubernetes orientée vers la création de petits clusters de production notamment pour l'informatique embarquée et l'Edge computing. Elle a la caractéristique de rassembler les différents composants d'un cluster kubernetes en un seul "binaire" pouvant s'exécuter en mode `master` (noeud du control plane) ou `agent` (noeud de calcul).
+
+Avec K3s, il est possible d'installer un petit cluster d'un seul noeud en une commande ce que nous allons faire ici:
+
+<!-- - Passez votre terminal en root avec la commande `sudo -i` puis: -->
+- Lancez dans un terminal la commande suivante: `curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh - `
+
+ La configuration kubectl pour notre nouveau cluster k3s est dans le fichier `/etc/rancher/k3s/k3s.yaml` et accessible en lecture uniquement par `root`. Pour se connecter au cluster on peut donc faire (parmis d'autre méthodes pour gérer la kubeconfig):
+
+ - Copie de la conf `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/k3s.yaml`
+ - Changer les permission `sudo chown $USER ~/.kube/k3s.yaml`
+ - activer cette configuration pour kubectl avec une variable d'environnement: `export KUBECONFIG=~/.kube/k3s.yaml`
+ - Tester la configuration avec `kubectl get nodes` qui devrait renvoyer quelque chose proche de:
+
+ ```
+NAME                 STATUS   ROLES                  AGE   VERSION
+vnc-stagiaire-...   Ready    control-plane,master   10m   v1.21.7+k3s1
+```
+
+
 ### Explorons notre cluster k8s
 
 Notre cluster k8s est plein d'objets divers, organisés entre eux de façon dynamique pour décrire des applications, tâches de calcul, services et droits d'accès. La première étape consiste à explorer un peu le cluster :
 
-- Listez les nodes pour récupérer le nom de l'unique node (`kubectl get nodes`) puis affichez ses caractéristiques avec `kubectl describe node/minikube`.
+- Listez les nodes pour récupérer le nom de l'unique node (`kubectl get nodes`) puis affichez ses caractéristiques avec `kubectl describe node/<nom du node>`.
 
 La commande `get` est générique et peut être utilisée pour récupérer la liste de tous les types de ressources.
 
-De même, la commande `describe` peut s'appliquer à tout objet k8s. On doit cependant préfixer le nom de l'objet par son type (ex : `node/minikube` ou `nodes minikube`) car k8s ne peut pas deviner ce que l'on cherche quand plusieurs ressources ont le même nom.
+De même, la commande `describe` peut s'appliquer à tout objet k8s. On doit cependant préfixer le nom de l'objet par son type (ex : `node/<nom du node>` ou `nodes <nom du node>`) car k8s ne peut pas deviner ce que l'on cherche quand plusieurs ressources ont le même nom.
 
 - Pour afficher tous les types de ressources à la fois que l'on utilise : `kubectl get all`
 
@@ -157,29 +180,8 @@ La création prend environ 5 minutes.
 
 Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
 
-## Une 3e installation: `k3s` sur votre VPS
 
-K3s est une distribution de Kubernetes orientée vers la création de petits clusters de production notamment pour l'informatique embarquée et l'Edge computing. Elle a la caractéristique de rassembler les différents composants d'un cluster kubernetes en un seul "binaire" pouvant s'exécuter en mode `master` (noeud du control plane) ou `agent` (noeud de calcul).
-
-Avec K3s, il est possible d'installer un petit cluster d'un seul noeud en une commande ce que nous allons faire ici:
-
-<!-- - Passez votre terminal en root avec la commande `sudo -i` puis: -->
-- Lancez dans un terminal la commande suivante: `curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh - `
-
- La configuration kubectl pour notre nouveau cluster k3s est dans le fichier `/etc/rancher/k3s/k3s.yaml` et accessible en lecture uniquement par `root`. Pour se connecter au cluster on peut donc faire (parmis d'autre méthodes pour gérer la kubeconfig):
-
- - Copie de la conf `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/k3s.yaml`
- - Changer les permission `sudo chown $USER ~/.kube/k3s.yaml`
- - activer cette configuration pour kubectl avec une variable d'environnement: `export KUBECONFIG=~/.kube/k3s.yaml`
- - Tester la configuration avec `kubectl get nodes` qui devrait renvoyer quelque chose proche de:
-
- ```
-NAME                 STATUS   ROLES                  AGE   VERSION
-vnc-stagiaire-...   Ready    control-plane,master   10m   v1.21.7+k3s1
-```
-
-
-## Merger la configuration kubectl
+<!-- ## Merger la configuration kubectl
 
 
 La/Les configurations de kubectl sont à déclarer dans la variable d'environnement `KUBECONFIG`. Nous allons déclarer deux fichiers de config et les merger automatiquement. 
@@ -197,7 +199,7 @@ La/Les configurations de kubectl sont à déclarer dans la variable d'environnem
 - Maintenant que nos trois configs sont fusionnées, observons l'organisation du fichier `~/.kube/config` en particulier les éléments des listes YAML de:
   - `clusters`
   - `contexts`
-  - `users`
+  - `users` -->
 
 - Listez les contextes avec `kubectl config get-contexts` et affichez les contexte courant avec `kubectl config current-context`.
 
@@ -225,17 +227,17 @@ Lens est une interface graphique (un client "lourd") pour Kubernetes. Elle se co
 Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
-## Install Lens
-curl -LO https://github.com/lensapp/lens/releases/download/v4.1.4/Lens-4.1.4.amd64.deb
-sudo dpkg -i Lens-4.1.4.amd64.deb
+## Ajouter OpenLens
+curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366/OpenLens-6.5.2-366.x86_64.AppImage
+sudo chmod +x OpenLens-6.5.2-366.x86_64.AppImage
 ```
 
-- Lancez l'application `Lens` dans le menu "internet" de votre machine VNC
-- Sélectionnez le cluster Scaleway en cliquant sur le bouton plus au lancement
+- Lancez l'application `OpenLens` dans le menu "internet" de votre machine VNC
+<!-- - Sélectionnez le cluster Scaleway en cliquant sur le bouton plus au lancement -->
 - Explorons ensemble les ressources dans les différentes rubriques et namespaces
 
-#### Installer `Argocd` sur notre cluster k3s
+<!-- #### Installer `ArgoCD` sur notre cluster k3s
 
 Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster.
 
-Nous verrons dans le TP5 comment l'installer et l'utiliser.
+Nous verrons dans le TP5 comment l'installer et l'utiliser. -->

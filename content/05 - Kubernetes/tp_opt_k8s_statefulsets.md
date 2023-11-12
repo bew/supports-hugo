@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "TP opt. - StatefulSets et bases de données"
 weight: 2075
 ---
