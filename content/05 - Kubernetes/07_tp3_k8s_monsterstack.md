@@ -16,13 +16,15 @@ Elle est composée :
 Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `monstericon` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans `minikube`.
 
 
-# Etudions le code et testons avec `docker-compose`
+# Etudions le code et testons avec `docker compose`
 
 - Monstericon est une application web python (flask) qui propose un petit formulaire et lance une requete sur le backend pour chercher une image et l'afficher.
 - Monstericon est construit à partir du `Dockerfile` présent dans le dossier `TP3`.
 - Le fichier `docker-compose.yml` est utile pour faire tourner les trois services de l'application dans docker rapidement (plus simple que kubernetes)
 
-Pour lancer l'application il suffit d'exécuter: `docker-compose up`
+Pour lancer l'application il suffit :
+1. d'installer Docker avec : `curl https://get.docker.com | sudo sh -`
+2. puis d'exécuter : `docker compose up`
 
 Passons maintenant à Kubernetes.
 
