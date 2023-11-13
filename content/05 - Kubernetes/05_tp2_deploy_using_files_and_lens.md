@@ -15,7 +15,30 @@ N'hésitez pas aussi à observer les derniers évènements arrivés à votre clu
 
 Nous allons d'abord déployer notre application comme un simple **Pod** (non recommandé mais montré ici pour l'exercice).
 
-- Créez un fichier `demo-pod.yaml` avec à l'intérieur le code d'exemple du cours précédent de la partie Pods.
+- Créez un fichier `demo-pod.yaml` avec à l'intérieur le code d'exemple suivant :
+
+`rancher-demo-pod.yaml`
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rancher-demo-pod
+spec:
+  containers:
+    - image: monachus/rancher-demo:latest
+      name: rancher-demo-container
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+    - image: redis
+      name: redis-container
+      ports:
+        - containerPort: 6379
+          name: http
+          protocol: TCP
+```
 - Appliquez le ficher avec `kubectl apply -f <fichier>`
 - Constatez dans Lens dans la partie pods que les deux conteneurs du pod sont bien démarrés (deux petits carrés vert à droite de la ligne du pod)
 - Modifiez le nom du pod dans la description précédente et réappliquez la configuration. Kubernetes mets à jour le nom.
