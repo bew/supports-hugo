@@ -24,7 +24,7 @@ Nous allons également utiliser le builder kubernetes `skaffold` pour déployer 
 
 Pour lancer l'application il suffit :
 1. d'installer Docker avec : `curl https://get.docker.com | sudo sh -`
-2. puis d'exécuter : `docker compose up`
+2. puis d'exécuter : `sudo docker compose up`
 
 Passons maintenant à Kubernetes.
 
