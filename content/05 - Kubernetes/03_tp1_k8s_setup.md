@@ -151,7 +151,7 @@ Une méthode pour accéder à un service (quel que soit sont type) en mode déve
 
 => Un seul conteneur s'affiche. En effet `kubectl port-forward` sert à créer une connexion de developpement/debug qui pointe toujours vers le même pod en arrière plan.
 
-Pour exposer cette application en production sur un véritable cluster, nous devrions plutôt avoir recours à service de type un LoadBalancer. Mais minikube ne propose pas par défaut de loadbalancer. Nous y reviendrons dans le cours sur les objets kubernetes.
+Pour exposer cette application en production sur un véritable cluster, nous devrions plutôt avoir recours à un service de type un LoadBalancer. Nous y reviendrons dans le cours sur les objets kubernetes.
 
 #### Simplifier les lignes de commande k8s
 
