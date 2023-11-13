@@ -70,7 +70,8 @@ Avec K3s, il est possible d'installer un petit cluster d'un seul noeud en une co
 
  La configuration kubectl pour notre nouveau cluster k3s est dans le fichier `/etc/rancher/k3s/k3s.yaml` et accessible en lecture uniquement par `root`. Pour se connecter au cluster on peut donc faire (parmis d'autre méthodes pour gérer la kubeconfig):
 
- - Copie de la conf `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/k3s.yaml`
+- Créer le répertoire `~/.kube`
+ - Copie de la conf `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config`
  - Changer les permission `sudo chown $USER ~/.kube/k3s.yaml`
  - activer cette configuration pour kubectl avec une variable d'environnement: `export KUBECONFIG=~/.kube/k3s.yaml`
  - Tester la configuration avec `kubectl get nodes` qui devrait renvoyer quelque chose proche de:
