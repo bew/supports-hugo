@@ -50,7 +50,7 @@ On peut écraser certains de ces paramètres dans un nouveau fichier par exemple
 - Visitez le code des charts de votre choix en clonant le répertoire Git des Charts officielles Bitnami et en l'explorant avec VSCode :
 
 ```bash
-git clone https://github.com/bitnami/charts/
+git clone https://github.com/bitnami/charts/ --depth 1
 code charts
 ```
 
