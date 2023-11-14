@@ -9,7 +9,7 @@ weight: 2060
 
 ### Les Volumes Kubernetes
 
-Comme dans Docker, Kubernetes fournit la possibilité de monter des volumes virtuels dans les conteneurs de nos pod. On liste séparément les volumes de notre pod puis on les monte une ou plusieurs dans les différents conteneurs Exemple:
+Comme dans Docker, Kubernetes fournit la possibilité de monter des volumes virtuels dans les conteneurs de nos pod. On liste séparément les volumes de notre pod puis on monte un ou plusieurs points de montage dans les différents conteneurs Exemple:
 
 ```yaml
 apiVersion: v1
