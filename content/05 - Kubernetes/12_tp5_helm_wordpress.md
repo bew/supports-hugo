@@ -32,11 +32,12 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 - Installer une **"release"** `wordpress-tp` de cette application (ce chart) avec `helm install wordpress-tp bitnami/wordpress`
 
-- Suivez les instructions affichées dans le terminal pour trouver l'IP et afficher le login et password de notre installation. Dans minikube il faut également lancer `minikube service wordpress-tp`.
+- Suivez les instructions affichées dans le terminal pour trouver l'IP et afficher le login et password de notre installation.
+Si l'IP n'est pas accessible, il faut également lancer `kubectl port-foward service wordpress-tp <port_de_votre_choix>:80`.
 
 - Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8s).
 
-Vous pouvez constater que l'utilisateur est par default `user` ce qui n'est pas très pertinent. Un chart prend de nombreux paramètres de configuration qui sont toujours listés dans le fichier `values.yaml` à la racine du Chart.
+Vous pouvez constater que l'objet Service est par default `Loadbalancer` ce qui n'est pas très pertinent. Un chart prend de nombreux paramètres de configuration qui sont toujours listés dans le fichier `values.yaml` à la racine du Chart.
 
 On peut écraser certains de ces paramètres dans un nouveau fichier par exemple `myvalues.yaml` et installer la release avec l'option `--values=myvalues.yaml`.
 
@@ -55,24 +56,30 @@ code charts
 
 - Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`.
 
-- Comment modifier l'username et le password wordpress à l'installation ? il faut donner comme paramètres le yaml suivant:
+- Comment modifier l'username wordpress à l'installation ? il faut donner comme paramètres le yaml suivant:
 
 ```yaml
 wordpressUsername: <votrenom>
-wordpressPassword: <easytoguesspasswd>
 ```
 
 - Nous allons paramétrer plus encore l'installation. Créez un dossier TP5 avec à l'intérieur un fichier `values.yaml` contenant:
 
 ```yaml
 wordpressUsername: <stagiaire> # replace
-wordpressPassword: myunsecurepassword
 wordpressBlogName: Kubernetes example blog
 
 replicaCount: 1
 
 service:
   type: ClusterIP
+
+ingress:
+  enabled: true
+  hostname: wordpress.<stagiaire>.formation.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
+```
+
+Si vous avez activé `certmanager` vous pouvez remplacer la clé ingress avec :
+```yaml
 
 ingress:
   enabled: true
