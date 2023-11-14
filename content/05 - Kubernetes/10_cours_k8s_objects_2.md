@@ -15,13 +15,13 @@ Comme dans Docker, Kubernetes fournit la possibilité de monter des volumes virt
 apiVersion: v1
 kind: Pod
 metadata:
-  name: test-pd
+  name: test-pod
 spec:
   containers:
   - image: k8s.gcr.io/test-webserver
     name: test-container
     volumeMounts:
-    - mountPath: /test-pd
+    - mountPath: /test
       name: test-volume
   volumes:
   - name: test-volume
