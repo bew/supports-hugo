@@ -75,6 +75,7 @@ service:
 
 ingress:
   enabled: true
+  ingressClassName: nginx
   hostname: wordpress.<stagiaire>.formation.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
 ```
 
@@ -86,6 +87,7 @@ ingress:
   hostname: wordpress.<stagiaire>.formation.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
   tls: true
   certManager: true
+  ingressClassName: nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
