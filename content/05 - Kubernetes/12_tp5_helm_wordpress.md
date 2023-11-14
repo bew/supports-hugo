@@ -28,7 +28,7 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 - Cherchez Wordpress sur [https://artifacthub.io/](https://artifacthub.io/).
 
-- Prenez la version de **Bitnami** et ajoutez le dépôt avec la première commande à droite (ajouter le dépôt et déployer une release).
+- Prenez la version de **Bitnami** et ajoutez le dépôt avec la commande indiquée dans "Install" : `helm repo add bitnami https://charts.bitnami.com/bitnami`
 
 - Installer une **"release"** `wordpress-tp` de cette application (ce chart) avec `helm install wordpress-tp bitnami/wordpress`
 
@@ -78,7 +78,7 @@ ingress:
   hostname: wordpress.<stagiaire>.formation.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
 ```
 
-Si vous avez activé `certmanager` vous pouvez remplacer la clé ingress avec :
+**Si vous avez activé `certmanager`** (voir TP optionnel) vous pouvez remplacer la clé ingress avec :
 ```yaml
 
 ingress:
