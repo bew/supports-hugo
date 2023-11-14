@@ -115,7 +115,7 @@ spec:
 ```
 
 
-- Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
+- Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 5 + 1 réplicats sont bien lancés.
 
 ## Déploiement du frontend `monstericon`
 
