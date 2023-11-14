@@ -51,7 +51,7 @@ On peut écraser certains de ces paramètres dans un nouveau fichier par exemple
 
 ```bash
 git clone https://github.com/bitnami/charts/ --depth 1
-code charts
+code charts/bitnami/wordpress
 ```
 
 - Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`.
