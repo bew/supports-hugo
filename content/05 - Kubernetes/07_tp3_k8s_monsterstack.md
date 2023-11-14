@@ -115,7 +115,7 @@ spec:
 ```
 
 
-- Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 5 + 1 réplicats sont bien lancés.
+- Appliquez ces ressources avec `kubectl apply -f k8s-deploy-dev/` et vérifiez dans `Lens` que les 5 + 1 réplicats sont bien lancés.
 
 ## Déploiement du frontend `monstericon`
 
@@ -149,7 +149,7 @@ spec:
             - containerPort: 5000
 ```
 
-### Skaffold
+### Skaffold (optionnel)
 - Installez `skaffold` en suivant les indications ici: [https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
 L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notre Kubernetes doit pouvoir accéder à la nouvelle version de l'image construite à partir du `Dockerfile`. Nous allons utiliser `skaffold` pour cela.
@@ -172,7 +172,15 @@ Il y a plusieurs possibilités :
 - Observons le fichier `skaffold.yaml`
 - Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici le registry docker local et `kubectl`)
 
+### Une image pour `monstericon`
 
+
+L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notre Kubernetes doit pouvoir accéder à la nouvelle version de l'image construite à partir du `Dockerfile`.
+
+**Sans un outil comme Skaffold**, nous sommes bloqué·es : il faut construire l'image à la main et la pousser dans un registry joignable par notre install.
+
+Voici l'image déjà poussée par le formateur :
+`docker.io/uptimeformation/monstericon`
 
 #### Santé du service avec les `Probes`
 
