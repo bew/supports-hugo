@@ -61,17 +61,17 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
 <!-- Pour pouvoir observer le conteneur convenablement il fautdrait faire tourner quelque chose à l’intérieur. Ajoutez à la fin du fichier la ligne :
   `CMD ["/bin/sleep", "3600"]` -->
 
-Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent.
+<!-- Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent. -->
 
-- Reconstruisez l'image et relancez un conteneur
+<!-- - Reconstruisez l'image et relancez un conteneur -->
 
-- Affichez la liste des conteneurs en train de fonctionner
+<!-- - Affichez la liste des conteneurs en train de fonctionner -->
 
-- Nous allons maintenant rentrer dans le conteneur en ligne de commande pour observer. Utilisez la commande : `docker exec -it <id_du_conteneur> /bin/bash`
+<!-- - Nous allons maintenant rentrer dans le conteneur en ligne de commande pour observer. Utilisez la commande : `docker exec -it <id_du_conteneur> /bin/bash` -->
 
-- Vous êtes maintenant dans le conteneur avec une invite de commande. Utilisez quelques commandes Linux pour le visiter rapidement (`ls`, `cd`...).
+<!-- - Vous êtes maintenant dans le conteneur avec une invite de commande. Utilisez quelques commandes Linux pour le visiter rapidement (`ls`, `cd`...).
 
-- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur.
+- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur. -->
 
 <!-- Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
@@ -82,7 +82,7 @@ RUN apt-get install -y python3-pip
 
   <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
 
-- Reconstruisez votre image. Si tout se passe bien, poursuivez.
+<!-- - Reconstruisez votre image. Si tout se passe bien, poursuivez. -->
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
@@ -337,7 +337,7 @@ Une image est composée de plusieurs layers empilés entre eux par le Docker Eng
 
 - Vous pouvez aussi utiliser la commande `docker save votre_image -o image.tar`, et utiliser `tar -C image_decompressee/ -xvf image.tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
 
-- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive`
+- Pour explorer la hiérarchie des images vous pouvez installer <https://github.com/wagoodman/dive>
 
 ---
 
