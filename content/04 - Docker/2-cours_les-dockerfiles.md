@@ -308,7 +308,7 @@ CMD ["./app"]
 
 ---
 
-## Le design pattern de l'architecture "microservice" : [12factor.net](https://12factor.net)
+## Le design pattern de l'architecture "microservice" (multi-conteneurs) : [12factor.net](https://12factor.net)
 
 [12factor.net](https://12factor.net)
 
