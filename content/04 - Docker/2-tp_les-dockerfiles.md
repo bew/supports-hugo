@@ -11,6 +11,8 @@ weight: 1025
 git clone https://github.com/uptime-formation/microblog/
 ```
 
+- Si VSCode n'est pas installé : `sudo snap install --classic code`
+
 - Ouvrez VSCode avec le dossier `microblog` en tapant `code microblog` ou bien en lançant VSCode avec `code` puis en cliquant sur `Open Folder`.
 
 - Dans VSCode, vous pouvez faire `Terminal > New Terminal` pour obtenir un terminal en bas de l'écran.

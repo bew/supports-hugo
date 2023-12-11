@@ -261,7 +261,7 @@ docker run --name wordpressavecmysql -d -e WORDPRESS_DB_HOST="mysqlpourwordpress
 - regardez les logs du conteneur Wordpress avec `docker logs`
 
 - visitez votre app Wordpress et terminez la configuration de l'application : si les deux conteneurs sont bien configurés, on ne devrait pas avoir à configurer la connexion à la base de données
-- avec `docker exec`, visitez votre conteneur Wordpress. Pouvez-vous localiser le fichier `wp-config.php` ? Une fois localisé, utilisez `docker cp` pour le copier sur l'hôte.
+<!-- - avec `docker exec`, visitez votre conteneur Wordpress. Pouvez-vous localiser le fichier `wp-config.php` ? Une fois localisé, utilisez `docker cp` pour le copier sur l'hôte. -->
 <!-- - (facultatif) Détruisez votre conteneur Wordpress, puis recréez-en un et poussez-y votre configuration Wordpress avec `docker cp`. Nous verrons ensuite une meilleure méthode pour fournir un fichier de configuration à un conteneur. -->
 
 ## Faire du ménage
