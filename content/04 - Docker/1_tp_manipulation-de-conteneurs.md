@@ -225,11 +225,11 @@ Nous pouvons accéder au Wordpress, mais il n'a pas encore de base MySQL configu
 
 Depuis Ubuntu:
 
-<!-- - Il va falloir mettre ces deux conteneurs dans le même réseau (nous verrons plus tarde ce que cela implique), créons ce réseau :
+- Il va falloir mettre ces deux conteneurs dans le même réseau (nous verrons plus tarde ce que cela implique), créons ce réseau :
 
 ```bash
 docker network create wordpress
-``` -->
+```
 
 - Cherchez le conteneur `mysql` version 5.7 sur le Docker Hub.
 
@@ -240,7 +240,7 @@ docker network create wordpress
 {{% expand "Résultat :" %}}
 
 ```bash
-docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress mysql:5.7
+docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress --network wordpress mysql:5.7
 ```
 
 {{% /expand %}}
@@ -248,12 +248,12 @@ docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e
 - inspectez le conteneur MySQL avec `docker inspect`
 
 - Faites de même avec la documentation sur le Docker Hub pour préconfigurer l'app Wordpress.
-- En plus des variables d'environnement, il va falloir exposer un port pour l'app Wordpress.
+- En plus des variables d'environnement, il va falloir le mettre dans le même réseau, et exposer un port
 
 {{% expand "Solution :" %}}
 
 ```bash
-docker run --name wordpressavecmysql -d -e WORDPRESS_DB_HOST="mysqlpourwordpress:3306" -e WORDPRESS_DB_PASSWORD=monwordpress -e WORDPRESS_DB_USER=wordpress -p 80:80 wordpress
+docker run --name wordpressavecmysql -d -e WORDPRESS_DB_HOST="mysqlpourwordpress:3306" -e WORDPRESS_DB_PASSWORD=monwordpress -e WORDPRESS_DB_USER=wordpress --network wordpress -p 80:80 wordpress
 ```
 
 {{% /expand %}}
