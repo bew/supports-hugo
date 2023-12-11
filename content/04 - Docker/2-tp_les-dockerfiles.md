@@ -143,7 +143,7 @@ docker push <your-docker-registry-account>/microblog:latest
 
 ### Une image plus simple
 
-- A l'aide de l'image `python:3.9-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` car ce programme est désormais inclus dans l'image de base), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
+- A l'aide de l'image `python:3.9-alpine` et en remplaçant les instructions nécessaires<!-- (pas besoin d'installer `python3-pip` car ce programme est désormais inclus dans l'image de base)-->, repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
 
 ### Ne pas faire tourner l'app en root
 - Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
@@ -343,7 +343,7 @@ Une image est composée de plusieurs layers empilés entre eux par le Docker Eng
 
 ## _Facultatif :_ un Registry privé
 
-- En récupérant [la commande indiquée dans la doc officielle](https://docs.docker.com/registry/deploying/), créez votre propre registry.
+- En récupérant [la commande indiquée dans la doc officielle](https://distribution.github.io/distribution/), créez votre propre registry.
 - Puis trouvez comment y pousser une image dessus.
 - Enfin, supprimez votre image en local et récupérez-la depuis votre registry.
 
