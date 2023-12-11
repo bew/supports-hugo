@@ -307,3 +307,16 @@ CMD ["./app"]
   <!-- - **Docker Trusted Registry (DTR)** fait partie de **Docker Enterprise** et pratique des tests de sécurité sur les images. -->
 
 ---
+
+## Le design pattern de l'architecture "microservice" : [12factor.net](https://12factor.net)
+
+[12factor.net](https://12factor.net)
+
+- faire en sorte que le conteneur soit agnostique de l'environnement :
+  - s'assure qu'il a les services dont il a besoin
+  - config dans des volumes ou des variables d'environnement
+  - le plus "stateless" possible
+  - interagit avec d'autres services via des ports réseau
+  - log bien via son process principal
+  - se lance vite et s'éteint proprement rapidement
+  - basé sur la même image pour la prod et le dev (ou au mieux)
