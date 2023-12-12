@@ -214,16 +214,19 @@ networks:
   identinet:
     driver: bridge
 ```
+
 {{% /expand %}}
 
 - Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant **deux fois** ce bout de code où c'est nécessaire **_(attention aux indentations !)_** :
 
 ```yaml
-networks:
-  - identinet
+  networks:
+    - identinet
 ```
 
 - Ajoutons également un conteneur `redis` **_(attention aux indentations !)_**. Cette base de données sert à mettre en cache les images et à ne pas les recalculer à chaque fois.
+
+{{% expand "Solution :" %}}
 
 ```yml
 redis:
@@ -232,7 +235,10 @@ redis:
     - identinet
 ```
 
-`docker-compose.yml` final :
+{{% /expand %}}
+
+{{% expand "`docker-compose.yml` final :" %}}
+
 
 ```yaml
 services:
@@ -259,10 +265,11 @@ networks:
     driver: bridge
 ```
 
+{{% /expand %}}
+
 - Lancez l'application et vérifiez que le cache fonctionne en cherchant les messages dans les logs de l'application.
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). 
-
 
 
 ### Le Hot Code Reloading (rechargement du code à chaud)
