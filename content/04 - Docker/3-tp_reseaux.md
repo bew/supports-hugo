@@ -47,7 +47,7 @@ Pour connecter les deux applications créons un réseau manuellement:
 
 - `docker network create moby-network`
 
-<!-- Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip -br a` de nouveau et comparez. Qu'est-ce qui a changé ? -->
+Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip -br a` de nouveau et comparez. Qu'est-ce qui a changé ?
 
 Maintenant, lançons les deux applications en utilisant notre réseau :
 
