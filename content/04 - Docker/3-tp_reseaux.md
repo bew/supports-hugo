@@ -79,11 +79,14 @@ docker exec moby-counter ping -c3 redis
 - Pour s'en assurer, interrogeons le serveur DNS de notre réseau `moby-network` en lançant la commande `nslookup redis` grâce à `docker exec` :
   `docker exec moby-counter nslookup redis`
 
-### Une deuxième stack `moby-counter`
 
 - Créez un deuxième réseau `moby-network2`
 - Créez une deuxième instance de l'application dans ce réseau : `docker run -d --name moby-counter2 --network moby-network2 -p 9090:80 russmckendrick/moby-counter`
 - Lorsque vous pingez `redis` depuis cette nouvelle instance `moby-counter2`, qu'obtenez-vous ? Pourquoi ?
+- **Comment peut-on faire que `moby-counter2` joigne un deuxième Redis ?**
+  - il y a deux solutions possibles
+
+## Une deuxième stack `moby-counter`
 
 Vous ne pouvez pas avoir deux conteneurs avec les mêmes noms, comme nous l'avons déjà découvert.
 Par contre, notre deuxième réseau fonctionne complètement isolé de notre premier réseau, ce qui signifie que nous pouvons toujours utiliser le nom de domaine `redis`. Pour ce faire, nous devons spécifier l'option `--network-alias` :

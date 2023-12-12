@@ -84,7 +84,12 @@ RUN apt-get install -y python3-pip
 
 <!-- - Reconstruisez votre image. Si tout se passe bien, poursuivez. -->
 
-- Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
+- Pour installer les dépendances python et configurer la variable d'environnement Flask, il va falloir :
+  - ajouter le fichier `requirements.txt` avec `COPY`
+  - lancer `pip3 install -r requirements.txt`
+  - initialiser la variable d'environnement `FLASK_APP` à `microblog.py`
+
+{{% expand "Solution :" %}}
 
 ```Dockerfile
 COPY ./requirements.txt /requirements.txt
@@ -92,30 +97,46 @@ RUN pip3 install -r requirements.txt
 ENV FLASK_APP microblog.py
 ```
 
+{{% /expand %}}
+
 - Reconstruisez votre image. Si tout se passe bien, poursuivez.
 
-- Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
+- Ensuite, copions le code de l’application à l’intérieur du conteneur.
+
+{{% expand "Solution :" %}}
+
+Pour cela ajoutez les lignes :
 
 ```Dockerfile
 COPY ./ /microblog
-WORKDIR /microblog
 ```
 
-Cette première ligne indique de copier tout le contenu du dossier courant sur l'hôte dans un dossier `/microblog` à l’intérieur du conteneur.
+{{% /expand %}}
+
+
+Cette ligne indique de copier tout le contenu du dossier courant sur l'hôte dans un dossier `/microblog` à l’intérieur du conteneur.
 Nous n'avons pas copié les requirements en même temps pour pouvoir tirer partie des fonctionnalités de cache de Docker, et ne pas avoir à retélécharger les dépendances de l'application à chaque fois que l'on modifie le contenu de l'app.
 
-Puis, dans la 2e ligne, le dossier courant dans le conteneur est déplacé à `/`.
+Puis, faites que le dossier courant dans le conteneur est déplacé à `/microblog`.
+
+{{% expand "Solution :" %}}
+```Dockerfile
+WORKDIR /microblog
+```
+{{% /expand %}}
 
 - Reconstruisez votre image. **Observons que le build recommence à partir de l'instruction modifiée. Les layers précédents avaient été mis en cache par le Docker Engine.**
 - Si tout se passe bien, poursuivez.
 
-  <!-- - `RUN pip3 install flask` -->
 
 - Enfin, ajoutons la section de démarrage à la fin du Dockerfile, c'est un script appelé `boot.sh` :
+
+{{% expand "Solution :" %}}
 
 ```Dockerfile
 CMD ["./boot.sh"]
 ```
+{{% /expand %}}
 
 - Reconstruisez l'image et lancez un conteneur basé sur l'image en ouvrant le port `5000` avec la commande : `docker run -p 5000:5000 microblog`
 
