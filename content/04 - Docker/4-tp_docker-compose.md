@@ -14,7 +14,22 @@ weight: 1045
 ### Si Docker Compose n'est pas installé
 
 - Installez le plugin `docker compose` avec `sudo apt install docker-compose-plugin`.
-- Si ça ne marche pas, il faudra suivre ce tutoriel : <https://docs.docker.com/compose/install/linux/#install-the-plugin-manually>
+- Si ça ne marche pas, il faudra ajouter le repo officiel de Docker :
+```bash
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
 
 <!-- - Pour vous faciliter la vie et si ce n'est pas déjà le cas, ajoutez le plugin _autocomplete_ pour Docker Compose à `bash` en copiant les commandes suivantes :
 
