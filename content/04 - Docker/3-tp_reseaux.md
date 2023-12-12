@@ -79,6 +79,8 @@ docker exec moby-counter ping -c3 redis
 - Pour s'en assurer, interrogeons le serveur DNS de notre réseau `moby-network` en lançant la commande `nslookup redis` grâce à `docker exec` :
   `docker exec moby-counter nslookup redis`
 
+### Une deuxième stack `moby-counter`
+
 - Créez un deuxième réseau `moby-network2`
 - Créez une deuxième instance de l'application dans ce réseau : `docker run -d --name moby-counter2 --network moby-network2 -p 9090:80 russmckendrick/moby-counter`
 - Lorsque vous pingez `redis` depuis cette nouvelle instance `moby-counter2`, qu'obtenez-vous ? Pourquoi ?
