@@ -179,7 +179,10 @@ services:
 - Lancez le service (pour le moment mono-conteneur) avec `docker compose up` (cette commande sous-entend `docker compose build`)
 - Visitez la page web de l'app.
 
-- Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** :
+- Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** un service `dnmonster` utilisant l'image `amouat/dnmonster:1.0`.
+
+{{% expand "Solution :" %}}
+
 
 ```yml
 dnmonster:
@@ -198,16 +201,20 @@ services:
   dnmonster:
     image: amouat/dnmonster:1.0
 ```
+{{% /expand %}}
 
-Enfin, nous déclarons aussi un réseau appelé `identinet` pour y mettre les deux conteneurs de notre application.
+- Enfin, nous déclarons aussi un réseau appelé `identinet` pour y mettre les deux conteneurs de notre application.
 
-- Il faut déclarer ce réseau à la fin du fichier (notez que l'on doit spécifier le driver réseau) :
+{{% expand "Solution :" %}}
+
+- Il faut déclarer ce réseau à la fin du fichier (notez que l'on peut spécifier le driver réseau) :
 
 ```yaml
 networks:
   identinet:
     driver: bridge
 ```
+{{% /expand %}}
 
 - Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant **deux fois** ce bout de code où c'est nécessaire **_(attention aux indentations !)_** :
 
