@@ -4,7 +4,7 @@ draft: false
 weight: 1045
 ---
 
-## Articuler trois images avec Docker compose
+## Articuler trois images avec Docker Compose
 
 
 <!-- ### Dans une VM -->
