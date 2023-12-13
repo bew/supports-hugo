@@ -259,12 +259,12 @@ Pour basculer `eval $(docker env hote-digitalocean);`
 
 # Présentation de Kubernetes
 
-![](../../images/kubernetes.png)
+![](../../images/kubernetes/k8s_archi1.png)
 
 - Les **pods** Kubernetes servent à grouper des conteneurs en unités d'application (microservices ou non) fortement couplées (un peu comme les *stacks* Swarm)
 
-- Les **services** sont des groupes de pods exposés à l'extérieur
-- 
+- Les **services** sont des abstractions réseau pour exposer des groupes de pods à l'extérieur
+
 - Les **deployments** sont une abstraction pour scaler ou mettre à jours des groupes de **pods** (un peu comme les *tasks* dans Swarm).
 
 <!-- - Ces derniers tendent à se rapprocher d'une VM du point de vue de l'application. -->
@@ -289,10 +289,8 @@ Pour basculer `eval $(docker env hote-digitalocean);`
 
 - Swarm plus intégré avec la CLI et le workflow Docker.
 - Swarm est plus fluide, moins structurant mais moins automatique que Kubernetes.
-- Swarm groupe les containers entre eux par **stack**.
-- Kubernetes au contraire crée des **pods** avec une meilleure isolation.
-  - Kubernetes a une meilleure fault tolerance que Swarm
-  - attention au contre-sens : un service Swarm est un seul conteneur répliqué, un service Kubernetes est un groupe de conteneurs (pod) répliqué, plus proche des Docker Stacks.
+- Kubernetes a une meilleure fault tolerance que Swarm
+  - attention au contre-sens : un service Swarm est un seul conteneur répliqué, un service Kubernetes est un objet réseau vers un groupe de pods.
 
 ---
 

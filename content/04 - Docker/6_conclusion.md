@@ -43,7 +43,7 @@ Ou avec Nginx, avec deux projets :
 
 ## Tests sur des conteneurs
 
-Ansible comme source de healthcheck
+- Ansible ou un autre outil comme source de healthcheck
 
 ---
 
