@@ -210,7 +210,7 @@ La/Les configurations de kubectl sont à déclarer dans la variable d'environnem
 - Observons les derniers évènements arrivés à notre cluster avec `kubectl get events --watch`.
 
 
-## Au délà de la ligne de commande...
+## Au delà de la ligne de commande...
 
 #### Accéder à la dashboard Kubernetes
 
@@ -218,7 +218,7 @@ Le moyen le plus classique pour avoir une vue d'ensemble des ressources d'un clu
 
 On peut aussi l'installer dans minikube ou k3s.
 
-=> Démonstration
+<!-- => Démonstration -->
 
 #### Installer Lens
 
