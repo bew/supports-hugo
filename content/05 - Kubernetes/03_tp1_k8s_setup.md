@@ -6,7 +6,7 @@ weight: 2025
 
 Au cours de nos TPs nous allons passer rapidement en revue deux manières de mettre en place Kubernetes :
 
-- Un cluster de développement avec `minikube`
+- Un cluster de développement avec `k3s`
 - Un cluster managed loué chez un provider (Scaleway, DigitalOcean, Azure ou Google Cloud)
 
 Nous allons d'abord passer par la première option.
@@ -72,8 +72,8 @@ Avec K3s, il est possible d'installer un petit cluster d'un seul noeud en une co
 
 - Créer le répertoire `~/.kube`
  - Copie de la conf `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config`
- - Changer les permission `sudo chown $USER ~/.kube/k3s.yaml`
- - activer cette configuration pour kubectl avec une variable d'environnement: `export KUBECONFIG=~/.kube/k3s.yaml`
+ - Changer les permission `sudo chown $USER ~/.kube/config`
+ - activer cette configuration pour kubectl avec une variable d'environnement: `export KUBECONFIG=~/.kube/config` ou rechargez votre terminal
  - Tester la configuration avec `kubectl get nodes` qui devrait renvoyer quelque chose proche de:
 
  ```
