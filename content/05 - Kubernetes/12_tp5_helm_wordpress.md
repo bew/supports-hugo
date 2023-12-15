@@ -47,15 +47,6 @@ On peut écraser certains de ces paramètres dans un nouveau fichier par exemple
 
 ### Utiliser la fonction `template` de Helm pour étudier les ressources d'un Chart
 
-- Visitez le code des charts de votre choix en clonant le répertoire Git des Charts officielles Bitnami et en l'explorant avec VSCode :
-
-```bash
-git clone https://github.com/bitnami/charts/ --depth 1
-code charts/bitnami/wordpress
-```
-
-- Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`.
-
 - Comment modifier l'username wordpress à l'installation ? il faut donner comme paramètres le yaml suivant:
 
 ```yaml
@@ -96,6 +87,18 @@ ingress:
 - En utilisant ces paramètres, plutôt que d'installer le chart, nous allons faire le rendu (templating) des fichiers ressource générés par le chart: `helm template wordpress-tp bitnami/wordpress --values=values.yaml > wordpress-tp-manifests.yaml`.
 
 On peut maintenant lire dans ce fichier les objets kubernetes déployés par le chart et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut constater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
+
+### Créer sa chart Helm
+
+- Visitez le code des charts de votre choix en clonant le répertoire Git des Charts officielles Bitnami et en l'explorant avec VSCode :
+
+```bash
+git clone https://github.com/bitnami/charts/ --depth 1
+code charts/bitnami/wordpress
+```
+
+- Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`.
+
 
 ### Installer ArgoCD
 
