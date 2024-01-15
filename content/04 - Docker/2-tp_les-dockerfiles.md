@@ -415,9 +415,25 @@ ENTRYPOINT ["/usr/games/cowsay"]
 - L'instruction `ENTRYPOINT` et la gestion des entrées-sorties des programmes dans les Dockerfiles peut être un peu capricieuse et il faut parfois avoir de bonnes notions de Bash et de Linux pour comprendre (et bien lire la documentation Docker).
 - On utilise parfois des conteneurs juste pour qu'ils s'exécutent une fois (pour récupérer le résultat dans la console, ou générer des fichiers). On utilise alors l'option `--rm` pour les supprimer dès qu'ils s'arrêtent.
 
-## _Facultatif :_ Un multi-stage build
+## _Facultatif :_ TP avancé : Un multi-stage build avec distroless comme image de base de prod
 
-Transformez le `Dockerfile` de l'app `dnmonster` située à l'adresse suivante pour réaliser un multi-stage build afin d'obtenir l'image finale la plus légère possible :
-<https://github.com/amouat/dnmonster/>
+Chercher la documentation sur les images distroless. 
+Quel est l'intérêt ? Quels sont les cas d'usage ? 
 
-La documentation pour les multi-stage builds est à cette adresse : <https://docs.docker.com/develop/develop-images/multistage-build/>
+Objectif : transformer le `Dockerfile` de l'app nodejs (express) suivante en build multistage : https://github.com/Uptime-Formation/docker-example-nodejs-multistage-distroless.git
+ Le builder sera par exemple basé sur l'image `node:20` et le résultat sur `gcr.io/distroless/nodejs20-debian11`.
+
+La doc:
+- https://docs.docker.com/build/building/multi-stage/
+
+ Deux exemples simple pour vous aider:
+ - https://alphasec.io/dockerize-a-node-js-app-using-a-distroless-image/
+ - https://medium.com/@luke_perry_dev/dockerizing-with-distroless-f3b84ae10f3a
+
+ Une correction possible dans la branche correction : `git clone https://github.com/Uptime-Formation/docker-example-nodejs-multistage-distroless/-b correction`
+
+ L'image résultante fait tout de même environ 170Mo.
+
+ Pour entrer dans les détails de l'image on peut installer et utiliser https://github.com/wagoodman/dive
+
+ <!-- On peut alors constater que pour une application nodejs, même le minimum du minimum dans une image c'est déjà un joyeux bordel difficile à auditer: (confs linux + locales + ssl + autre + votre node_modules avec plein de lib + votre app) -->
