@@ -173,7 +173,7 @@ docker push <your-docker-registry-account>/microblog:latest
 
 ```Dockerfile
 # Ajoute un user et groupe appelés microblog
-RUN addgroup -S microblog && adduser -S microblog -G microblog
+RUN addgroup --system microblog && adduser --system microblog -G microblog
 RUN chown -R microblog:microblog ./
 USER microblog
 ```
