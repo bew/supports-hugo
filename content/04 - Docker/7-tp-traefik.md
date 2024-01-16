@@ -98,7 +98,6 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 ```yaml
   whoami:
     image: "traefik/whoami"
-    container_name: "simple-service"
     labels:
       - "traefik.http.routers.whoami.rule=Host(`example.com`)"
       - "traefik.http.routers.whoami.entrypoints=web-securise"
