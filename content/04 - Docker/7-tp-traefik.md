@@ -57,7 +57,6 @@ whoami:
 
 ## Exercice 1b - un certificat Let's Encrypt (ou autosigné)
 
-**Note pour utiliser un certificat autosigné :** il suffit de supprimer les lignes `certificatesresolvers` et `certresolver` pour utiliser un certificat autosigné
 
 - Avec l'aide de la [documentation Traefik sur Let's Encrypt et Docker Compose](https://doc.traefik.io/traefik/user-guides/docker-compose/acme-http/), configurez Traefik pour qu'il crée un certificat Let's Encrypt pour votre container.
 <!-- - Si vous avez une IP publique mais pas de domaine, vous pouvez utiliser le service gratuit [netlib.re] qui vous fournira un domaine en `*.netlib.re`. -->
@@ -105,6 +104,12 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 ```
 
 {{% /expand %}}
+
+
+### **Note pour utiliser un certificat autosigné :**
+Pour utiliser un certificat autosigné, il faut adapter la ligne suivante :
+`- "traefik.http.routers.whoami.tls=true"`
+
 
 ## Exercice 2 - Router vers notre stack identidock
 
