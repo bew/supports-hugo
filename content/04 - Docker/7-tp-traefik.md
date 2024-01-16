@@ -4,7 +4,7 @@ draft: false
 weight: 1075
 ---
 
-## Exercice 1 - Utiliser Traefik pour le routage
+## Exercice 1a - Utiliser Traefik pour le routage
 
 Traefik est un reverse proxy très bien intégré à Docker. Il permet de configurer un routage entre un point d'entrée (ports `80` et `443` de l'hôte) et des containers Docker, grâce aux informations du daemon Docker et aux `labels` sur chaque containers.
 Nous allons nous baser sur le guide d'introduction [Traefik - Getting started](https://doc.traefik.io/traefik/getting-started/quick-start/).
@@ -52,6 +52,8 @@ whoami:
 ```
 
 {{% /expand %}}
+
+## Exercice 1b - un certificat Let's Encrypt
 
 - Avec l'aide de la [documentation Traefik sur Let's Encrypt et Docker Compose](https://doc.traefik.io/traefik/user-guides/docker-compose/acme-http/), configurez Traefik pour qu'il crée un certificat Let's Encrypt pour votre container.
 <!-- - Si vous avez une IP publique mais pas de domaine, vous pouvez utiliser le service gratuit [netlib.re] qui vous fournira un domaine en `*.netlib.re`. -->
@@ -103,12 +105,17 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 
 ## Exercice 2 - Router vers notre stack identidock
 
-Ajoutons des labels dans notre stack identidock pour l'exposer via Traefik.
+Ajoutons des labels dans notre stack identidock pour l'exposer via Traefik sur l'adresse `monster.localhost`.
+
+{{% expand "Indice 1 :" %}}
 Attention : il faudra bien faire attention aux réseaux dans lesquels se trouvent les conteneurs !
+{{% /expand %}}
 
-Indice 1 : il va falloir utiliser le mot-clé `external` dans `networks:`
+{{% expand "Indice 2 :" %}}
+Il va falloir utiliser le mot-clé `external` dans `networks:`
+{{% /expand %}}
 
-Indice 2 : il y a un problème avec Traefik qui n'est pas explicite ! Cette page vous aidera à le résoudre : https://community.traefik.io/t/docker-provider-how-does-traefik-choose-which-service-ip-address-to-proxy-to-when-container-is-on-multiple-networks/16852/2
+**Attention :** il y a un problème avec Traefik qui n'est pas explicite ! Cette page vous aidera à le résoudre : https://community.traefik.io/t/docker-provider-how-does-traefik-choose-which-service-ip-address-to-proxy-to-when-container-is-on-multiple-networks/16852/2
 
 ## Exercice 3 - Swarm avec Traefik
 
