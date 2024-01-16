@@ -209,7 +209,7 @@ ajout pour moi command ansible reboot all
 
 FROM python:3.6-alpine
 
-RUN addgroup -S microblog && adduser -S microblog -G microblog
+RUN addgroup --system microblog && adduser --system microblog -G microblog
 
 WORKDIR /microblog
 

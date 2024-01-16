@@ -430,7 +430,7 @@ La doc:
  - https://alphasec.io/dockerize-a-node-js-app-using-a-distroless-image/
  - https://medium.com/@luke_perry_dev/dockerizing-with-distroless-f3b84ae10f3a
 
- Une correction possible dans la branche correction : `git clone https://github.com/Uptime-Formation/docker-example-nodejs-multistage-distroless/-b correction`
+ Une correction possible dans la branche correction : `git clone https://github.com/Uptime-Formation/docker-example-nodejs-multistage-distroless/ -b correction`
 
  L'image résultante fait tout de même environ 170Mo.
 

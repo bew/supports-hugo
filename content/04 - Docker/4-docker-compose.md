@@ -12,7 +12,7 @@ weight: 1040
 
 - Pour bien comprendre qu'il ne s'agit que de convertir des options de commande Docker en YAML, un site vous permet de convertir une commande `docker run` en fichier Docker Compose : <https://www.composerize.com/>
 
-- Le "langage" de Docker Compose : [la documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/compose-file-v3/) est essentielle.
+- Le "langage" de Docker Compose : [la documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/) est essentielle.
 ---
 
 # A quoi ça ressemble, YAML ?
@@ -168,7 +168,7 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 ## Le "langage" de Docker Compose
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`.
-- [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/compose-file-v3/) est essentielle.
+- [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/) est essentielle.
 
 - il est aussi possible d'utiliser des variables d'environnement dans Docker Compose : se référer au [mode d'emploi](https://docs.docker.com/compose/compose-file/#variable-substitution) pour les subtilités de fonctionnement
 
@@ -178,6 +178,6 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - Certaines applications microservice peuvent avoir potentiellement des dizaines de petits conteneurs spécialisés. Le service devient alors difficile à lire dans le compose file.
 
-- Il est possible de visualiser l'architecture d'un fichier Docker Compose en utilisant [docker-compose-viz](https://github.com/pmsipilot/docker-compose-viz)
+- Il est possible de visualiser l'architecture d'un fichier Docker Compose en utilisant [docker-compose-viz-mermaid](https://github.com/derlin/docker-compose-viz-mermaid)
 
 - Cet outil peut être utilisé dans un cadre d'intégration continue pour produire automatiquement la documentation pour une image en fonction du code.
