@@ -57,7 +57,7 @@ whoami:
 
 ## Exercice 1b - un certificat Let's Encrypt (ou autosigné)
 
-**Note:** il suffit de supprimer les lignes `certificatesresolvers` pour utiliser un certificat autosigné
+**Note pour utiliser un certificat autosigné :** il suffit de supprimer les lignes `certificatesresolvers` et `certresolver` pour utiliser un certificat autosigné
 
 - Avec l'aide de la [documentation Traefik sur Let's Encrypt et Docker Compose](https://doc.traefik.io/traefik/user-guides/docker-compose/acme-http/), configurez Traefik pour qu'il crée un certificat Let's Encrypt pour votre container.
 <!-- - Si vous avez une IP publique mais pas de domaine, vous pouvez utiliser le service gratuit [netlib.re] qui vous fournira un domaine en `*.netlib.re`. -->
