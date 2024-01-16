@@ -160,7 +160,7 @@ C'est ce qu'on appelle l'intégration continue.
 Le principe central du DevOps est d'automatiser également les opérations de déploiement et de maintenance en se basant sur le même modèle.
 
 ![](../../images/devops.png)
-![](../../images/continuous_delivery.png)
+![](../../images/devops/gitlab_workflow_example.png)
 
 Mais pour que ça fonctionne il faut résoudre des défi techniques nouveau => innovations
 
