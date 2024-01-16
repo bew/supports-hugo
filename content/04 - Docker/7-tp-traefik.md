@@ -107,7 +107,7 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 
 
 ### **Note pour utiliser un certificat autosigné :**
-Pour utiliser un certificat autosigné, il faut adapter la ligne suivante :
+Pour utiliser un certificat autosigné, il n'y a pas besoin de configurer de "cert resolver", il suffit de bien exposer le port 443 de Traefik et d'adapter la ligne suivante pour chaque service exposé :
 `- "traefik.http.routers.whoami.tls=true"`
 
 
@@ -123,7 +123,7 @@ Attention : il faudra bien faire attention aux réseaux dans lesquels se trouven
 Il va falloir utiliser le mot-clé `external` dans `networks:`
 {{% /expand %}}
 
-**Attention :** il y a un problème avec Traefik qui n'est pas explicite ! Cette page vous aidera à le résoudre : https://community.traefik.io/t/docker-provider-how-does-traefik-choose-which-service-ip-address-to-proxy-to-when-container-is-on-multiple-networks/16852/2
+**Attention :** il y a un problème avec Traefik qui n'est pas explicite ! Cette page vous aidera à le résoudre (à rajouter dans le paramètre `command:` du conteneur Traefik) : https://community.traefik.io/t/docker-provider-how-does-traefik-choose-which-service-ip-address-to-proxy-to-when-container-is-on-multiple-networks/16852/2
 
 ## Exercice 3 - Swarm avec Traefik
 
