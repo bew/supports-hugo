@@ -417,6 +417,8 @@ L'index nécessaire à Kibana est créé, vous pouvez vous rendre dans la partie
 
 Il est temps de faire un petit `docker stats` pour découvrir l'utilisation du CPU et de la RAM de vos conteneurs !
 
+##### Avec WSL
+Avec WSL, l'emplacement des logs est assez difficile à trouver ! Vous pouvez vous aider de cette page pour ce TP : <https://gist.github.com/Bert-R/e5bb77b9ce9c94fdb1a90e4e615ee518>
 
 ### _Facultatif :_ Ajouter un nœud Elasticsearch
 
