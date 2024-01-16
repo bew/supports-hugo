@@ -101,7 +101,16 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 
 {{% /expand %}}
 
-## Exercice 2 - Swarm avec Traefik
+## Exercice 2 - Router vers notre stack identidock
+
+Ajoutons des labels dans notre stack identidock pour l'exposer via Traefik.
+Attention : il faudra bien faire attention aux réseaux dans lesquels se trouvent les conteneurs !
+
+Indice 1 : il va falloir utiliser le mot-clé `external` dans `networks:`
+
+Indice 2 : il y a un problème avec Traefik qui n'est pas explicite ! Cette page vous aidera à le résoudre : https://community.traefik.io/t/docker-provider-how-does-traefik-choose-which-service-ip-address-to-proxy-to-when-container-is-on-multiple-networks/16852/2
+
+## Exercice 3 - Swarm avec Traefik
 
 - Avec l'aide de la [documentation Traefik sur Docker Swarm](https://doc.traefik.io/traefik/routing/providers/docker/#configuration-examples), configurez Traefik avec Swarm.
 
