@@ -1,5 +1,5 @@
 # TODO
-
+- https://medium.com/@.anders/learnings-from-our-8-years-of-kubernetes-in-production-two-major-cluster-crashes-ditching-self-0257c09d36cd
 - ajouter secrets and configmaps!!!
 
 - On pourrait faire : je donne les ressources pour se co avec Azure CLI, pendant ce temps, cours sur les Dockerfiles, et après pendant leur tp dockerfile je les aide sur la azure cli pour apply le rôle helm et creer un azure container registry et azure file ?
