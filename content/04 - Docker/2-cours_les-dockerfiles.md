@@ -104,7 +104,7 @@ CMD ["rails", "server", "-b", "0.0.0.0"]
 
 - Permet de lancer une commande shell (installation, configuration).
 
-## Instruction `ADD`
+## Instruction `ADD` ou `COPY`
 
 - Permet d'ajouter des fichier depuis le contexte de build à l'intérieur du conteneur.
 - Généralement utilisé pour ajouter le code du logiciel en cours de développement et sa configuration au conteneur.
