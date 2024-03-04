@@ -127,7 +127,7 @@ La difficulté principale pour les Ops c'est qu'un système informatique est:
 - Un système très complexe qu'il est quasi **impossible de complètement visualiser** dans sa tête.
 - Les **évènements** qui se passe sur la machines sont **instantanés** et **invisibles**
 - L'**état actuel** de la machine n'est **pas ou peu explicite** (combien d'utilisateur, machine pas connectée au réseau par exemple.)
-- Les **interractions entre des problèmes** peu graves peuvent entrainer des erreurs critiques en cascades.
+- Les **interactions entre des problèmes** peu graves peuvent entrainer des erreurs critiques en cascades.
 
 On peut donc constater que les opérations traditionnelles implique une culture de la **prudence**
 

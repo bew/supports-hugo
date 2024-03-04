@@ -93,7 +93,7 @@ La difficulté principale pour les Obs c'est qu'un système informatique est:
 
 - ## L'**état actuel** de la machine n'est **pas ou peu explicite** (combien d'utilisateur, machine pas connectée au réseau par exemple.)
 
-- Les **interractions entre des problèmes** peu graves peuvent entrainer des erreurs critiques en cascades.
+- Les **interactions entre des problèmes** peu graves peuvent entrainer des erreurs critiques en cascades.
 
 ---
 
