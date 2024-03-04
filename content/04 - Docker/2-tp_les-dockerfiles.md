@@ -392,6 +392,7 @@ Créons un nouveau Dockerfile qui permet de faire dire des choses à une vache g
 Le but est de faire fonctionner notre programme dans un conteneur à partir de commandes de type :
 
 - `docker run --rm cowsay Coucou !`
+- `docker run --rm cowsay # Affiche une vache qui dit "Hello"`
 - `docker run --rm cowsay -f stegosaurus Yo!`
 - `docker run --rm cowsay -f elephant-in-snake Un éléphant dans un boa.`
 
