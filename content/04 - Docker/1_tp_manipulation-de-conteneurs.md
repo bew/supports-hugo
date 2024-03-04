@@ -298,11 +298,7 @@ Portainer est un portail web pour gérer une installation Docker via une interfa
 
 ```bash
 docker volume create portainer_data
-docker run --detach --name portainer \
-    -p 9000:9000 \
-    -v portainer_data:/data \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    portainer/portainer-ce
+docker run --detach --name portainer -p 9000:9000 -v portainer_data:/data -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer-ce
 ```
 
 - Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--volume` ci-dessus.
