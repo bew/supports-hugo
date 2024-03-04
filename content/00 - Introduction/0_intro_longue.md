@@ -249,9 +249,9 @@ C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
 # Infrastructure as code
 
-- Permet de régler un problème de l'administration système : Difficultée l'état du système à un instant T ce qui augmente les risques.
+- Permet de régler un problème de l'administration système : Difficulté de connaître l'état du système à un instant T, ce qui augmente les risques.
 
-- Plutôt que d'appliquer des commandes puis d'oublier si on les a appliqué, On **décrit** le système d'exploitation (l'état du linux) dans un fichier et on utilise un système qui applique cette configuration explicite à tout moment.
+- Plutôt que d'appliquer des commandes puis d'oublier si on les a appliquées, On **décrit** le système d'exploitation (l'état du linux) dans un fichier et on utilise un système qui applique cette configuration explicite à tout moment.
 
 - Permet aux Ops/AdminSys de travailler comme des développeur·euses (avec une usine logicielle et ses outils)
 
@@ -312,7 +312,7 @@ Le problème identifié que cherche a résoudre l'IaC est un écheveau de diffic
 - Fiabilité limitée et risques peu maîtrisés lors de certaines opérations transversales (si d'autres méchanismes de fiabilisation n'ont pas été mis en place).
 - Problème de communication dans les grandes équipes car l'information est détenue implicitement par quelques personnes.
 
-2. Faible reproductibilité des systèmes et donc difficultée/lenteur du passage à l'échelle (horizontal scaling).
+2. Faible reproductibilité des systèmes et donc difficulté/lenteur du passage à l'échelle (horizontal scaling).
 
 - Multiplier les serveurs identiques est difficile si leur état est le résultat d'un processus manuel partiellement documenté.
 - Difficulté à reproduire/simuler l'état précis de l'infrastructure de production dans les contextes de tests logiciels.

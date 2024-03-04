@@ -83,7 +83,7 @@ Dans un DSI (département de service informatique) on organise ces activités en
 
 ---
 
-# Opérations : la difficultée
+# Opérations : la difficulté
 
 La difficulté principale pour les Obs c'est qu'un système informatique est:
 

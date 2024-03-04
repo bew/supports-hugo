@@ -31,7 +31,7 @@ Ce mouvement se structure autour des solutions **humaines** (organisation de l'e
 
 - L'agrandissement rapide face à la demande des services logiciels et infrastructures les supportant.
 - La célérité de déploiement demandée par le développement agile (cycles journaliers de développement).
-- Difficultées à organiser des équipes hétérogènes de grande taille et qui s'agrandissent très vite selon le modèle des startups.et
+- Difficultés à organiser des équipes hétérogènes de grande taille et qui s'agrandissent très vite selon le modèle des startups.et
 
 Il y a de nombreuses versions de ce que qui caractérise le DevOps mais pour résumer:
 
