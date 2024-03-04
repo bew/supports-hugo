@@ -1,3 +1,19 @@
+devcontainers
++ docker compose -f
+42 layers 
+RUn --mount + buildkit advanced cache https://www.augmentedmind.de/2023/11/19/advanced-buildkit-caching/
+flask run => boot.sh => entrypoint.sh
+dockerignore
+docker internal host
+astuces network external
+https://docs.docker.com/compose/compose-file/
+docker compose viz mermaid
+dockerfile version
+docker compose version
+docker compose override
+gitlab reconstruire 
+
+---
 Add watchtower et buildx bake
 
 # TODO:
@@ -232,14 +248,11 @@ docker run --name microblog -e DATABASE_URL=mysql+mysqlconnector://microblog:mic
 
 ---
 
-james :
-stephane : matinée moin sstructurée, réseaux a l'air plus compliqué, pas assez cadré
-kevin : pas adminsys du coup hs reseaux ? bien aimé dockerfile docker compose, yaml pas un pb
-fabien : orchestration en plus
-
-killian : network trop flou !!! bien aimé identidock, on aurait du travailler avec les volumes ou le transformer en stack
-louise agnes : theorie OK
-sebastien :
+retours:
+- réseaux a l'air plus compliqué, pas assez cadré
+- pas adminsys du coup hs reseaux ? bien aimé dockerfile docker compose, yaml pas un pb
+- fabien : orchestration en plus
+- network trop flou !!! bien aimé identidock, on aurait du travailler avec les volumes ou le transformer en stack
 
 ---
 
