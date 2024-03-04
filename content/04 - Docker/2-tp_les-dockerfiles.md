@@ -250,10 +250,8 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 RUN useradd --system flask
 # On copie des fichiers qui changent moins souvent avant pour le cache
-COPY microblog.py config.py boot.sh /microblog/
 WORKDIR /microblog
-COPY migrations/ migrations
-COPY app/ app
+COPY microblog.py config.py boot.sh migrations/ app/ ./
 
 RUN chown -R flask /microblog
 ENV CONTEXT PROD
