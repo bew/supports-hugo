@@ -157,7 +157,7 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - `run` fait tourner un conteneur pour exécuter une commande unique. Cela aura aussi pour effet de faire tourner tout conteneur décrit dans `depends_on`, à moins que l'argument `--no-deps` ne soit donné.
 
-- `logs` affiche les logs. De façon générale la sortie des logs est colorée et agrégée pour les conteneurs gérés par Compose.
+- `logs` affiche les logs. De façon générale la sortie des logs est colorée et agrégée pour les conteneurs gérés par Compose. `logs -f` pour suivre les logs en temps réel.
 
 - `stop` arrête les conteneurs sans les enlever.
 
