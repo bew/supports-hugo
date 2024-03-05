@@ -298,7 +298,7 @@ En s'inspirant des exercices sur les volumes (TP3) et du fichier `boot.sh` de l'
 Les éléments importants de `boot.sh` sont :
 - La variable d'environnement `FLASK_ENV=development`
 - le processus lancé avec la commande `flask run -h 0.0.0.0``
-{{% /expand }}
+{{% /expand %}}
 
 {{% expand "Solution :" %}}
 
