@@ -294,7 +294,7 @@ networks:
 
 En s'inspirant des exercices sur les volumes (TP3) et du fichier `boot.sh` de l'app microblog (TP2), modifions le `docker-compose.yml` pour y inclure des instructions pour lancer le serveur python en mode debug : la modification du code source devrait immédiatement être répercutée dans les logs d'`identidock`, et recharger la page devrait nous montrer la nouvelle version du code de l'application.
 
-{{% expand "Indice :"}}
+{{% expand "Indice :" %}}
 Les éléments importants de `boot.sh` sont :
 - La variable d'environnement `FLASK_ENV=development`
 - le processus lancé avec la commande `flask run -h 0.0.0.0``
