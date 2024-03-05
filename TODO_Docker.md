@@ -7,7 +7,6 @@ dockerignore
 docker internal host
 astuces network external
 https://docs.docker.com/compose/compose-file/
-docker compose viz mermaid
 dockerfile version
 docker compose version
 docker compose override
