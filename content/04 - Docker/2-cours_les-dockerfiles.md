@@ -108,7 +108,7 @@ CMD ["rails", "server", "-b", "0.0.0.0"]
 
 - Permet d'ajouter des fichier depuis le contexte de build à l'intérieur du conteneur.
 - Généralement utilisé pour ajouter le code du logiciel en cours de développement et sa configuration au conteneur.
-
+- Ces deux instructions ont des petites différences subtiles : les options de `COPY` sont plus complètes, et `ADD` permet de télécharger et dézipper un fichier disponible à une URL distante.
 ---
 
 ## Instruction `CMD`
