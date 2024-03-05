@@ -142,6 +142,7 @@ RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 RUN pip3 install Flask uWSGI requests redis
 WORKDIR /app
 COPY app/identidock.py /app
+ENV FLASK_APP identidock.py
 
 EXPOSE 5000 9191
 USER uwsgi
