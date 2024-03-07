@@ -228,11 +228,12 @@ Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
 ## Ajouter OpenLens
-curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366/OpenLens-6.5.2-366.x86_64.AppImage
-sudo chmod +x OpenLens-6.5.2-366.x86_64.AppImage
+curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366/OpenLens-6.5.2-366.amd64.deb
+sudo dpkg -i OpenLens-6.5.2-366.x86_64.deb
 ```
 
-- Lancez l'application `OpenLens` grâce à `./OpenLens-6.5.2-366.x86_64.AppImage`
+- Lancez l'application `OpenLens`
+<!-- - grâce à `./OpenLens-6.5.2-366.x86_64.AppImage` -->
 <!-- - Sélectionnez le cluster Scaleway en cliquant sur le bouton plus au lancement -->
 - Explorons ensemble les ressources dans les différentes rubriques et namespaces
 

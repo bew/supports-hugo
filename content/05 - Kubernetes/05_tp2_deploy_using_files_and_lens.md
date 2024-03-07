@@ -41,7 +41,7 @@ spec:
 ```
 - Appliquez le ficher avec `kubectl apply -f <fichier>`
 - Constatez dans Lens dans la partie pods que les deux conteneurs du pod sont bien démarrés (deux petits carrés vert à droite de la ligne du pod)
-- Modifiez le nom du pod dans la description précédente et réappliquez la configuration. Kubernetes mets à jour le nom.
+- Modifiez le nom du pod dans la description précédente et réappliquez la configuration. Kubernetes crée un nouveau pod à ce nom.
 - Modifier le nom du conteneur `rancher-demo` et réappliquez la configuration. Que se passe-t-il ?
 
 => Kubernetes refuse d'appliquer le nouveau nom de conteneur car un pod est largement immutable. Pour changer d'une quelquonque façon les conteneurs du pod il faut supprimer (`kubectl delete -f <fichier>`) et recréer le pod. Mais ce travail de mise à jour devrais être géré par un déploiement pour automatiser et pour garantir la haute disponibilité de notre application `demonstration`.
