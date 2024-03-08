@@ -24,7 +24,14 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
 ### Observer le déploiement du secret à l'intérieur des pods
 
 - Entrez dans le pod de mysql grâce au terminal de `Lens`.
-- Cherchez la variable d'environnement `MYSQL_ROOT_PASSWORD` à l'aide des commande `env | grep MYSQL`. Le conteneur mysql a utilisé cette variable accessible de lui seul pour se configurer.
+- Cherchez la variable d'environnement `MYSQL_ROOT_PASSWORD` à l'aide des commandes `env | grep MYSQL`. Le conteneur mysql a utilisé cette variable accessible de lui seul pour se configurer.
+
+### Observer le déploiement des autres secrets à l'intérieur du pod
+
+- Entrez dans le pod de mysql grâce au terminal (`kubectl exec -it`)
+ <!-- de `Lens`. -->
+- Cherchez un fichier de secrets à l'aide des commandes `cd /var/lib/secrets` et `cat`. Kubernetes monte certains secrets par défaut dans tous les pods.
+
 
 ### Observez la persistence
 
