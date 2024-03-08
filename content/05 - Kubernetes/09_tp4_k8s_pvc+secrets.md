@@ -32,6 +32,8 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
  <!-- de `Lens`. -->
 - Cherchez un fichier de secrets à l'aide des commandes `cd /var/lib/secrets` et `cat`. Kubernetes monte certains secrets par défaut dans tous les pods.
 
+### (optionnel) Ajout d'une ConfigMap
+A l'aide de la page de documentation sur les configmaps et [de la documentation](https://kubernetes.io/docs/concepts/configuration/configmap/), ajoutez une configmap pour monter un fichier dans le conteneur Wordpress.
 
 ### Observez la persistence
 
